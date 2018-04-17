@@ -1,0 +1,65 @@
+@keyframes selectDate_keyframes {
+    from {
+        transform: translate3d(0, -100%, 0);
+        visibility: visible;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.selectDate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    overflow: auto;
+
+    &_title{
+        padding: 6px 10px 10px 20px;          
+        color: #848484;
+    }
+
+    > div {
+        background: white;
+        animation: selectDate_keyframes 1s both;
+        padding-bottom: 10px;
+    }
+
+    &_btns { 
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;  
+        padding: 10px;  
+        
+        > div {
+            width: 25%;
+            box-sizing: border-box;
+            text-align: center;
+            padding: 0 10px;
+
+            > div {
+                width: 100%;                
+                line-height: 25px;
+                font-size: 12px;
+                display: inline-block;
+                border-radius: 4px;
+            }
+        }
+
+        &_checked {           
+            border: 1px solid #1890ff;
+            color: #1890ff;
+            background: white;
+            
+        }
+
+        &_unchecked {
+            border: 1px solid #f0f0f0;
+            background: #f0f0f0;
+        }
+    }
+}

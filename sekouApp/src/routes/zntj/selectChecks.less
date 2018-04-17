@@ -1,0 +1,114 @@
+@keyframes selectChecks_keyframes {
+    from {
+        transform: translate3d(0, -100%, 0);
+        visibility: visible;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.selectChecks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    overflow: auto;
+
+    > div {
+        background: white;    
+        animation: selectChecks_keyframes 1s both;    
+    }
+
+    &_selected {
+        color: #1890ff;
+        background: white !important;
+        border: 1px solid #1890ff !important;
+        position: relative;
+    }
+
+    &_selected::before {  
+        content:'';      
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+        border-top: 12px solid #1890ff;
+        border-left: 12px solid transparent; 
+    }
+
+    &_selected::after {
+        position: absolute;
+        top: -10px;
+        right: -4px;
+        content: "✔";
+        color: white;
+    }
+
+    &_group {
+        font-size: 12px;
+        padding: 0px 8px;
+
+        &_title { 
+            padding: 10px;          
+            color: #848484;
+        }
+
+        &_items {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;  
+            padding-bottom: 10px;                  
+
+            > div {
+                box-sizing: border-box;
+                text-align: center;
+                width: 25%;
+                box-sizing: border-box;
+                padding: 10px;
+
+                > div {
+                    width: 100%;
+                    font-size: 12px;
+                    line-height: 25px;
+                    display: inline-block;
+                    background: #f0f0f0;
+                    border-radius: 3px;
+                    border: 1px solid #f0f0f0;    
+                }
+            }
+        }
+
+        &_sp {
+            border-top: 1px solid #eaeaea;
+            margin-bottom: 10px;
+        }
+    }
+
+    &_btn {
+        flex-grow: 1;
+        text-align: center;
+        font-size: 12px;
+
+        &_sp {
+            border-left: 1px solid #eaeaea;
+            height: 100%;
+        }
+    }
+
+    &_btns {
+        border-top: 1px solid #eaeaea;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;   
+        width: 100%;   
+        align-items: center;
+        height: 38px;  
+    }
+}
