@@ -1,0 +1,29 @@
+.yjxxinfo_header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: 40px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.yjxxinfo_header > * {
+  margin: 0 8px 0 4px;
+  color: #1890ff;
+  font-weight: 400;
+}
+.yjxxinfo_img {
+  width: 25px;
+  height: 25px;
+}
+.yjxxinfo_sp {
+  height: 8px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e8e8e8;
+}
+.yjxxinfo_list {
+  width: 100%;
+  border-collapse: collapse;
+}
+.yjxxinfo_list tr > td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e8e8e8;
+}

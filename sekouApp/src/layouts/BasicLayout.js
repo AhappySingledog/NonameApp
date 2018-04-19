@@ -44,7 +44,7 @@ export default connect(({ layout, loading }) => ({ ...layout }))(
                   <div>
                       <Switch>
                           { routers.map((router) => (<Route key={router.path} path= {router.path} component={router.component} />)) }
-                          <Redirect exact from="/" to="/zntj" />
+                          <Redirect exact from="/" to="/znyj" />
                       </Switch>
                   </div>
               </div>
