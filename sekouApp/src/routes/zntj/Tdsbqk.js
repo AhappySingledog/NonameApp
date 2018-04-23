@@ -2,23 +2,12 @@ import { Tabs, Icon } from "antd-mobile";
 import React, { Component } from "react";
 import { connect } from "dva";
 import ReactDOM from "react-dom";
-import Chart from "chart.js";
+import {Chart} from "../../componets";
 import SelectDate from "./SelectDate";
 import SelectChecks from "./SelectChecks";
 import "./tdsbqk.less";
 
 const style = { top: "84px" };
-
-Chart.defaults.scale.ticks.fontSize = 10;
-Chart.defaults.global.defaultFontSize = 10;
-Chart.defaults.global.tooltips.backgroundColor = "rgba(0,0,0,0.5)";
-Chart.defaults.global.tooltips.titleFontSize = 16;
-Chart.defaults.global.tooltips.bodyFontStyle = 12;
-Chart.defaults.global.tooltips.bodyFontStyle = "normal";
-Chart.defaults.global.tooltips.footerFontSize = 12;
-Chart.defaults.global.tooltips.xPadding = 6;
-Chart.defaults.global.tooltips.yPadding = 6;
-Chart.defaults.global.tooltips.cornerRadius = 4;
 
 var data1 = {
   type: "line",

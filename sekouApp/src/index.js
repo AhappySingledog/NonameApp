@@ -1,13 +1,9 @@
 import '@babel/polyfill';
 import 'url-polyfill';
 import dva from 'dva';
-
+import './core/netcore';
 import createHistory from 'history/createHashHistory';
 import createLoading from 'dva-loading';
-// import 'moment/locale/zh-cn';
-// import FastClick from 'fastclick';
-// import './rollbar';
-// import './index.less';
 
 // 1. Initialize
 const app = dva({

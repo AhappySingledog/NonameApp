@@ -1,0 +1,17 @@
+.headerfill{
+    background: white;
+    width: 100%;
+    border-style: solid;
+    border-color: #ebebeb;
+    border-width: 1px 0;
+
+    &-title {
+        color: black;
+        padding-top: 12px;
+    }
+    &-title::before {
+        content: '';
+        border-left: 4px solid #1891ff;
+        margin: 0 12px;
+    }
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { NavBar, Icon, Popover } from "antd-mobile";
 import { connect } from "dva";
 import { Route, Redirect, Switch } from "dva/router";
+import {GridFill} from '../componets';
 import { getRoutes } from '../utils/router';
 import znlj from '../images/layout/智能链接.svg';
 import me from '../images/layout/个人资料.svg';
@@ -36,19 +37,15 @@ export default connect(({ layout, loading }) => ({ ...layout }))(
           let { title, routerData, match, history, location } = this.props;
           let routers = getRoutes(match.path, routerData); 
           let router = routers.filter((router) => location.pathname === router.path)[0] || {};
-          title = router.title || title;          
+          title = router.title || title; 
           return (
-            <div className="app">
-              {router.top === true ? <NavBar mode="dark" rightContent={right}>{title}</NavBar> : <NavBar mode="dark" icon={<Icon type="left" />} onLeftClick={history.goBack} rightContent={right}>{title}</NavBar> }
-              <div className="app_content">
-                  <div>
-                      <Switch>
-                          { routers.map((router) => (<Route key={router.path} path= {router.path} component={router.component} />)) }
-                          <Redirect exact from="/" to="/znyj" />
-                      </Switch>
-                  </div>
-              </div>
-            </div>
+              <GridFill 
+                header={router.top === true ? <NavBar mode="dark" rightContent={right}>{title}</NavBar> : <NavBar mode="dark" icon={<Icon type="left" />} onLeftClick={history.goBack} rightContent={right}>{title}</NavBar>} >
+                <Switch>
+                    { routers.map((router) => (<Route key={router.path} path= {router.path} component={router.component} />)) }
+                    <Redirect exact from="/" to="/zntj" />
+                </Switch>
+              </GridFill>
           );
         }
     }

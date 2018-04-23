@@ -1,6 +1,7 @@
 import { Grid, Carousel} from "antd-mobile";
 import React, { Component } from "react";
 import { connect } from "dva";
+import {GridFill, HeaderFill} from '../../componets';
 
 let renderItem = (el, idx) => {
   return (
@@ -22,7 +23,7 @@ export default connect(({ zntj, loading }) => ({
     let {bgs =[], grids = [], onClick = () => {}} = this.props;
     let lg = grids.length - 1;
     return (
-      <div style={{background: 'white'}}>
+      <GridFill style={{background: 'white'}} header={
         <Carousel
           autoplay infinite
           autoplayInterval={5000}
@@ -41,18 +42,21 @@ export default connect(({ zntj, loading }) => ({
             </a>
           ))}
         </Carousel>
+      } >
+        <div>
         {
           grids.map((obj, idx) => {
             return (
               <div key={idx}>
-                <div className="sub-title" style={{ margin: "12px 0 0 8px" }}>{obj.name}</div>
+                <div style={{padding: '8px 8px 6px 16px', fontWeight: 600}}>{obj.name}</div>
                 <Grid data={obj.items} onClick={onClick} hasLine={false} renderItem={renderItem}/>
-                <div style={ idx < lg ? {width: '85%', margin:'4px auto', borderBottom: "1px solid #e8e8e8"}: {}}/>
+                <div style={ idx < lg ? {width: '90%', margin:'4px auto', borderBottom: "1px solid #e8e8e8"}: {}}/>
               </div>
             );
           })
-        }      
-      </div>
+        }  
+        </div>
+      </GridFill>
     );
   }
 });
