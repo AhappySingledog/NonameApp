@@ -18,6 +18,11 @@ export const routerConfig = {
     models: ["zssk"],
     router: () => import('../routes/zntj/Zssk')
   },
+  "/zntj_cysx": {
+    props: { title: "查验时效" },
+    models: ["cysx"],
+    router: () => import('../routes/zntj/Cysx')
+  },
   "/zntj_tgxl": {
     props: { title: "通关效率" },
     models: ["tgxl"],
@@ -26,7 +31,7 @@ export const routerConfig = {
   "/zntj_mtcb": {
     props: { title: "码头船舶情况" },
     models: ["mtcbqk"],
-    router: () => import('../routes/zntj/Mtcb')   
+    router: () => import('../routes/zntj/mt/Mtcb')   
   },
   "/zntj_cbsbqk": {
     props: { title: "船舶申报情况" },
@@ -38,10 +43,30 @@ export const routerConfig = {
     models: ["tdsbqk"],
     router: () => import('../routes/zntj/Tdsbqk')   
   },
+  "/zntj_cdsbqk": {
+    props: { title: "船代申报情况" },
+    models: ["cdsbqk"],
+    router: () => import('../routes/zntj/Cdsbqk')   
+  },
+  "/zntj_bghldqk": {
+    props: { title: "报关行录单情况" },
+    models: ["bghldqk"],
+    router: () => import('../routes/zntj/Bghldqk')   
+  },
+  "/zntj_jzxsbqk": {
+    props: { title: "码头集装箱申报情况" },
+    models: ["jzxsbqk"],
+    router: () => import('../routes/zntj/Jzxsbqk')   
+  },
+  "/zntj_hgcyqk": {
+    props: { title: "海关查验情况" },
+    models: ["hgcyqk"],
+    router: () => import('../routes/zntj/Hgcyqk')   
+  },
   "/zntj_mtjzx": {
     props: { title: "码头集装箱情况" },
     models: ["mtjzxxq"],
-    router: () => import('../routes/zntj/Mtjzx')   
+    router: () => import('../routes/zntj/mt/Mtjzx')   
   },
 
   "/zntj_yqcl" : {
@@ -53,6 +78,11 @@ export const routerConfig = {
     props: { title: "园区企业申报" },
     models: ["yqqysb"],
     router: () => import('../routes/zntj/yq/yqqysb') 
+  },
+  "/zntj_jckbazqd":{
+    props: { title: "进出口备案制清单" },
+    models: ["jckbazqd"],
+    router: () => import('../routes/zntj/yq/jckbazqd') 
   },
   "/zncx": {
     props: { title: "智能查询", top: true },

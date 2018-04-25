@@ -1,6 +1,18 @@
+const datas = [{
+        label: "本月",
+        value: 1
+    },
+    {
+        label: "今年",
+        value: 2
+    },
+];
+
 export default {
     namespace: "yqqysb",
     state: {
+        datas: datas,
+        data: [datas[0].value],
         tabs: [{
                 title: "库存量"
             },
@@ -123,6 +135,5 @@ export default {
             };
         },
     },
-    effects: {
-    }
+    effects: {}
 };

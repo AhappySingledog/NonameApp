@@ -1,21 +1,22 @@
-const datas = [
-    {label: "本月", value: 1},
-    {label: "今年", value: 2},
+const datas = [  
+    {label: "今日", value: 1},
+    {label: "本周", value: 2},
+    {label: "本月", value: 3},
+    {label: "今年", value: 4},
   ];
   
   export default {
-      namespace: "bgdl",
+      namespace: "hgcyqk",
       state: { 
         datas: datas,
         data: datas[0],
         tabs: [
-            { title: "总量" }, 
-            { title: "进口报关单量" },
-            { title: "出口报关单量" }
+            { title: "查验箱量" }, 
+            { title: "查验放行箱量" }
           ],
         source: [
           {
-          headTitle:'本月报关单量占比情况',
+          headTitle:'今日海关查验箱量占比情况',
           items:[
             {title:"月占比", vl:"80%", value:"1000"},
             {title:"年占比", vl:"8%", value:"2300"}
@@ -24,7 +25,7 @@ const datas = [
         ],
         chartPieMonth:[
           {
-            headTitle:'本月报关单量排名情况',
+            headTitle:'今日海关查验箱量排名情况',
             data: {
               type: 'doughnut',
               data: {
@@ -42,13 +43,13 @@ const datas = [
                       ]
                   }],
                   labels: [
-                      '关区1',
-                      '关区2',
-                      '关区3',
-                      '关区4',
-                      '关区5',
-                      '关区6',
-                      '关区7',
+                      '查验班组1',
+                      '查验班组2',
+                      '查验班组3',
+                      '查验班组4',
+                      '查验班组5',
+                      '查验班组6',
+                      '查验班组7',
                       'other'
                   ]
               },
@@ -67,10 +68,9 @@ const datas = [
           }          
           }  
         ],
-      
         monthchart1:[
           {
-            headTitle:'近一年报关单量同环比情况',
+            headTitle:'近一周海关查验箱量同环比情况',
             data:{
               type: 'bar',
               data: {
@@ -106,6 +106,7 @@ const datas = [
           }
           }
         ]
+  
       },
       reducers: {
         select(state, { payload }) {

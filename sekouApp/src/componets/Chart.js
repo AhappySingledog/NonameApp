@@ -8,6 +8,6 @@ Chart.defaults.global.tooltips.bodyFontStyle = "normal";
 Chart.defaults.global.tooltips.footerFontSize = 12;
 Chart.defaults.global.tooltips.xPadding = 6;
 Chart.defaults.global.tooltips.yPadding = 6;
-Chart.defaults.global.tooltips.cornerRadius = 4;
+Chart.defaults.global.tooltips.cornerRadius = 10;
 Chart.defaults.global.title.fontSize = 16;
 export default Chart;

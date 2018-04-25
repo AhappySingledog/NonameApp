@@ -5,19 +5,19 @@ import { subscribes, publish, unsubscribe } from '../../core/arbiter';
 import { connect } from "dva";
 import './action';
 
-import {Chart, LineChart, GridFill,SelectChart} from "../../componets";
-import "./bgdl.less";
+import {Chart, HeaderFill, LineChart, GridFill,SelectChart} from "../../componets";
+import "./hgcyqk.less";
 
-export default connect(({ bgdl, loading }) => ({ ...bgdl }))(
-  class Bgdl extends Component {
-      onchange(e){
-        this.props.dispatch({
-          type: "bgdl/select",
-          payload: e
-        });
-      }
+export default connect(({ hgcyqk, loading }) => ({ ...hgcyqk }))(
+  class Hgcyqk extends Component {
+    onchange(e){
+      this.props.dispatch({
+        type: "hgcyqk/select",
+        payload: e
+      });
+    }
       render() {   
-        let {datas =[],data= {}, source =[],tabs,chartPieMonth,monthchart1} = this.props;
+        let {datas =[], data= {}, source =[],tabs,chartPieMonth,monthchart1} = this.props;
         return (
           <GridFill header={
             <div id="abc" style={{borderBottom: "1px solid #ebebeb"}}>
@@ -31,11 +31,6 @@ export default connect(({ bgdl, loading }) => ({ ...bgdl }))(
              swipeable={false}
              initialPage={0}
              >
-                <div style={{background: "#f9f9f9"}}> 
-                    <LineChart source={source}/>
-                    <SelectChart  groups={chartPieMonth}/>
-                    <SelectChart  groups={monthchart1}/>
-                </div> 
                 <div style={{background: "#f9f9f9"}}> 
                     <LineChart source={source}/>
                     <SelectChart  groups={chartPieMonth}/>

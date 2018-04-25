@@ -1,184 +1,62 @@
-import { Tabs, Icon } from "antd-mobile";
-import React, { Component } from "react";
-import { connect } from "dva";
 import ReactDOM from "react-dom";
-import {Chart} from "../../componets";
-import SelectDate from "./SelectDate";
-import SelectChecks from "./SelectChecks";
+import { Picker, List } from "antd-mobile";
+import React, { Component } from "react";
+import { subscribes, publish, unsubscribe } from '../../core/arbiter';
+import { connect } from "dva";
+import './action';
+
+import {Chart, HeaderFill, LineChart, GridFill} from "../../componets";
 import "./tdsbqk.less";
-
-const style = { top: "84px" };
-
-var data1 = {
-  type: "line",
-  data: {
-    labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
-    datasets: [
-      {
-        label: "指标1",
-        fill: false,
-        spointRadius: 6,
-        pointHoverRadius: 8,
-        borderColor: "rgb(24, 210, 187)",
-        backgroundColor: "rgb(24, 210, 187)",
-        data: [65, 59, 80, 81, 56, 55, 40]
-      },
-      {
-        label: "指标2",
-        fill: false,
-        spointRadius: 6,
-        pointHoverRadius: 8,
-        borderColor: "rgb(3, 169, 245)",
-        backgroundColor: "rgb(3, 169, 245)",
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }
-    ]
-  }
-};
-
-var data2 = {
-  type: "line",
-  data: {
-    labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
-    datasets: [
-      {
-        label: "指标1",
-        spointRadius: 6,
-        pointHoverRadius: 8,
-        borderColor: "rgba(24, 210, 187, 0.3)",
-        backgroundColor: "rgba(24, 210, 187, 0.3)",
-        data: [65, 59, 80, 81, 56, 55, 40]
-      },
-      {
-        label: "指标2",
-        spointRadius: 6,
-        pointHoverRadius: 8,
-        borderColor: "rgba(3, 169, 245, 0.3)",
-        backgroundColor: "rgba(3, 169, 245, 0.3)",
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }
-    ]
-  }
-};
 
 export default connect(({ tdsbqk, loading }) => ({ ...tdsbqk }))(
   class Tdsbqk extends Component {
     componentDidMount() {
-      if (this.chart1) this.chart1.destroy();
-        this.chart1 = new Chart(ReactDOM.findDOMNode(this.refs.chart1), data1);
+      this.showCharts(this.props.data);
     }
-    onChange(tab, index) {
-      if(index === 0){
+    showCharts(e) {
+      publish("tdsbqk/showCharts", e).then((res) => {
+        let [data1,data2] = res[0];
         if (this.chart1) this.chart1.destroy();
-        setTimeout(() => {
-          this.chart1 = new Chart(ReactDOM.findDOMNode(this.refs.chart1), data1);
-        }, 100);
-        
-      }
-      else if(index === 1){
+        this.chart1 = new Chart(ReactDOM.findDOMNode(this.refs.chart1), data1);
         if (this.chart2) this.chart2.destroy();
-        setTimeout(() => {
-          this.chart2 = new Chart(ReactDOM.findDOMNode(this.refs.chart2), data2);
-        }, 100);        
-      }  
+        this.chart2 = new Chart(ReactDOM.findDOMNode(this.refs.chart2), data2);
+      });
+    }
+    onchange(e){
+      this.props.dispatch({
+        type: "tdsbqk/select",
+        payload: e
+      });
+      this.showCharts(e);
     }
     componentWillUnmount() {
       if (this.chart1) this.chart1.destroy();
       if (this.chart2) this.chart2.destroy();
     }
-    render() {
-      const { tabs, dateIdx, dataTitle, barType, dispatch, boats, filters } = this.props;
-      let toolBar = <div/>;
-      if(barType === "date") toolBar = <SelectDate lx={dateIdx} type="tdsbqk/dateChange" style={style} />;
-      if(barType === "boat") toolBar = <SelectChecks type="tdsbqk/boatChange" groups={boats} style={style} />;
-      if(barType === "filter") toolBar =  <SelectChecks type="tdsbqk/filterChange" groups={filters} style={style} />;      
-      return (
-        <div className="tabBar">
-          <Tabs
-            tabs={tabs}
-            swipeable={false}
-            initialPage={0}
-            onChange={this.onChange.bind(this)}
-            onTabClick={(tab, index) => {}}
-          >
-          <div className="tabContent">
-            <canvas style={{width:'100%', height: '50%'}} ref="chart1" />
-          </div>
-          <div className="tabContent">
-            <canvas style={{width:'100%', height: '50%'}} ref="chart2" />
-          </div>
-          <div className="tabContent">
-            <table className="tdsbqk">
-              <thead>
-                <tr>
-                  <td>日期</td>
-                  <td>码头名称</td>
-                  <td>进出口类型</td>
-                  <td>货物海关状态</td>
-                  <td>提单量</td>
-                </tr>
-              </thead>
-          </table>  
-          </div>                      
-          </Tabs>
-          <div className="tabBar_bar">
-            <div className="tabBar_bar_box">
-              <div>
-                <div
-                  className="tabBar_bar_box"
-                  style={{ color: barType === "date" ? "#1b91ff" : "inherit" }}
-                  onClick={() =>
-                    dispatch({
-                      type: "tdsbqk/showbar",
-                      payload: barType === "date" ? "" : "date"
-                    })
-                  }
-                >
-                  <div>{dataTitle}</div>
-                  <div>
-                    <Icon type="down" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div
-                  className="tabBar_bar_box"
-                  style={{ color: barType === "boat" ? "#1b91ff" : "inherit" }}
-                  onClick={() =>
-                    dispatch({
-                      type: "tdsbqk/showbar",
-                      payload: barType === "boat" ? "" : "boat"
-                    })
-                  }
-                >
-                  <div>船代名称</div>
-                  <div>
-                    <Icon type="down" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div
-                  className="tabBar_bar_box"
-                  style={{ color: barType === "filter" ? "#1b91ff" : "inherit" }}
-                  onClick={() =>
-                    dispatch({
-                      type: "tdsbqk/showbar",
-                      payload: barType === "filter" ? "" : "filter"
-                    })
-                  }
-                >
-                  <div>刷选</div>
-                  <div>
-                    <Icon type="down" />
-                  </div>
-                </div>
-              </div>
+      render() {   
+        let {datas =[], data= {}, source =[]} = this.props;
+        return (
+          <GridFill header={
+            <div id="abc" style={{borderBottom: "1px solid #ebebeb"}}>
+              <Picker data={datas} title="选择时间" extra={data.label} value={data} onChange={(e)=> this.onchange(e)}>
+                <List.Item arrow="horizontal">时间</List.Item>
+              </Picker>
             </div>
-          </div>
-          {toolBar}
-        </div>
-      );
-    }
+             }>
+            <div style={{background: "#f9f9f9"}}> 
+                <LineChart source={source}/>
+
+                <HeaderFill title="今日码头提单申报排名情况" style={{margin: "8px 0"}}>
+                <canvas ref="chart2" />
+               </HeaderFill>
+
+                <HeaderFill title="近一周码头提单申报同环比情况" style={{margin: "8px 0"}}>
+                  <canvas ref="chart1" />
+                </HeaderFill>
+            </div> 
+          </GridFill>        
+        );
+      }
+
   }
 );

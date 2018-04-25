@@ -20,14 +20,14 @@ export default {
           items: [
             {title: '报关单量', color: '#58dabc', src: require("../images/zntj/tgsj/关单量.svg"), router: '/zntj_bgdl'},
             {title: '征收税款', color: '#52befc', src: require("../images/zntj/tgsj/征收税款.svg"), router: '/zntj_zssk'},
-            {title: '查验时效', color: '#ffb84e', src: require("../images/zntj/tgsj/海关查验.svg")},            
+            {title: '查验时效', color: '#ffb84e', src: require("../images/zntj/tgsj/海关查验.svg"), router: '/zntj_cysx'},            
             {title: '通关效率', color: '#ffb84e', src: require("../images/zntj/tgsj/通关效率.svg"), router: '/zntj_tgxl'},
             {title: '船舶申报', color: '#259dfe', src: require("../images/zntj/tgsj/船舶申报.svg"), router: '/zntj_cbsbqk'},
             {title: '提单申报', color: '#58dabc', src: require("../images/zntj/tgsj/提单申报.svg"), router: '/zntj_tdsbqk'},
-            {title: '船代申报', color: '#459ef2', src: require("../images/zntj/tgsj/船代申报.svg")},
-            {title: '报关行录单', color: '#42cb93', src: require("../images/zntj/tgsj/报关行录单.svg")},
-            {title: '集装箱申报', color: '#42cb93', src: require("../images/zntj/tgsj/集装箱申报.svg")},              
-            {title: '海关查验情况', color: '#42cb93', src: require("../images/zntj/tgsj/集装箱申报.svg")}
+            {title: '船代申报', color: '#459ef2', src: require("../images/zntj/tgsj/船代申报.svg"), router: '/zntj_cdsbqk'},
+            {title: '报关行录单', color: '#42cb93', src: require("../images/zntj/tgsj/报关行录单.svg"), router: '/zntj_bghldqk'},
+            {title: '集装箱申报', color: '#42cb93', src: require("../images/zntj/tgsj/集装箱申报.svg"), router: '/zntj_jzxsbqk'},              
+            {title: '海关查验情况', color: '#42cb93', src: require("../images/zntj/tgsj/集装箱申报.svg"), router: '/zntj_hgcyqk'}
           ]
         },
         {
@@ -46,7 +46,7 @@ export default {
           items: [
               {title: '园区车辆', color: '#ffb84e', src: require("../images/zntj/yqsj/园区车辆.svg"), router: '/zntj_yqcl'},
               {title: '企业申报', color: '#259dfe', src: require("../images/zntj/yqsj/企业申报.svg"), router: '/zntj_yqqysb'},
-              {title: '进出口备案', color: '#62c174', src: require("../images/zntj/yqsj/进出口备案.svg")},
+              {title: '进出口备案', color: '#62c174', src: require("../images/zntj/yqsj/进出口备案.svg"), router: '/zntj_jckbazqd'},
           ]
         }
       ],
