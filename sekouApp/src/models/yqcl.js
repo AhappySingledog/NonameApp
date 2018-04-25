@@ -1,88 +1,14 @@
-import { GET } from '../servers/restful';
+
 
 export default {
     namespace: "yqcl",
     state: {
-        tabs: [{
-            title: '全部',
-            type: 'all',
-            data: {
-                jg: {
-                    val: 203,
-                    hb: 5,
-                    zb: 'down'
-                },
-                cg: {
-                    val: 320,
-                    hb: 7,
-                    zb: 'up'
-                }
-            }
-        },
-        {
-            title: '园区1',
-            type: 'yq1',
-            data: {
-                jg: {
-                    val: 35,
-                    hb: 7,
-                    zb: 'down'
-                },
-                cg: {
-                    val: 79,
-                    hb: 8,
-                    zb: 'up'
-                }
-            }
-        },
-        {
-            title: '园区2',
-            type: 'yq2',
-            data: {
-                jg: {
-                    val: 65,
-                    hb: 7,
-                    zb: 'down'
-                },
-                cg: {
-                    val: 89,
-                    hb: 8,
-                    zb: 'up'
-                }
-            }
-        },
-        {
-            title: '园区3',
-            type: 'yq3',
-            data: {
-                jg: {
-                    val: 46,
-                    hb: 7,
-                    zb: 'down'
-                },
-                cg: {
-                    val: 67,
-                    hb: 8,
-                    zb: 'up'
-                }
-            }
-        },
-        {
-            title: '其他',
-            type: 'other',
-            data: {
-                jg: {
-                    val: 42,
-                    hb: 2,
-                    zb: 'down'
-                },
-                cg: {
-                    val: 45,
-                    hb: 6,
-                    zb: 'up'
-                }
-            }
-        },
+        tabs: [
+            { title: '全部', type: 'all', datas: [{ name: 'z_chars1' }, { name: 'x_chars2' }], data: [{ val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆', img: require("../images/zntj/jcg/进港.svg") }, { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆', img: require("../images/zntj/jcg/出港.svg") }] },
+            { title: '园区1', type: 'yq1', datas: [{ name: 'z_chars3' }, { name: 'x_chars4' }], data: [{ val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆', img: require("../images/zntj/jcg/进港.svg") }, { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆', img: require("../images/zntj/jcg/出港.svg") }] },
+            { title: '园区2', type: 'yq2', datas: [{ name: 'z_chars5' }, { name: 'x_chars6' }], data: [{ val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆', img: require("../images/zntj/jcg/进港.svg") }, { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆', img: require("../images/zntj/jcg/出港.svg") }] },
+            { title: '园区3', type: 'yq3', datas: [{ name: 'z_chars7' }, { name: 'x_chars8' }], data: [{ val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆', img: require("../images/zntj/jcg/出港.svg") }, { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆', img: require("../images/zntj/jcg/出港.svg") }] },
+            { title: '其他', type: 'other', datas: [{ name: 'z_chars9' }, { name: 'x_chars10' }], data: [{ val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆', img: require("../images/zntj/jcg/进港.svg") }, { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆', img: require("../images/zntj/jcg/出港.svg") }] },
         ],
         monthchart1: [{
             headTitle: '近一年报关单量同环比情况',
@@ -168,29 +94,8 @@ export default {
         }
     },
     effects: {
-        /** 初始化菜单 */
-        INIT: function* ({ payload }, { select, call, put }) {
-            const response = yield call(GET, '/api/sidebar');
-            console.log(response);
-            if (response && response.data) {
-                // 更新数据流
-            }
-        },
+
     },
     subscriptions: {
-        setup: function ({ dispatch, history }) {
-            let bool = false;
-            history.listen(function (location) {
-                if (!bool) {
-                    dispatch({
-                        type: 'INIT',
-                        payload: {
-                            pathname: location.pathname,
-                        },
-                    });
-                    bool = true;
-                }
-            });
-        },
     },
 }

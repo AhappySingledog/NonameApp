@@ -1,7 +1,7 @@
 import { Tabs, DatePicker, List } from "antd-mobile";
 import React, { Component } from "react";
 import { connect } from "dva";
-import { Chart, HeaderFill, LineChart, GridFill, SelectChart } from "../../../componets";
+import { GridFill, Raingratio, MoreCharts } from "../../../componets";
 import "./mtcb.less";
 import csvg from "../../../images/zntj/jcg/出港.svg";
 import jsvg from "../../../images/zntj/jcg/进港.svg";
@@ -11,19 +11,21 @@ export default connect(({ mtcbqk, loading }) => ({ ...mtcbqk }))(
     state = {
       dataTime: new Date(Date.now()),
       datas: [
-        {
-          chars1: { name: 'z_chars1' }, chars2: { name: 'x_chars2' }
-        }, {
-          chars1: { name: 'z_chars3' }, chars2: { name: 'x_chars4' }
-        }, {
-          chars1: { name: 'z_chars5' }, chars2: { name: 'x_chars6' }
-        }, {
-          chars1: { name: 'z_chars7' }, chars2: { name: 'x_chars8' }
-        }],
+        [
+          { name: 'z_chars1' }, { name: 'x_chars2' }
+        ], [
+          { name: 'z_chars3' }, { name: 'x_chars4' }
+        ], [
+          { name: 'z_chars5' }, { name: 'x_chars6' }
+        ], [
+          { name: 'z_chars7' }, { name: 'x_chars8' }
+        ]],
+        title: '本月',
+        index: 0,
     }
 
-    onTabClick = (tab,index) => {
-
+    onTabClick = (tab, index) => {
+      this.setState({ index: index })
     }
     render() {
       let { tabs } = this.props;
@@ -43,27 +45,13 @@ export default connect(({ mtcbqk, loading }) => ({ ...mtcbqk }))(
             onChange={(tab, index) => { }}
             onTabClick={(tab, index) => { this.onTabClick(tab, index) }}
           >
-            {tabs.map((va,key)=>{
-             
-                return <div key ={key} className="mc">
-                     {
-                       va.data.map((valu,i)=>{
-                         return <div className="mtcb_box">
-                                <div className="mtcb_box_top">
-                                  <div className={"mtcb_box_top_"+valu.cb}></div>
-                                  <div className="mtcb_box_top_right">{valu.name}</div>
-                                </div>
-                                <div style={{fontSize : 20}}>{valu.val}</div>
-                                <div className="mtcb_box_bot">
-                                  <div>环比</div>
-                                  <div>{valu.zb}</div>
-                                  <div>{valu.hb}%</div>
-                                </div>
-                         </div>
-                       })
-                     }
-                </div>
+            {tabs.map((va, key) => {
+              return <div key={key}> <div className="boxS" /> <Raingratio val={va.data} />
+                <div className="boxS" />
+                <MoreCharts source={""} view={va.datas} title={this.state.title + "报关单量排名情况"} groupData={"yqqysb/showCharts"} index={this.state.index} />
+              </div>
             })}
+
           </Tabs>
 
         </GridFill>

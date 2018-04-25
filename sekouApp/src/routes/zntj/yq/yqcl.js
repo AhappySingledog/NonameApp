@@ -5,22 +5,52 @@ import { DatePicker, List, Tabs } from "antd-mobile";
 import React, { Component } from "react";
 import { subscribes, publish, unsubscribe } from '../../../core/arbiter';
 import { connect } from "dva";
-import { Chart, HeaderFill, LineChart, GridFill, SelectChart } from "../../../componets";
+import { MoreCharts, Raingratio, Chart } from "../../../componets";
 import csvg from "../../../images/zntj/jcg/出港.svg";
 import jsvg from "../../../images/zntj/jcg/进港.svg";
 import "./yqcl.less";
 
-export default connect(({ yqcl, loading }) => ({ tabs: yqcl.tabs, monthchart1: yqcl.monthchart1, monthchart2: yqcl.monthchart2 }))(
+export default connect(({ yqcl, loading }) => ({ ...yqcl }))(
     class Yqcl extends Component {
         componentDidMount() { }
         state = {
             dataTime: new Date(Date.now()),
+            index: 0,
+        }
+
+        componentDidMount() {
+            this.showCharts(0);
         }
         onchange(e) {
             this.props.dispatch({
                 type: "yqcl/select",
                 payload: e
             });
+            this.showCharts(e);
+        }
+
+
+        showCharts(e) {
+            publish("yqqysb/showCharts", e).then((res) => {
+                let [data1, data2] = res[0];
+                for (let i in this.refs) {
+                    if (i.indexOf('z_') > -1) {
+                        let chars = new Chart(ReactDOM.findDOMNode(this.refs[i]), data1);
+                    } else {
+                        let chars1 = new Chart(ReactDOM.findDOMNode(this.refs[i]), data2);
+                    }
+                }
+                this.setState({ index: e })
+            });
+        }
+
+        componentWillUnmount() {
+
+        }
+
+
+        onTabClick = (title, index) => {
+            this.showCharts(index);
         }
         render() {
             let { mothdatas = [], nowdata = {}, tabs, monthchart1, monthchart2 } = this.props;
@@ -31,55 +61,15 @@ export default connect(({ yqcl, loading }) => ({ tabs: yqcl.tabs, monthchart1: y
                     swipeable={false}
                     initialPage={0}
                     onChange={(tab, index) => { }}
-                    onTabClick={(tab, index) => { }}
+                    onTabClick={(tab, index) => { this.onTabClick(tab, index) }}
                 >
-                    {tabs.map((tab, idx) => {
-                        let { data: { jg = {}, cg = {} } } = tab;
-                        return <div key={idx} className="yqcl_tab_content">
-                            <div className="yqcl_segbox" />
-                            <div className="yqcl_box">
-                                <DatePicker mode="date" title="选择时间" value={this.state.dataTime} extra="Optional" onChange={(e) => this.onchange(e)}>
-                                    <List.Item arrow="horizontal">时间</List.Item>
-                                </DatePicker>
-                            </div>
-                            <div className="yqcl_segbox" />
-                            <div className="yqcl_tj yqcl_box">
-                                <div className="yqcl_tj_item">
-                                    <div>
-                                        <div className="yqcl_img">
-                                            <img src={jsvg} alt="" />
-                                        </div>
-                                        <span className="yqcl_jgsl">进闸车辆</span>
-                                    </div>
-                                    <div className="yqcl_val">{jg.val}</div>
-                                    <div>
-                                        <span className="yqcl_hb">环比：</span>
-                                        <span className={"yqcl_hb_" + jg.zb}>
-                                            <span>{jg.hb}%</span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="yqcl_tj_sp" />
-                                <div className="yqcl_tj_item">
-                                    <div>
-                                        <div className="yqcl_img">
-                                            <img src={csvg} alt="" />
-                                        </div>
-                                        <span className="yqcl_cgsl"> 出闸车辆 </span>
-                                    </div>
-                                    <div className="yqcl_val">{cg.val}</div>
-                                    <div>
-                                        <span className="yqcl_hb">环比：</span>
-                                        <span className={"yqcl_hb_" + cg.zb}>
-                                            <span>{cg.hb}%</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <SelectChart groups={monthchart1} />
-                            <SelectChart groups={monthchart2} />
-                        </div>;
+                    {tabs.map((va, key) => {
+                        return <div key={key}> <div className="boxS" /> <Raingratio val={va.data} />
+                            <div className="boxS" />
+                            <MoreCharts source={""} view={va.datas} title={"近一年报关单量同环比情况"} groupData={"yqqysb/showCharts"} index={this.state.index} />
+                        </div>
                     })}
+
                 </Tabs>
 
 
