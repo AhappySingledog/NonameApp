@@ -63,7 +63,7 @@ export default connect(({ yqqysb, loading }) => ({ ...yqqysb }))(
 
 
         render() {
-            let { datas = [], data = {}, tabs, source, chartPieMonth, monthchart1 } = this.props;
+            let { datas = [], data = {}, tabs } = this.props;
             return (
                 <GridFill header={
                     <div id="abc" style={{ borderBottom: "1px solid #ebebeb" }}>
@@ -80,7 +80,9 @@ export default connect(({ yqqysb, loading }) => ({ ...yqqysb }))(
                         onTabClick={(tab, index) => { this.onTabClick(tab, index) }}
                     >
                         {
-                            this.state.datas.map((val, i) => { return <MoreCharts key={i} source={source} view={val} title={this.state.title + "报关单量排名情况"} groupData={"yqqysb/showCharts"} index={this.state.index} /> })
+                            tabs.map((val,key)=>{
+                                return <MoreCharts key={key} view={val.datas} groupData={"yqqysb/showCharts"} index={this.state.index} />
+                            })
                         }
                     </Tabs>
                 </GridFill>

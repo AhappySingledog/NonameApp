@@ -69,6 +69,26 @@ export const routerConfig = {
     router: () => import('../routes/zntj/mt/Mtjzx')   
   },
 
+  "/zntj_mtwsbjzx": {
+    props: { title: "码头未申报集装箱" },
+    models: ["mtwsbjzx"],
+    router: () => import('../routes/zntj/mt/Mtwsbjzx')   
+  },
+  "/zntj_wxpjzxqk": {
+    props: { title: "危险品集装箱情况" },
+    models: ["wxpjzxqk"],
+    router: () => import('../routes/zntj/mt/Wxpjzxqk')   
+  },
+  "/zntj_mtcl" : {
+    props: { title: "码头车辆信息" },
+    models: ["mtcl"],
+    router: () => import('../routes/zntj/mt/Mtcl')  
+  },
+  "/zntj_mtdc" : {
+    props: { title: "码头堆场信息" },
+    models: ["mtdc"],
+    router: () => import('../routes/zntj/mt/Mtdc')  
+  },
   "/zntj_yqcl" : {
     props: { title: "园区车辆" },
     models: ["yqcl"],
@@ -95,11 +115,11 @@ export const routerConfig = {
     models: ["xxinfo"],
     router: () => import('../routes/zncx/Xxinfo')  
    },
-  // "/spjk": {
-  //   props: { title: "视频监控",top: true },
-  //   models: ["spjk"],
-  //   router: () => import('../routes/spjk/App')
-  // },
+  "/spjk": {
+    props: { title: "视频监控",top: true },
+    models: ["spjk"],
+    router: () => import('../routes/spjk/App')
+  },
   "/znyj": {
     props: { title: "智能预警", top: true },
     models: ["znyj"],

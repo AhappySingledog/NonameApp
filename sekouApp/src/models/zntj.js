@@ -35,10 +35,10 @@ export default {
           items: [
             { title: "码头船舶", color: "#5ea5fd", src: require("../images/zntj/mtsj/码头船舶.svg"), router: '/zntj_mtcb'},
             { title: "码头集装箱", color: "#4abbfd", src: require("../images/zntj/mtsj/码头集装箱.svg"), router: '/zntj_mtjzx' },
-            { title: "码头车辆", color: "#57dabc", src: require("../images/zntj/mtsj/码头车辆.svg") },
-            { title: "码头堆场", color: "#64cefb", src: require("../images/zntj/mtsj/码头堆场.svg") },
-            { title: "未申报集装箱", color: "#fecc7f", src: require("../images/zntj/mtsj/未申报集装箱.svg") },
-            { title: "危险品堆场", color: "#66b1f6", src: require("../images/zntj/mtsj/危险品堆场.svg") }
+            { title: "码头车辆", color: "#57dabc", src: require("../images/zntj/mtsj/码头车辆.svg"), router: '/zntj_mtcl' },
+            { title: "码头堆场", color: "#64cefb", src: require("../images/zntj/mtsj/码头堆场.svg"), router: '/zntj_mtdc' },
+            { title: "未申报集装箱", color: "#fecc7f", src: require("../images/zntj/mtsj/未申报集装箱.svg"), router: '/zntj_mtwsbjzx' },
+            { title: "危险品堆场", color: "#66b1f6", src: require("../images/zntj/mtsj/危险品堆场.svg") , router: '/zntj_wxpjzxqk'}
           ]
         },       
         {

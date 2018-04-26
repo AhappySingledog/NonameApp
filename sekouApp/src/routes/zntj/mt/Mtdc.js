@@ -2,10 +2,10 @@ import { Tabs, DatePicker, List } from "antd-mobile";
 import React, { Component } from "react";
 import { connect } from "dva";
 import { GridFill, Raingratio, MoreCharts } from "../../../componets";
-import "./mtcb.less";
+import "./Mtdc.less";
 
-export default connect(({ mtcbqk, loading }) => ({ ...mtcbqk }))(
-  class Mtcb extends Component {
+export default connect(({ mtdc, loading }) => ({ ...mtdc }))(
+  class Mtdc extends Component {
     state = {
       dataTime: new Date(Date.now()),
         index: 0,
@@ -35,7 +35,7 @@ export default connect(({ mtcbqk, loading }) => ({ ...mtcbqk }))(
             {tabs.map((va, key) => {
               return <div key={key}> <div className="boxS" /> <Raingratio val={va.data} />
                 <div className="boxS" />
-                <MoreCharts view={va.datas} groupData={"mtcb/showCharts"} index={this.state.index} />
+                <MoreCharts view={va.datas} groupData={"mtdc/showCharts"} index={this.state.index} />
               </div>
             })}
           </Tabs>
