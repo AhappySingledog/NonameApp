@@ -45,7 +45,7 @@ export default connect(({ tgxl, loading }) => ({ ...tgxl }))(
         }>
           <div style={{background: "#f9f9f9",height:'100%'}}>  
 
-              <HeaderFill title="本月通关效率情况" box='总效率:' num={num} style={{margin: "8px 0",height:'40%'}}>
+              <HeaderFill title="本月通关效率情况" box='总效率:' num={num} style={{margin: "8px 0"}}>
                 <canvas ref="chart3" />
               </HeaderFill>
 

@@ -59,9 +59,15 @@
   text-align: center;
 }
 .yjbox_right_cen_yj {
+  width: 100%;
+  text-align: center;
+  margin-left: -15px;
   color: #FEBA56;
 }
 .yjbox_right_cen_bj {
+  width: 100%;
+  text-align: center;
+  margin-left: -15px;
   color: #FE6668;
 }
 .yjbox_right_bot {

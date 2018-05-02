@@ -44,9 +44,11 @@ export default connect(({ cysx, loading }) => ({ ...cysx }))(
                 </div>
                  }>
                 <div style={{background: "#f9f9f9",height :　'100%'}}> 
-                    <HeaderFill title="本月查验时效情况" box='总效率:' num={num} style={{margin: "8px 0",height:'40%'}}>
+
+                    <HeaderFill title="本月查验时效情况" box='总效率:' num={num} style={{margin: "8px 0"}}>
                       <canvas ref="chart2" />
                     </HeaderFill>
+
                     <HeaderFill  title={barTitle} style={{margin: "8px 0",height:'60%'}}>
                       <canvas style={{height: '100%'}} ref="chart1" />
                     </HeaderFill>

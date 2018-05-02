@@ -3,6 +3,7 @@ import {Map, Marker,InfoWindow} from 'react-bmap';
 import { connect } from "dva";
 import style from './app.less';
 import {Modal, Grid, Icon,SearchBar} from 'antd-mobile';
+import lb from '../../images/spjk/列表.svg'
 
 export default connect(({ spjk, loading }) => ({ ...spjk }))(class App extends Component {
   render() {
@@ -10,31 +11,36 @@ export default connect(({ spjk, loading }) => ({ ...spjk }))(class App extends C
     return (
       <div style={{width: "100%", height: "100%",overflow:'hidden'}}>
         
-        <div style={{top:10,right:10, width:30,height:30,position:'absolute',zIndex:999,"border":"1px solid #d2d1d1",'border-radius':3,backgroundColor:'#ffffff',padding:3,'box-shadow':'1px 1px 1px 1px #d2d1d1'}}   onClick={() => dispatch({ type: "spjk/onClick"})}>
-            <Icon type="search" style={{width:30,height:30}}/>
+        <div style={{top:10,right:10, width:30,height:30,position:'absolute',zIndex:999,"border":"1px solid #d2d1d1",'border-radius':3,backgroundColor:'#ffffff',padding:1,'box-shadow':'1px 1px 1px 1px #d2d1d1'}}   onClick={() => dispatch({ type: "spjk/onClick"})}>
+            <img style={{width:30,height:30}} src={lb}/>
         </div>
         
         <Map  style={{ width:'100%',height:'110%'}} center={center.split(",").reduce((a, b) => {let kv = b.split(":");a[kv[0]] = kv[1];return a;}, {})} zoom={zoom}>
             {
               spxg.map((spx, i) => {
                 let {coordinate, name,liveID,rtmpReleaseAddr,hlsReleaseAddr } = spx;
-                return<Marker key={i} position={coordinate.split(",").reduce((a, b) => {
+
+                if( center === coordinate ){
+                  return<Marker icon="loc_red" key={i} position={coordinate.split(",").reduce((a, b) => {
                     let kv = b.split(":");
                     a[kv[0]] = kv[1];
                     return a;
                 }, {})} events={{click() {
                   dispatch({ type: "spjk/showModal",payload: spx })
                 }}}/> 
+                }else{
+                  return<Marker icon="loc_blue" key={i} position={coordinate.split(",").reduce((a, b) => {
+                    let kv = b.split(":");
+                    a[kv[0]] = kv[1];
+                    return a;
+                }, {})} events={{click() {
+                  dispatch({ type: "spjk/showModal",payload: spx })
+                }}}/> 
+                }
+             
               })
             } 
-            {text === '' ?  null :
-            <InfoWindow style={{width:'50%',height:'50%'}} position={center.split(",").reduce((a, b) => {
-              let kv = b.split(":");
-              a[kv[0]] = kv[1];
-              return a;
-              }, {})} text={text}/> 
-            }
-        
+
           </Map>
       
           {modal === true ? 
@@ -68,5 +74,5 @@ export default connect(({ spjk, loading }) => ({ ...spjk }))(class App extends C
           }
       </div>
     );
-  }
+  } 
 })

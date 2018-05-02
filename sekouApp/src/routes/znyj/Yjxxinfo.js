@@ -39,10 +39,12 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
                     </tr>
                   );
                 })}
-              <tr key={'btn'}>
+              { /**
+                <tr key={'btn'}>
                 <td style={{ color: "#848484" }}>操作:</td>
                 <td> <Button type="warning" inline size="small" onClick={() => { Toast.offline("正在通宵开发中", 1) }}>处理</Button></td>
               </tr>
+              */}
             </tbody>
           </table>
         </div>

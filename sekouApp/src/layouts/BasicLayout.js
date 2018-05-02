@@ -43,7 +43,7 @@ export default connect(({ layout, loading }) => ({ ...layout }))(
                 header={router.top === true ? <NavBar mode="dark" rightContent={right}>{title}</NavBar> : <NavBar mode="dark" icon={<Icon type="left" />} onLeftClick={history.goBack} rightContent={right}>{title}</NavBar>} >
                 <Switch>
                     { routers.map((router) => (<Route key={router.path} path= {router.path} component={router.component} />)) }
-                    <Redirect exact from="/" to="/zntj" />
+                    <Redirect exact from="/" to="/zncx" />
                 </Switch>
               </GridFill>
           );
