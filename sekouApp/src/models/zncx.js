@@ -10,6 +10,7 @@ export default {
       {
         title: "船舶信息",
         type: "cbxx",
+        tablename : 'V_IMAP_SCCT_BERTH',
         icon: require('../images/zncx/船舶信息.svg'),
         cols: {imo: "IMO号",shc: "商业航次号",cm: '船名', mhc: "码头航次号", mt: "靠泊码头"},
         tip: {
@@ -30,6 +31,7 @@ export default {
       {
         title: "提单信息",
         type: "tdxx",
+        tablename : '',
         icon: require('../images/zncx/提单信息.svg'),
         cols: {imo: "IMO号",shc: "商业航次号",cm: '船名', mhc: "码头航次号", tdh: "靠泊码头"},
         datas: [
@@ -40,6 +42,7 @@ export default {
       {
         title: "集装箱信息",
         type: "jzxxx",
+        tablename : 'V_IMAP_SCCT_ONYARD',
         icon: require('../images/zncx/集装箱信息.svg'),
         cols: {imo: "IMO号",shc: "商业航次号",cm: '船名', mhc: "码头航次号", zymt: "作业码头"},
         datas: [
@@ -50,6 +53,7 @@ export default {
       {
         title: "车辆信息",
         type: "clxx",
+        tablename : '',
         icon: require('../images/zncx/车辆信息.svg'),
         cols: {cph: "车牌号", bm: "拖车海关编号", mc: "企业名称",pm: '车辆牌名', no: "车身号码"},
         datas: [

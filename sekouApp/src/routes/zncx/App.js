@@ -1,41 +1,13 @@
-import { Tabs, SearchBar, Toast, PullToRefresh, ListView, Button } from "antd-mobile";
+import { Tabs, SearchBar, Toast, PullToRefresh, ListView, Button, Picker, List } from "antd-mobile";
 import { publish } from "../../core/arbiter";
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { connect } from "dva";
 import $ from 'jquery';
 import "./app.less";
+import "./action"
 
 
-/** 从后台数据中需要获取多少条数据 */
-const NUM_ROWS = 8;
-let pageIndex = 0;
-
-
-const data = [
-    {
-        img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
-        title: 'Meet hotel',
-        des: '不是所有的兼职汪都需要风吹日晒',
-    },
-    {
-        img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
-        title: 'McDonald\'s invites you',
-        des: '不是所有的兼职汪都需要风吹日晒',
-    },
-    {
-        img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
-        title: 'Eat the week',
-        des: '不是所有的兼职汪都需要风吹日晒',
-    },
-];
-function genData(pIndex = 0) {
-    const dataArr = [];
-    for (let i = 0; i < NUM_ROWS; i++) {
-        dataArr.push(`row - ${(pIndex * NUM_ROWS) + i}`);
-    }
-    return dataArr;
-}
 class Demo extends React.Component {
     constructor(props) {
         super(props);
@@ -45,44 +17,24 @@ class Demo extends React.Component {
             isLoading: true,
             height: document.documentElement.clientHeight,
             useBodyScroll: false,
-            tabo: [],
+            names: [],
             datas: [],
             loading: true,
-            data: [],
-            index: 5,
+            index: 1,       //上拉加载数据
+            value: null,   //港口选择
+            tablename: null, //查询的表名
         };
     }
 
 
-    fecthData(NUM_ROWS) {
-        console.log(NUM_ROWS)
-        const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-        //查询数据请求，并且用cloneWithRows处理数据
-        publish('webAction',
-            {
-                svn: 'skhg_loader_service', path: 'queryTableByWhere',
-                data: {
-                    tableName: 'V_IMAP_SCCT_BERTH', where: "TERMINALCODE= 'SCT' AND ROWNUM <= '" + NUM_ROWS + "'"
-                }
-            }).then(
-                res => {
-                    Toast.hide();
-                    this.setState({
-                        tabo: res[0].attr,
-                        datas: res[0].data,
-                    })
-                }).catch(err => {
-                    console.log(err)
-                });
-    }
-
     componentDidMount() {
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-        this.fecthData(NUM_ROWS);
+        this.fecthData();
         setTimeout(() => {
-            this.rData = genData();
+            this.resa = this.state.datas;
+            this.numss = true;
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(genData()),
+                dataSource: this.state.dataSource.cloneWithRows(this.resa),
                 height: hei,
                 refreshing: false,
                 isLoading: false,
@@ -90,6 +42,32 @@ class Demo extends React.Component {
         }, 1500);
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
+        if (nextProps.val !== null) {
+            this.setState({ value: nextProps.val, index: 1, tablename: nextProps.tablename }, () => this.fecthData());
+            setTimeout(() => {
+                this.resa = this.state.datas;
+                this.numss = true;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.resa),
+                    refreshing: false,
+                    isLoading: false,
+                });
+            }, 1500);
+        } else {
+            this.setState({ index: 1, tablename: nextProps.tablename }, () => this.fecthData());
+            setTimeout(() => {
+                this.resa = this.state.datas;
+                this.numss = true;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.resa),
+                    refreshing: false,
+                    isLoading: false,
+                });
+            }, 1500);
+        }
+    }
     componentDidUpdate() {
         if (this.state.useBodyScroll) {
             document.body.style.overflow = 'auto';
@@ -98,13 +76,39 @@ class Demo extends React.Component {
         }
     }
 
+    fecthData() {
+        console.log(this.props.tablename);
+        const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+        Toast.hide();
+        //查询数据请求，并且用cloneWithRows处理数据
+        Promise.all([
+            publish('getData', { svn: 'skhg_loader', tableName: this.state.tablename, data: { pageno: this.state.index, pagesize: 5, where: this.state.value ? "TERMINALCODE like '%" + this.state.value + "'" : "1=1" } }),
+            publish('tableName_find')
+        ]).then(res => {
+            if (res[0][0].features.length > 0) {
+                this.numss = true;
+                let datas = [];
+                res[0][0].features.map(x => datas.push(x.attributes));
+                this.setState({
+                    datas: datas,
+                    names: res[1][0].features[0].table
+                })
+            } else {
+                this.numss = false;
+                Toast.fail('无更多的数据！', 1)
+            }
+        }).catch(err => {
+            console.log(err)
+        });
+
+    }
+
     onRefresh = () => {
-        console.log('下拉');
-        this.setState({ refreshing: true, isLoading: true });
+        this.setState({ refreshing: true, isLoading: true, index: 1 }, () => this.fecthData());
         setTimeout(() => {
-            this.rData = genData();
+            this.resa = this.state.datas;
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(this.rData),
+                dataSource: this.state.dataSource.cloneWithRows(this.resa),
                 refreshing: false,
                 isLoading: false,
             });
@@ -112,59 +116,39 @@ class Demo extends React.Component {
     };
 
     onEndReached = (event) => {
-        console.log('上拉');
-        if (this.state.isLoading && !this.state.hasMore) {
-            return;
-        }
-        this.setState({ index: this.state.index + 5 });
-        let json = this.fecthData(this.state.index)
+        this.setState({ index: this.state.index + 1 }, () => this.fecthData());
         setTimeout(() => {
-            this.rData = [...this.rData, ...genData(++pageIndex)];
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(this.rData),
-                isLoading: false,
-            });
+            if (this.numss) {
+                this.resa = [...this.resa, ...this.state.datas];
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.resa),
+                    isLoading: true,
+                });
+            } else {
+                this.setState({ isLoading: false, });
+            }
         }, 1000);
     }
 
     render() {
-        const separator = (sectionID, rowID) => (
-            <div
-                key={`${sectionID}-${rowID}`}
-                style={{
-                    backgroundColor: '#F5F5F9',
-                    height: 8,
-                    borderTop: '1px solid #ECECED',
-                    borderBottom: '1px solid #ECECED',
-                }}
-            />
-        );
+        const separator = (sectionID, rowID) => (<div key={`${sectionID}-${rowID}`} style={{ backgroundColor: '#F5F5F9', height: 8, borderTop: '1px solid #ECECED', borderBottom: '1px solid #ECECED', }} />);
         let { icon, type } = this.props;
-        let { datas, tabo = {} } = this.state;
-        let keys = Object.keys(tabo);
-
+        let { datas, names } = this.state;
         let index = this.state.datas.length - 1;
         const row = (rowData, sectionID, rowID) => {
-            if (index < 0) {
-                index = this.state.datas.length - 1;
-            }
+            if (index < 0) index = this.state.datas.length - 1;
             const obj = this.state.datas[index--];
             return (
-                <div key={rowID}
-                    style={{
-                        padding: '0 15px',
-                        backgroundColor: 'white',
-                    }}
-                >
+                <div key={rowID} style={{ padding: '0 15px', backgroundColor: 'white', }}>
                     <table key={rowID} className="zncx_table" >
                         <tbody>
                             {
-                                Object.keys(obj).map((key, id) => {
-                                    if (id + 0 && id < 5) {
+                                this.state.datas.length > 1 ? Object.keys(obj).map((key, id) => {
+                                    if (id + 0 && id < 7 && names[0][key]) {
                                         return (
                                             <tr key={id + type} style={{ color: "#8e8e8e" }}>
                                                 <td></td>
-                                                <td style={{ width: '50%' }}>{tabo[key]}:</td>
+                                                <td style={{ width: '50%' }}>{names ? names[0][key] : null}:</td>
                                                 <td>{obj[key]}</td>
                                                 <td></td>
                                             </tr>
@@ -174,13 +158,13 @@ class Demo extends React.Component {
                                         return (
                                             <tr key={id + type} style={{ color: "#1890ff" }}>
                                                 <td className="zncx_table_col_1"><div className="zncx_table_img"><img src={icon} alt="" /></div></td>
-                                                <td>{tabo[key]}:</td>
+                                                <td>{names ? names[0][key] : null}:</td>
                                                 <td>{obj[key]}</td>
                                                 <td></td>
                                             </tr>
                                         );
                                     }
-                                })
+                                }) : null
                             }
                         </tbody>
                     </table>
@@ -219,6 +203,7 @@ export default connect(({ zncx, loading }) => ({ tabs: zncx.tabs, itemClick: znc
         constructor(props) {
             super(props);
             this.state = {
+                value: null,
                 index: 0,
                 tabo: [],
                 datas: [],
@@ -229,7 +214,6 @@ export default connect(({ zncx, loading }) => ({ tabs: zncx.tabs, itemClick: znc
         }
 
         componentDidMount() {
-            $('#abc').hide();
             if (this.state.index === 0) {
                 this.setState({ index: 1 });
 
@@ -242,21 +226,36 @@ export default connect(({ zncx, loading }) => ({ tabs: zncx.tabs, itemClick: znc
         }
 
         handefind = (tab, index) => {
-            this.setState({ index });
+            this.setState({ index, value: null });
             // window.localStorage.setItem('mthzx_tabs_indx', index)
         }
 
         handeChange = (tab, index) => {
-            if (index === 3) {
-                $('#abc').show();
-            } else {
-                $('#abc').hide();
-            }
+            this.setState({ index, value: null });
+        }
+
+        onChange = (value) => {
+            this.setState({
+                value,
+            });
+        }
+        onScrollChange = (value) => {
         }
 
         render() {
             let { tabs, itemClick = () => { } } = this.props;
             let { index, datas, tabo = {} } = this.state;
+            const seasons = [[{ label: 'SCT', value: 'SCT', }, { label: 'CCT', value: 'CCT', }, { label: 'MCT', value: 'MCT', }],];
+            let items = [];
+            if (index === 2) {
+                items = [
+                    <div key="valChange">
+                        <Picker data={seasons} cascade={false} title="选择港口" extra="请选择(可选)" value={this.state.value} onChange={v => this.setState({ value: v })}>
+                            <List.Item arrow="horizontal">港口选择</List.Item>
+                        </Picker>
+                    </div>
+                ];
+            }
             return (
                 <Tabs
                     tabs={tabs.map(tab => ({ title: tab.title }))}
@@ -264,17 +263,16 @@ export default connect(({ zncx, loading }) => ({ tabs: zncx.tabs, itemClick: znc
                     onChange={(tab, index, type) => this.handeChange(tab, index, type)}
                     onTabClick={(tab, index, type) => this.handefind(tab, index, type)}
                 >
-
                     {tabs.map((tab, idsx) => {
-                        let { datas: items = [], cols = {}, icon, tip, type } = tab;
+                        let { cols = {}, icon, tip, type, tablename } = tab;
                         let keys = Object.keys(tabo);
                         return (
                             <div key={idsx} className="zncx">
                                 <div className="zncx_bar">
                                     <SearchBar placeholder="请输入" onSubmit={value => this.handefind(value)} ref={ref => this.autoFocusInst = ref} />
                                 </div>
-                                <div id="abc">123</div>
-                                <Demo icon={icon} type={type} />
+                                {items}
+                                <Demo icon={icon} type={type} index={index} tablename={tablename} val={idsx === index ? this.state.value : null} />
                                 <div />
                             </div>
                         );
