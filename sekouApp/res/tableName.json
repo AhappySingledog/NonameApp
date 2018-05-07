@@ -1,18 +1,20 @@
 {
-    "features": [{
-        "type": "berthShip",
-        "table": [{
-            "TERMINALCODE": "港区",
-            "VESSELTYPE": "船舶类型",
-            "BERTHNO": "泊位",
-            "EVESSELNAM": "船舶编码",
-            "CVESSELNAME": "船舶中文名",
-            "DISCHARGE": "卸船箱量",
-            "LOADING": "装船箱量",
-            "DISCHARGE_E": "卸船空箱量 ",
-            "DISCHARGE_F ": "卸船重箱量",
-            "LOADING_E": " 装船空箱量",
-            "LOADING_F": "装船重箱量 "
-        }]
-    }]
+    "cbxx": {
+        "TERMINALCODE": "港区",
+        "VESSELTYPE": "船舶类型",
+        "BERTHNO": "泊位",
+        "EVESSELNAME": "船舶编码",
+        "CVESSELNAME": "船舶中文名",
+        "DISCHARGE": "卸船箱量",
+        "LOADING": "装船箱量",
+        "DISCHARGE_E": "卸船空箱量 ",
+        "DISCHARGE_E ": "卸船重箱量",
+        "LOADING_E": " 装船空箱量",
+        "LOADING_F": "装船重箱量 "
+    },
+    "jzxxx": {
+        "TERMINALCODE": "码头",
+        "CNTRCOUNT": "堆存柜量",
+        "YARD": "堆场位置"
+    }
 }
