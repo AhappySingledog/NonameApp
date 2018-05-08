@@ -2,7 +2,7 @@
   "proxy": [
     {
       "name": "proxy",
-      "url": "http://localhost:8080/dist/proxy.jsp",
+      "url": "http://218.17.35.47:9999/proxy/proxy.jsp",
       "desc": "支持费JSONP代理"
     }
   ],

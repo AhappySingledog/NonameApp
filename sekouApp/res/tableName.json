@@ -16,5 +16,29 @@
         "TERMINALCODE": "码头",
         "CNTRCOUNT": "堆存柜量",
         "YARD": "堆场位置"
+    },
+    "jzxzsxx": {
+        "IMO": "IMO号",
+        "InBusinessVoy": "进口商业航次号",
+        "OutBusinessVoy": "出口商业航次号",
+        "OutVesselVoyage": "船名航次",
+        "DbId": "作业码头",
+        "BookingEdo": "订舱号",
+        "ContainerNbr": "箱号",
+        "SzTpHt": "箱型尺寸高度",
+        "Status": "空重",
+        "Category": "进出口状态",
+        "LineId": "箱主",
+        "Location": "当前位置",
+        "PolAlias": "装货港",
+        "PodAlias": "卸货港",
+        "Destination": "目的港",
+        "CUS": "海关放行时间",
+        "CIQ": "国检放行时间",
+        "CicTime": "集中查验时间",
+        "CicStatus": "集中查验状态",
+        "ReleaseStatus": "海关查验状态、国检查验状态、放行状态",
+        "InTime": "进场时间",
+        "OutTime": "离港时间"
     }
 }

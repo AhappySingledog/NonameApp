@@ -1,4 +1,4 @@
-import { Tabs, SearchBar, Toast, PullToRefresh, ListView, Button, Picker, List } from "antd-mobile";
+import { Tabs, SearchBar, Toast, PullToRefresh, ListView, Picker, List, Modal, Button } from "antd-mobile";
 import { publish } from "../../core/arbiter";
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
@@ -6,6 +6,56 @@ import { connect } from "dva";
 import $ from 'jquery';
 import "./app.less";
 import "./action"
+
+function closest(el, selector) {
+    const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+    while (el) {
+        if (matchesSelector.call(el, selector)) {
+            return el;
+        }
+        el = el.parentElement;
+    }
+    return null;
+}
+
+class Tabos extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            val: [],
+            newHi: document.documentElement.clientHeight
+        }
+    }
+    componentWillReceiveProps(nexProps) {
+        this.setState({
+            val: nexProps.val
+        })
+    }
+
+    render() {
+        let { val: [data = [], tabs = []] } = this.state;
+        return (
+            <div style={{ height: this.state.newHi - 296, width: '100%', overflow: 'scroll' }}>
+                <table key="tabs" className="zncx_table" >
+                    <tbody>
+                        {
+                            data.length > 0 ? Object.keys(tabs[0]['jzxzsxx']).map((key, id) => {
+                                return (
+                                    <tr key={id + key}>
+                                        <td></td>
+                                        <td className="zncx_datas">{tabs[0]['jzxzsxx'][key]}:</td>
+                                        <td className="zncx_tabs">{data[0]['InnerList'][0][key]}</td>
+                                        <td></td>
+                                    </tr>
+                                )
+                            }) : null
+                        }
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+}
 
 export default connect(({ zncx, loading }) => ({ ...zncx }))(
     class Mtcb extends Component {
@@ -23,7 +73,8 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                 PageTitleDate: {},     //页面标题数据
                 count: 2,            //翻页
                 tableName: 'V_IMAP_SCCT_BERTH', //表名
-
+                tabsx: [],
+                modal: false,
             }
         }
 
@@ -44,14 +95,30 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
 
         /** 切换标题签 */
         handefind = (tab, index) => {
-            this.setState({ pageSize: index, value: null, PageDisplayDate: [], PageTitleDate: {} },() => this.fecthData());
-            
+            this.setState({ pageSize: index, value: null, PageDisplayDate: [], PageTitleDate: {} }, () => this.fecthData());
         }
 
+        /** 输入框查询 */
+        handeViewfind = (val) => {
+            let type = this.props.tabs[this.state.pageSize].type;
+            this.props.dispatch({
+                type: 'zncx/' + type,
+                payload: {
+                    num: val
+                },
+            });
+            this.setState({ modal: true, })
+            Toast.loading('加载中...', 30);
+            setTimeout(() => {
+                if (this.props.jzxxx.length > 0) {
+                    Toast.hide();
+                }
+            }, 500);
+        }
 
         onRefresh = () => {
             console.log("下拉一次");
-            this.setState({ count: 2 },() => this.fecthData());
+            this.setState({ count: 2 }, () => this.fecthData());
         };
 
         /** 上拉事件 */
@@ -99,6 +166,17 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                     PageTitleDate: this.props.list[1][0][this.props.tabs[this.state.pageSize].type]
                 });
             }, 1000));
+        }
+
+        onWrapTouchStart = (e) => {
+            // fix touch to scroll background page on iOS
+            if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
+                return;
+            }
+            const pNode = closest(e.target, '.am-modal-content');
+            if (!pNode) {
+                e.preventDefault();
+            }
         }
         render() {
             let items = [];
@@ -166,7 +244,7 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                         return (
                             <div key={idsx} className="zncx">
                                 <div className="zncx_bar">
-                                    <SearchBar placeholder="请输入" onSubmit={value => this.handefind(value)} ref={ref => this.autoFocusInst = ref} />
+                                    <SearchBar placeholder="请输入" onSubmit={value => this.handeViewfind(value)} ref={ref => this.autoFocusInst = ref} />
                                 </div>
                                 {items}
                                 <ListView
@@ -182,6 +260,19 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                                     onEndReached={this.onEndReached}
                                     pageSize={5}
                                 />
+                                <Modal
+                                    popup
+                                    visible={this.state.modal}
+                                    transparent
+                                    maskClosable={false}
+                                    onClose={() => this.setState({ modal: false })}
+                                    title="集装箱详情"
+                                    footer={[{ text: '关闭', onPress: () => { this.setState({ modal: false }) } }]}
+                                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                                    animationType="slide-up"
+                                >
+                                    <Tabos val={this.props.jzxxx.length > 0 ? this.props.jzxxx : null} />
+                                </Modal>
                                 <div />
                             </div>
                         );
