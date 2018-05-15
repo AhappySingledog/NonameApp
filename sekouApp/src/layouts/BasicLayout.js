@@ -4,10 +4,10 @@ import { connect } from "dva";
 import { Route, Redirect, Switch } from "dva/router";
 import {GridFill} from '../componets';
 import { getRoutes } from '../utils/router';
-import znlj from '../images/layout/智能链接.svg';
-import me from '../images/layout/个人资料.svg';
-import yun from '../images/layout/关务云.svg';
-import about from '../images/layout/@我蛇关.svg';
+import znlj from '../images/layout/znlj.svg';
+import me from '../images/layout/grzl.svg';
+import yun from '../images/layout/gwy.svg';
+import about from '../images/layout/@wsg.svg';
 
 import "./basic.less";
 
@@ -43,7 +43,7 @@ export default connect(({ layout, loading }) => ({ ...layout }))(
                 header={router.top === true ? <NavBar mode="dark" rightContent={right}>{title}</NavBar> : <NavBar mode="dark" icon={<Icon type="left" />} onLeftClick={history.goBack} rightContent={right}>{title}</NavBar>} >
                 <Switch>
                     { routers.map((router) => (<Route key={router.path} path= {router.path} component={router.component} />)) }
-                    <Redirect exact from="/" to="/zncx" />
+                    <Redirect exact from="/" to="/zntj" />
                 </Switch>
               </GridFill>
           );

@@ -9,8 +9,8 @@ export default {
             { name: 'y_chars1', tabname: '近一周出闸车辆变化情况' },
           ],
           data: [
-            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/进港.svg") },
-            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量', img: require("../images/zntj/jcg/出港.svg") },
+            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/jg.svg") },
+            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量', img: require("../images/zntj/jcg/cg.svg") },
           ]
         },
         {
@@ -20,8 +20,8 @@ export default {
             { name: 'y_chars2', tabname: '近一周出闸车辆变化情况' },
           ],
           data: [
-            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/进港.svg") },
-            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量',  img: require("../images/zntj/jcg/出港.svg") },
+            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/jg.svg") },
+            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量',  img: require("../images/zntj/jcg/cg.svg") },
           ]
         },
         {
@@ -31,8 +31,8 @@ export default {
             { name: 'y_chars3', tabname: '近一周出闸车辆变化情况' },
           ],
           data: [
-            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/进港.svg") },
-            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量',  img: require("../images/zntj/jcg/出港.svg") },
+            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/jg.svg") },
+            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量',  img: require("../images/zntj/jcg/cg.svg") },
           ]
         },
         {
@@ -42,8 +42,8 @@ export default {
             { name: 'y_chars4', tabname: '近一周出闸车辆变化情况' },
           ],
           data: [
-            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/进港.svg") },
-            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量',  img: require("../images/zntj/jcg/出港.svg") },
+            { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸车辆数量', img: require("../images/zntj/jcg/jg.svg") },
+            { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸车辆数量',  img: require("../images/zntj/jcg/cg.svg") },
           ]
         },
       ]

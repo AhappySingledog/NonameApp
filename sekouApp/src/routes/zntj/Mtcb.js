@@ -2,8 +2,8 @@ import { Tabs, DatePicker, List } from "antd-mobile";
 import React, { Component } from "react";
 import { connect } from "dva";
 import "./mtcb.less";
-import csvg from "../../images/zntj/jcg/出港.svg";
-import jsvg from "../../images/zntj/jcg/进港.svg";
+import csvg from "../../images/zntj/jcg/cg.svg";
+import jsvg from "../../images/zntj/jcg/jg.svg";
 
 export default connect(({ mtcbqk, loading }) => ({ tabs: mtcbqk.tabs }))(
   class Mtcb extends Component {

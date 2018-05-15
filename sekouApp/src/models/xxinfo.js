@@ -18,7 +18,7 @@ export default {
       let data = {
         cbxx: {
           title: "船舶信息详情",
-          icon: require("../images/zncx/船舶信息1.svg"),
+          icon: require("../images/zncx/cbxx1.svg"),
           key: "imo",
           cols: {
             imo: "IMO号",
@@ -53,7 +53,7 @@ export default {
         },
         tdxx: {
           title: "提单信息详情",
-          icon: require("../images/zncx/提单信息1.svg"),
+          icon: require("../images/zncx/tdxx1.svg"),
           fStyle: {
             tdh: {color: "#f9b45b"}
           },
@@ -81,7 +81,7 @@ export default {
         },
         jzxxx: {
           title: "集装箱信息详情",
-          icon: require("../images/zncx/集装箱信息1.svg"),
+          icon: require("../images/zncx/jzxxx1.svg"),
           fStyle: {
             hgcyzt: {color: "#00cc66"},
             gjcyzt: {color: "#00cc66"},
@@ -128,7 +128,7 @@ export default {
         },
         clxx: {
           title: "车辆信息详情",
-          icon: require("../images/zncx/车辆信息1.svg"),
+          icon: require("../images/zncx/clxx1.svg"),
           cols: {
               cph: "车牌号", 
               bm: "拖车海关编号", 

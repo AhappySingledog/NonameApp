@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import pathToRegexp from "path-to-regexp";
 import './xxinfo.less';
 import { connect } from "dva";
-import img from "../../images/zncx/船舶信息.svg";
+import img from "../../images/zncx/cbxx.svg";
 
 export default connect(({ xxinfo, loading }) => ({ ...xxinfo }))(
   class Xxinfo extends Component {

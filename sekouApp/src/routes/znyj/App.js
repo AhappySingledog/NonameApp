@@ -8,7 +8,6 @@ export default connect(({ znyj, loading }) => ({ tabs: znyj.tabs, onClick: znyj.
         state = { index: (window.localStorage.getItem('znyj_index') || 0) * 1 }
         render() {
             let { tabs = [], onClick = () => { } } = this.props;
-            console.log(tabs)
             const { index } = this.state;
             return (
                 <Tabs

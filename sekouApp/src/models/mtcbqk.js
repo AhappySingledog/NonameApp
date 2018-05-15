@@ -17,14 +17,14 @@ export default {
           zb: 'down',
           cb: 'cg',
           name: '进港船舶数量',
-          img: require("../images/zntj/jcg/进港.svg")
+          img: require("../images/zntj/jcg/jg.svg")
         }, {
           val: 320,
           hb: 7,
           zb: 'up',
           cb: 'jg',
           name: '出港船舶数量',
-          img: require("../images/zntj/jcg/出港.svg")
+          img: require("../images/zntj/jcg/cg.svg")
         }]
       },
       {
@@ -43,14 +43,14 @@ export default {
           zb: 'down',
           cb: 'cg',
           name: '进港船舶数量',
-          img: require("../images/zntj/jcg/进港.svg")
+          img: require("../images/zntj/jcg/jg.svg")
         }, {
           val: 320,
           hb: 7,
           zb: 'up',
           cb: 'jg',
           name: '出港船舶数量',
-          img: require("../images/zntj/jcg/出港.svg")
+          img: require("../images/zntj/jcg/cg.svg")
         }]
       },
       {
@@ -69,14 +69,14 @@ export default {
           zb: 'down',
           cb: 'cg',
           name: '进港船舶数量',
-          img: require("../images/zntj/jcg/进港.svg")
+          img: require("../images/zntj/jcg/jg.svg")
         }, {
           val: 320,
           hb: 7,
           zb: 'up',
           cb: 'jg',
           name: '出港船舶数量',
-          img: require("../images/zntj/jcg/出港.svg")
+          img: require("../images/zntj/jcg/cg.svg")
         }]
       },
       {
@@ -95,14 +95,14 @@ export default {
           zb: 'down',
           cb: 'cg',
           name: '进港船舶数量',
-          img: require("../images/zntj/jcg/出港.svg")
+          img: require("../images/zntj/jcg/cg.svg")
         }, {
           val: 320,
           hb: 7,
           zb: 'up',
           cb: 'jg',
           name: '出港船舶数量',
-          img: require("../images/zntj/jcg/出港.svg")
+          img: require("../images/zntj/jcg/cg.svg")
         }]
       },
       {
@@ -121,14 +121,14 @@ export default {
           zb: 'down',
           cb: 'cg',
           name: '进港船舶数量',
-          img: require("../images/zntj/jcg/进港.svg")
+          img: require("../images/zntj/jcg/jg.svg")
         }, {
           val: 320,
           hb: 7,
           zb: 'up',
           cb: 'jg',
           name: '出港船舶数量',
-          img: require("../images/zntj/jcg/出港.svg")
+          img: require("../images/zntj/jcg/cg.svg")
         }]
       },
     ]

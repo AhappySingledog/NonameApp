@@ -1,4 +1,4 @@
-import { Tabs, SearchBar, Toast, PullToRefresh, ListView, Picker, List, Modal, Button } from "antd-mobile";
+import { Tabs, SearchBar, Toast, PullToRefresh, ListView, Picker, List, Modal, Button, SegmentedControl, Accordion } from "antd-mobile";
 import { publish } from "../../core/arbiter";
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
@@ -6,6 +6,8 @@ import { connect } from "dva";
 import $ from 'jquery';
 import "./app.less";
 import "./action"
+
+const AccordionPanel = Accordion.Panel;
 
 function closest(el, selector) {
     const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
@@ -18,6 +20,7 @@ function closest(el, selector) {
     return null;
 }
 
+/** 详情 */
 class Tabos extends React.Component {
     constructor(props) {
         super(props);
@@ -26,25 +29,24 @@ class Tabos extends React.Component {
             newHi: document.documentElement.clientHeight
         }
     }
-    componentWillReceiveProps(nexProps) {
+    componentDidMount() {
         this.setState({
-            val: nexProps.val
+            val: this.props.val || []
         })
     }
-
     render() {
-        let { val: [data = [], tabs = []] } = this.state;
+        let { val = [] } = this.state;
         return (
-            <div style={{ height: this.state.newHi - 296, width: '100%', overflow: 'scroll' }}>
+            <div style={{ height: this.state.newHi - 246, width: '100%', overflow: 'scroll' }}>
                 <table key="tabs" className="zncx_table" >
                     <tbody>
                         {
-                            data.length > 0 ? Object.keys(tabs[0]['jzxzsxx']).map((key, id) => {
+                            val.length > 0 ? val.map((key, ab) => {
                                 return (
-                                    <tr key={id + key}>
+                                    <tr key={"xq" + ab}>
                                         <td></td>
-                                        <td className="zncx_datas">{tabs[0]['jzxzsxx'][key]}:</td>
-                                        <td className="zncx_tabs">{data[0]['InnerList'][0][key]}</td>
+                                        <td className="zncx_datas">{key['key']}</td>
+                                        <td className="zncx_tabs">{key['value']}</td>
                                         <td></td>
                                     </tr>
                                 )
@@ -62,7 +64,7 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
         constructor(props) {
             super(props);
             this.state = {
-                seasonsValue: null,
+                seasonsValue: 'SCT',
                 pageSize: 0,
                 dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
                 refreshing: true,
@@ -73,7 +75,6 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                 PageTitleDate: {},     //页面标题数据
                 count: 2,            //翻页
                 tableName: 'V_IMAP_SCCT_BERTH', //表名
-                tabsx: [],
                 modal: false,
             }
         }
@@ -84,21 +85,52 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
         };
 
 
-        /** 若上拉加载数据，高度则添加下拉框 ？ */
-        // componentDidUpdate() {
-        //     if (this.state.useBodyScroll) {
-        //         document.body.style.overflow = 'auto';
-        //     } else {
-        //         document.body.style.overflow = 'hidden';
-        //     }
-        // }
+        componentWillReceiveProps(nextProps) {
+            if (nextProps.jzxxx.length > 0 && this.state.pageSize !== 1) {
+                Toast.loading('请稍后...', 30);
+                this.setState({ modal: true })
+                Toast.hide();
+            }
+        }
 
         /** 切换标题签 */
         handefind = (tab, index) => {
-            this.setState({ pageSize: index, value: null, PageDisplayDate: [], PageTitleDate: {} }, () => this.fecthData());
+            $('#IMO').val(null)
+            $('#hc').val(null)
+            this.props.dispatch({
+                type: 'zncx/clear',
+            });
+            if (index !== 3) {
+                Toast.loading('加载中...', 30);
+                this.resa = {};
+                this.setState({
+                    pageSize: index, value: null, PageDisplayDate: [], PageTitleDate: {},
+                    dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+                }, () => this.fecthData());
+            } else {
+                Toast.fail('正在通宵开发', 2)
+                this.setState({ pageSize: index, value: null, PageDisplayDate: [], PageTitleDate: {} });
+            }
         }
 
-        /** 输入框查询 */
+        /** 船舶输入框条件查询 */
+        handeFindxx = () => {
+            if ($('#IMO').val() !== "" || $('#hc').val() !== "" || this.state.seasonsValue !== 'null') {
+                let type = this.props.tabs[this.state.pageSize].type;
+                this.props.dispatch({
+                    type: 'zncx/' + type,
+                    payload: {
+                        mt: this.state.seasonsValue,
+                        imo: $('#IMO').val(),
+                        hc: $('#hc').val(),
+                    },
+                });
+            } else {
+                Toast.fail('查询失败，请重新检查查询条件', 2);
+            }
+        }
+
+        /** 集装箱(含历史轨迹的)输入框查询 */
         handeViewfind = (val) => {
             let type = this.props.tabs[this.state.pageSize].type;
             this.props.dispatch({
@@ -107,23 +139,15 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                     num: val
                 },
             });
-            this.setState({ modal: true, })
-            Toast.loading('加载中...', 30);
-            setTimeout(() => {
-                if (this.props.jzxxx.length > 0) {
-                    Toast.hide();
-                }
-            }, 500);
         }
 
+        /** 下拉 */
         onRefresh = () => {
-            console.log("下拉一次");
             this.setState({ count: 2 }, () => this.fecthData());
         };
 
         /** 上拉事件 */
         onEndReached = (event) => {
-            console.log("上拉一次");
             this.props.dispatch({
                 type: 'zncx/fetch',
                 payload: {
@@ -147,7 +171,6 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
         }
         /** 回滚 */
         fecthData() {
-            this.resa = {};
             const hei = document.documentElement.clientHeight - ReactDOM.findDOMNode(this.lv).parentNode.offsetTop;
             this.props.dispatch({
                 type: 'zncx/fetch',
@@ -155,17 +178,28 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                     tablename: this.props.tabs[this.state.pageSize].tablename,
                     count: 1,
                 },
-            }, setTimeout(() => {
-                this.resa = this.props.list[0];         //支持旧数据
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.resa),        //分类
-                    height: hei,
-                    refreshing: false,
-                    isLoading: true,
-                    PageDisplayDate: this.props.list[0],
-                    PageTitleDate: this.props.list[1][0][this.props.tabs[this.state.pageSize].type]
-                });
-            }, 1000));
+            });
+            let num = 0;
+            let abc = setInterval(()=>{
+                num++;
+                if (this.props.list.length > 0) {
+                    this.resa = this.props.list[0];         //支持旧数据
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.resa),        //分类
+                        height: hei,
+                        refreshing: false,
+                        isLoading: true,
+                        PageDisplayDate: this.props.list[0],
+                        PageTitleDate: this.props.list[1][0][this.props.tabs[this.state.pageSize].type]
+                    });
+                    clearInterval(abc);
+                    Toast.hide();
+                }else{
+                    if(num === '10'){
+                        clearInterval(abc);
+                    }
+                }
+            },1000)
         }
 
         onWrapTouchStart = (e) => {
@@ -221,12 +255,97 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                     </div>
                 );
             };
+            if (pageSize === 0) {
+                items = [
+                    <div key="zncx_Search">
+                        <div key="valChange" style={{ margin: 5 }}>
+                            <SegmentedControl values={['SCT', 'CCT', 'MCT']} onChange={e => this.setState({ seasonsValue: e.nativeEvent.value })} />
+                        </div>
+                        <div className="zncxSea">
+                            <input className="zncxSea_left" type="text" id="IMO" placeholder="请输入IMO编号" type="search" />
+                            <input className="zncxSea_right" type="text" id="hc" placeholder="请输入商业航次号" type="search" />
+                            <Button style={{ height: '100%' }} type="primary" size="small" inline onClick={this.handeFindxx}>查询</Button>
+                        </div>
+                        <ListView
+                            key={this.state.useBodyScroll}
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}
+                            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}> {this.state.isLoading ? '加载中...' : '暂无更多数据'} </div>)}
+                            renderRow={row}
+                            renderSeparator={separator}
+                            useBodyScroll={this.state.useBodyScroll}
+                            style={{ height: this.state.height, border: '1px solid #ddd', margin: '5px 0', }}
+                            pullToRefresh={<PullToRefresh refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
+                            onEndReached={this.onEndReached}
+                            pageSize={5}
+                        />
+                    </div>
+                ]
+            }
+            if (pageSize === 1) {
+                items = [
+                    <div key="valChanges">
+                        <div className="zncx_bar">
+                            <SearchBar placeholder="请输入箱号" onSubmit={value => this.handeViewfind(value)} ref={ref => this.autoFocusInst = ref} />
+                        </div>
+                        {
+                            this.props.jzxxx.length > 0 ? <div key="td_id" style={{ padding: '0 15px', backgroundColor: '#F7F7F7', marginTop: 10, marginBottom: 10 }}>
+                                <Accordion accordion openAnimation={{}} className="my-accordion">
+                                    {
+                                        this.props.jzxxx.map((a, ab) => {
+                                            return (
+                                                <AccordionPanel key={ab} header={"操作时间：" + a[3]['value']}>
+                                                    <List className="my-list">
+                                                        {
+                                                            a.map((key, id) => {
+                                                                if (id < 1) {
+                                                                    return (
+                                                                        <List.Item key={id}>
+                                                                            <div style={{ color: "#1890ff" }} ><img className="imgss" src={tabs[this.state.pageSize].icon} alt="" />{key['key']}</div>
+                                                                            <div style={{ color: "#1890ff" }} >{key['value']}</div>
+                                                                        </List.Item>
+                                                                    )
+                                                                }
+                                                                if (id > 1) {
+                                                                    return (
+                                                                        <List.Item key={id}>
+                                                                            <div>{key['key']}</div>
+                                                                            <div>{key['value']}</div>
+                                                                        </List.Item>
+                                                                    )
+                                                                }
+                                                            })
+                                                        }
+                                                    </List>
+                                                </AccordionPanel>
+                                            )
+                                        })
+                                    }
+                                </Accordion>
+                            </div> : <div></div>
+                        }
+                    </div>
+                ]
+            }
             if (pageSize === 2) {
                 items = [
-                    <div key="valChange">
-                        <Picker data={seasons} cascade={false} title="选择港口" extra="请选择(可选)" value={this.state.seasonsValue} onChange={v => this.setState({ seasonsValue: v })}>
-                            <List.Item arrow="horizontal">港口选择</List.Item>
-                        </Picker>
+                    <div key="valChanges">
+                        <div className="zncx_bar">
+                            <SearchBar placeholder="请输入箱号" onSubmit={value => this.handeViewfind(value)} ref={ref => this.autoFocusInst = ref} />
+                        </div>
+                        <ListView
+                            key={this.state.useBodyScroll}
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}
+                            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}> {this.state.isLoading ? '加载中...' : '暂无更多数据'} </div>)}
+                            renderRow={row}
+                            renderSeparator={separator}
+                            useBodyScroll={this.state.useBodyScroll}
+                            style={{ height: this.state.height, border: '1px solid #ddd', margin: '5px 0', }}
+                            pullToRefresh={<PullToRefresh refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
+                            onEndReached={this.onEndReached}
+                            pageSize={5}
+                        />
                     </div>
                 ];
             }
@@ -243,30 +362,13 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                         let { icon, tip, type, tablename } = tab;
                         return (
                             <div key={idsx} className="zncx">
-                                <div className="zncx_bar">
-                                    <SearchBar placeholder="请输入" onSubmit={value => this.handeViewfind(value)} ref={ref => this.autoFocusInst = ref} />
-                                </div>
                                 {items}
-                                <ListView
-                                    key={this.state.useBodyScroll}
-                                    ref={el => this.lv = el}
-                                    dataSource={this.state.dataSource}
-                                    renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}> {this.state.isLoading ? '加载中...' : '暂无更多数据'} </div>)}
-                                    renderRow={row}
-                                    renderSeparator={separator}
-                                    useBodyScroll={this.state.useBodyScroll}
-                                    style={{ height: this.state.height, border: '1px solid #ddd', margin: '5px 0', }}
-                                    pullToRefresh={<PullToRefresh refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
-                                    onEndReached={this.onEndReached}
-                                    pageSize={5}
-                                />
                                 <Modal
                                     popup
                                     visible={this.state.modal}
                                     transparent
                                     maskClosable={false}
-                                    onClose={() => this.setState({ modal: false })}
-                                    title="集装箱详情"
+                                    title="查询详情"
                                     footer={[{ text: '关闭', onPress: () => { this.setState({ modal: false }) } }]}
                                     wrapProps={{ onTouchStart: this.onWrapTouchStart }}
                                     animationType="slide-up"

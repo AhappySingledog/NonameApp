@@ -3,7 +3,7 @@ import {Map, Marker,InfoWindow} from 'react-bmap';
 import { connect } from "dva";
 import style from './app.less';
 import {Modal, Grid, Icon,SearchBar} from 'antd-mobile';
-import lb from '../../images/spjk/列表.svg'
+import lb from '../../images/spjk/lb.svg'
 
 export default connect(({ spjk, loading }) => ({ ...spjk }))(class App extends Component {
   render() {

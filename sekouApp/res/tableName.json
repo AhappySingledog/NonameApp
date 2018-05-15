@@ -40,5 +40,14 @@
         "ReleaseStatus": "海关查验状态、国检查验状态、放行状态",
         "InTime": "进场时间",
         "OutTime": "离港时间"
+    },
+    "jzxlsgj" : {
+        "DbId" : "港区",
+        "ContainerOwner" : "船公司",
+        "OpType" : "操作",
+        "OpTime" : "操作时间",
+        "ColumnName" : "操作服务",
+        "OldValue" : "从",
+        "NewValue" : "到"
     }
 }

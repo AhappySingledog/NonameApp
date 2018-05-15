@@ -11,10 +11,10 @@ export default {
           { name: 'b_chars1', tabname: '近一周卸船情况' }
         ],
         data: [
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量', img: require("../images/zntj/jcg/出港.svg") },
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/出港.svg") }
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量', img: require("../images/zntj/jcg/cg.svg") },
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/cg.svg") }
         ]
       },
       {
@@ -26,10 +26,10 @@ export default {
           { name: 'b_chars2', tabname: '近一周卸船情况' }
         ],
         data: [
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/出港.svg") },
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/出港.svg") }
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/cg.svg") },
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/cg.svg") }
         ]
       },
       {
@@ -41,10 +41,10 @@ export default {
           { name: 'b_chars3', tabname: '近一周卸船情况' }
         ],
         data: [
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/出港.svg") },
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/出港.svg") }
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/cg.svg") },
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/cg.svg") }
         ]
       },
       {
@@ -56,10 +56,10 @@ export default {
           { name: 'b_chars4', tabname: '近一周卸船情况' }
         ],
         data: [
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/出港.svg") },
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/出港.svg") }
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/cg.svg") },
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/cg.svg") }
         ]
       },
       {
@@ -71,10 +71,10 @@ export default {
           { name: 'b_chars5', tabname: '近一周卸船情况' }
         ],
         data: [
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/出港.svg") },
-          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/进港.svg") },
-          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/出港.svg") }
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '进闸数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '出闸数量',  img: require("../images/zntj/jcg/cg.svg") },
+          { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '装船数量', img: require("../images/zntj/jcg/jg.svg") },
+          { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '卸船数量', img: require("../images/zntj/jcg/cg.svg") }
         ]
       },
     ]

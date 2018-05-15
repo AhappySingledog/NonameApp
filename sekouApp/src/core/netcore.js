@@ -193,4 +193,5 @@ function regedit(data) {
     );
 }
 
-$.ajax({ dataType: 'json', url: '../../res/taskServices.json', async: false, success: regedit });
+// $.ajax({ dataType: 'json', url: '../../../build/res/taskServices.json', async: false, success: regedit });
+$.ajax({ dataType: 'json', url: '../../../res/taskServices.json', async: false, success: regedit });
