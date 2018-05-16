@@ -1,4 +1,6 @@
 const { injectBabelPlugin, getLoader } = require('react-app-rewired');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
 
 const fileLoaderMatcher = function (rule) {
   return rule.loader && rule.loader.indexOf(`file-loader`) != -1;
@@ -93,7 +95,15 @@ module.exports = function override(config, env) {
   let l = getLoader(config.module.rules, fileLoaderMatcher);
   l.exclude.push(/\.less$/);
 
-  // config.output.publicPath = './';
+  config.plugins.push(
+    new CopyWebpackPlugin([{
+      from: path.join(__dirname, 'res'),
+      to: path.join(__dirname, 'build/res')
+    }, ])
+  );
+  
+  if(env == 'production')
+    config.output.publicPath = './';
 
   return config;
 };
