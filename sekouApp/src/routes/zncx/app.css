@@ -17,24 +17,27 @@
   height: 25px;
   margin: 0 8px;
 }
-.zncx_table {
-  width: 100%;
-  background: white;
-  margin-top: 8px;
-  border-top: 1px solid #e8e8e8;
-  border-bottom: 1px solid #e8e8e8;
+.zncx_views {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.zncx_table_img {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  background: #1890ff;
+.zncx_views > div {
+  width: 55%;
+  color: #1890FF;
 }
-.zncx_table_col_1 {
-  width: 30px;
+.zncx_view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.zncx_table > tr > td {
-  padding: 4px;
+.zncx_view > div {
+  width: 55%;
+  color: #8e8e8e;
+}
+.zncxTop {
+  width: 35% !important;
+  text-align: end;
 }
 .custom-pagination-with-icon .am-pagination-wrap-btn-prev .am-button-inline {
   padding-left: 0;

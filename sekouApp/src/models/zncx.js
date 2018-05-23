@@ -25,27 +25,35 @@ export default {
 			dispatch(routerRedux.push("/zncx_xx/" + lx + "/1"));
 		},
 		list: [],
-		jzxxx: [],
 	},
 	effects: {
 		*fetch({ payload }, { call, put }) {
-			let datas = [];
-			datas.splice(0, datas.length);
-			let responseCXJG = yield (publish('getData', { svn: 'skhg_loader', tableName: payload.tablename, data: { pageno: payload.count, pagesize: 10, where: payload.value ? "TERMINALCODE like '%" + payload.value + "'" : "1=1" } }));
-			let responseCXBM = yield (publish('tableName_find'));
-			if (responseCXJG[0]['features'].length > 0) {
-				responseCXJG[0].features.map(x => datas.push(x.attributes));
+			if (payload.tablename) {
+				let responseCXJG = yield (publish('getData', { svn: 'skhg_loader', tableName: payload.tablename, data: { pageno: payload.count, pagesize: 10, where: "1=1" } }));
+				let responseCXBM = yield (publish('tableName_find'));
+				if (responseCXJG[0]['features'].length > 0) {
+					let datas = [];
+					responseCXJG[0].features.map(x => datas.push(x.attributes));
+					yield put({
+						type: 'appendList',
+						payload: [datas, responseCXBM] ? [datas, responseCXBM] : [],
+					});
+					Toast.hide();
+				} else {
+					yield put({
+						type: 'appendList',
+						payload: []
+					});
+					Toast.offline("没有数据", 3);
+				}
+			} else {
+				Toast.hide();
 				yield put({
 					type: 'appendList',
-					payload: [datas, responseCXBM] ? [datas, responseCXBM] : [],
+					payload: []
 				});
-			}else{
-				yield put({
-					type: 'appendList',
-					payload: ''
-				});
-				Toast.offline("没有数据", 3);
 			}
+
 		},
 		*jzxxx({ payload }, { call, put }) {
 			let responseCXJZXXX = yield (publish('webAction', { svn: 'eportapisct', path: 'GContainerInfo', data: { System: '', PageIndex: 1, PageSize: 30, SortBy: '', IsDescending: false, ContainerNo: payload.num } }));
@@ -57,10 +65,11 @@ export default {
 					type: 'QueryJZX',
 					payload: datas
 				});
+				Toast.hide();
 			} else {
 				yield put({
 					type: 'QueryJZX',
-					payload: ''
+					payload: []
 				});
 				Toast.offline("没有数据", 3);
 			}
@@ -77,6 +86,7 @@ export default {
 					type: 'QueryJZX',
 					payload: datas
 				});
+				Toast.hide();
 			} else {
 				yield put({
 					type: 'QueryJZX',
@@ -98,10 +108,11 @@ export default {
 					type: 'QueryJZX',
 					payload: datas
 				});
+				Toast.hide();
 			} else {
 				yield put({
 					type: 'QueryJZX',
-					payload: ''
+					payload: []
 				});
 				Toast.offline("没有数据", 3);
 			}
@@ -123,7 +134,7 @@ export default {
 		QueryJZX(state, aciton) {
 			return {
 				...state,
-				jzxxx: aciton.payload,
+				newJson: aciton.payload,
 			}
 		},
 

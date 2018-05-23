@@ -64,7 +64,6 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
         constructor(props) {
             super(props);
             this.state = {
-                seasonsValue: 'SCT',
                 pageSize: 0,
                 dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
                 refreshing: true,
@@ -80,18 +79,15 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
         }
 
         componentDidMount() {
-            this.setState({ pageSize: 0 });
-            this.fecthData();
-        };
-
-
-        componentWillReceiveProps(nextProps) {
-            if (nextProps.jzxxx.length > 0 && this.state.pageSize !== 1) {
-                Toast.loading('请稍后...', 30);
-                this.setState({ modal: true })
-                Toast.hide();
+            let id = document.location.hash;
+            console.log(document.location);
+            if (id.indexOf('userid') > 0) {
+                this.setState({ pageSize: 0 });
+                this.fecthData();
+            } else {
+                Toast.fail("您未登入系统，无法正常操作！", 0)
             }
-        }
+        };
 
         /** 切换标题签 */
         handefind = (tab, index) => {
@@ -104,7 +100,11 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                 Toast.loading('加载中...', 30);
                 this.resa = {};
                 this.setState({
-                    pageSize: index, value: null, PageDisplayDate: [], PageTitleDate: {},
+                    pageSize: index,
+                    value: null,
+                    PageDisplayDate: [],
+                    PageTitleDate: {},
+                    refreshing: false,
                     dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
                 }, () => this.fecthData());
             } else {
@@ -115,15 +115,21 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
 
         /** 船舶输入框条件查询 */
         handeFindxx = () => {
-            if ($('#IMO').val() !== "" || $('#hc').val() !== "" || this.state.seasonsValue !== 'null') {
+            if ($('#IMO').val() !== "" || $('#hc').val() !== "") {
                 let type = this.props.tabs[this.state.pageSize].type;
+                console.log(type);
+                Toast.loading('请稍后...', 0);
                 this.props.dispatch({
                     type: 'zncx/' + type,
                     payload: {
-                        mt: this.state.seasonsValue,
+                        mt: this.seasonsValue || 'SCT',
                         imo: $('#IMO').val(),
                         hc: $('#hc').val(),
                     },
+                }).then( e => {
+                    if (this.props.newJson.length > 0 ) {
+                        this.setState({ modal: true })
+                    }
                 });
             } else {
                 Toast.fail('查询失败，请重新检查查询条件', 2);
@@ -133,55 +139,56 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
         /** 集装箱(含历史轨迹的)输入框查询 */
         handeViewfind = (val) => {
             let type = this.props.tabs[this.state.pageSize].type;
+            Toast.loading('请稍后...', 0);
             this.props.dispatch({
                 type: 'zncx/' + type,
                 payload: {
                     num: val
                 },
+            }).then(e => {
+                if (this.props.newJson.length > 0 && this.state.pageSize !== 1) {
+                    this.setState({ modal: true })
+                }
             });
         }
 
         /** 下拉 */
         onRefresh = () => {
+            console.log("123");
             this.setState({ count: 2 }, () => this.fecthData());
         };
 
         /** 上拉事件 */
         onEndReached = (event) => {
+            this.setState({ isLoading: true })
             this.props.dispatch({
                 type: 'zncx/fetch',
                 payload: {
                     tablename: this.props.tabs[this.state.pageSize].tablename,
                     count: this.state.count,
                 },
-            });
-            this.setState({ count: this.state.count + 1 }, () => setTimeout(() => {
-                if (this.props.list[0].length > 0) {
+            }).then(e => {
+                this.setState({ count: this.state.count + 1 });
+                if (this.props.list.length > 0) {
                     this.resa = [...this.resa, ...this.props.list[0]];
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.resa),
-                        isLoading: true,
+                        isLoading: false,
                         PageDisplayDate: this.props.list[0],
                     });
-                } else {
-                    Toast.fail('没有多余的数据了！', 1);
-                    this.setState({ isLoading: false, });
                 }
-            }, 1000));
+            });
         }
         /** 回滚 */
         fecthData() {
-            const hei = document.documentElement.clientHeight - ReactDOM.findDOMNode(this.lv).parentNode.offsetTop;
+            const hei = document.documentElement.clientHeight - 5;
             this.props.dispatch({
                 type: 'zncx/fetch',
                 payload: {
                     tablename: this.props.tabs[this.state.pageSize].tablename,
                     count: 1,
                 },
-            });
-            let num = 0;
-            let abc = setInterval(()=>{
-                num++;
+            }).then(e => {
                 if (this.props.list.length > 0) {
                     this.resa = this.props.list[0];         //支持旧数据
                     this.setState({
@@ -189,18 +196,14 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                         height: hei,
                         refreshing: false,
                         isLoading: true,
+                        refreshing: false,
                         PageDisplayDate: this.props.list[0],
                         PageTitleDate: this.props.list[1][0][this.props.tabs[this.state.pageSize].type]
                     });
-                    clearInterval(abc);
-                    Toast.hide();
-                }else{
-                    if(num === '10'){
-                        clearInterval(abc);
-                    }
                 }
-            },1000)
+            });
         }
+
 
         onWrapTouchStart = (e) => {
             // fix touch to scroll background page on iOS
@@ -223,35 +226,19 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                 if (index < 0) index = PageDisplayDate.length - 1;
                 const obj = PageDisplayDate[index--];
                 return (
-                    <div key={rowID} style={{ padding: '0 15px', backgroundColor: 'white', }}>
-                        <table key={rowID} className="zncx_table" >
-                            <tbody>
-                                {
-                                    Object.keys(PageTitleDate).map((key, id) => {
-                                        if (id + 0 && id < 5 && PageTitleDate) {
-                                            return (
-                                                <tr key={id + key} style={{ color: "#8e8e8e" }}>
-                                                    <td></td>
-                                                    <td style={{ width: '50%' }}>{PageTitleDate[key]}:</td>
-                                                    <td>{obj[key]}</td>
-                                                    <td></td>
-                                                </tr>
-                                            )
-                                        }
-                                        if (id < 1) {
-                                            return (
-                                                <tr key={id + key} style={{ color: "#1890ff" }}>
-                                                    <td className="zncx_table_col_1"><div className="zncx_table_img"><img src={tabs[this.state.pageSize].icon} alt="" /></div></td>
-                                                    <td>{PageTitleDate[key]}:</td>
-                                                    <td>{obj[key]}</td>
-                                                    <td></td>
-                                                </tr>
-                                            );
-                                        }
-                                    })
+                    <div key={rowID} className="zncx_table" style={{ padding: '0 15px', backgroundColor: 'white', }}>
+                        {
+                            PageDisplayDate.length > 0 ? Object.keys(PageTitleDate).map((key, id) => {
+                                if (id < 5) {
+                                    return (
+                                        <div key={id + key} className={id === 0 ? "zncx_views" : "zncx_view"}>
+                                            <div className="zncxTop">{PageTitleDate[key]} :</div>
+                                            <div>{obj[key]}</div>
+                                        </div>
+                                    )
                                 }
-                            </tbody>
-                        </table>
+                            }) : <div />
+                        }
                     </div>
                 );
             };
@@ -259,7 +246,8 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                 items = [
                     <div key="zncx_Search">
                         <div key="valChange" style={{ margin: 5 }}>
-                            <SegmentedControl values={['SCT', 'CCT', 'MCT']} onChange={e => this.setState({ seasonsValue: e.nativeEvent.value })} />
+                            <SegmentedControl values={['SCT', 'CCT', 'MCT']} onValueChange={e => { this.seasonsValue = e }} />
+                            {/* <SegmentedControl selectedIndex={1} values={['Segment1', 'Segment2', 'Segment3']} /> */}
                         </div>
                         <div className="zncxSea">
                             <input className="zncxSea_left" type="text" id="IMO" placeholder="请输入IMO编号" type="search" />
@@ -289,10 +277,10 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                             <SearchBar placeholder="请输入箱号" onSubmit={value => this.handeViewfind(value)} ref={ref => this.autoFocusInst = ref} />
                         </div>
                         {
-                            this.props.jzxxx.length > 0 ? <div key="td_id" style={{ padding: '0 15px', backgroundColor: '#F7F7F7', marginTop: 10, marginBottom: 10 }}>
+                            this.props.newJson.length > 0 ? <div key="td_id" style={{ padding: '0 15px', backgroundColor: '#F7F7F7', marginTop: 10, marginBottom: 10 }}>
                                 <Accordion accordion openAnimation={{}} className="my-accordion">
                                     {
-                                        this.props.jzxxx.map((a, ab) => {
+                                        this.props.newJson.map((a, ab) => {
                                             return (
                                                 <AccordionPanel key={ab} header={"操作时间：" + a[3]['value']}>
                                                     <List className="my-list">
@@ -373,7 +361,7 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                                     wrapProps={{ onTouchStart: this.onWrapTouchStart }}
                                     animationType="slide-up"
                                 >
-                                    <Tabos val={this.props.jzxxx.length > 0 ? this.props.jzxxx : null} />
+                                    <Tabos val={this.props.newJson} />
                                 </Modal>
                                 <div />
                             </div>

@@ -4,10 +4,15 @@ import { Button, Toast } from "antd-mobile";
 import pathToRegexp from "path-to-regexp";
 import './yjxx.less';
 import { connect } from "dva";
+import { subscribe, unsubscribe } from "../../core/arbiter";
 
 
 export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
   class Yjxx extends Component {
+    state = {
+      tableName: (window.localStorage.getItem('tableName') || ""),
+      count: 2,
+    }
     componentDidMount() {
       const { location, dispatch, routerData } = this.props;
       const key = Object.keys(routerData).find(key =>
@@ -17,7 +22,25 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
         type: "yjxxinfo/findTable",
         payload: pathToRegexp(key).exec(location.pathname)
       });
+      // dispatch({
+      //   type: "yjxxinfo/QueryTable",
+      //   payload: {
+      //     tableName: this.state.tableName,
+      //     count: 1
+      //   },
+      // });
     }
+
+
+    componentWillMount() {
+      this.sub_userName = subscribe('userName', this.userName);
+    }
+
+    componentWillUnmount() {
+      if (this.sub_userName) unsubscribe(this.sub_userName);
+      if (this.sub_tableName) unsubscribe(this.sub_tableName);
+    }
+
     render() {
       const { cols = {}, datas = {}, kfiled = "", } = this.props;
       return (

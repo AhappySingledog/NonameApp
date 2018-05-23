@@ -10,7 +10,7 @@ dynamic.setDefaultLoadingComponent(() => {
 });
 
 function RouterConfig({ history, app }) {
-  const routerData = getRouterData(app);
+  const routerData = getRouterData(app); //目录
   const BasicLayout = routerData["/"].component;
   return (
     <ConnectedRouter history={history}>

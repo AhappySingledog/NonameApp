@@ -13,6 +13,11 @@
       "url": "http://10.27.24.86:8085/ServiceEngine/rest/services/WhpngServer",
       "proxy": ""
     },{
+      "name": "skhg_stage",
+      "description": "元数据服务",
+      "url": "http://218.17.35.47:9999/ServiceEngine/rest/services/NetServer/skhg_stage",
+      "proxy": ""
+    },{
       "name": "skhg_loader",
       "description": "元数据服务",
       "url": "http://218.17.35.47:9999/ServiceEngine/rest/services/NetServer/skhg_loader",
@@ -25,7 +30,7 @@
     },{
       "name": "skhg_stage_service",
       "description": "skhg_stage服务接口",
-      "url": "http://218.17.35.47:9999/ServiceEngine/rest/services/NetServer/skhg_loader",
+      "url": "http://218.17.35.47:9999/ServiceEngine/rest/services/SKHGStageServer",
       "proxy": ""
     },{
       "name": "skhg_loader_service",

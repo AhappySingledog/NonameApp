@@ -128,6 +128,6 @@ export const routerConfig = {
   "/znyj_xx/:lx/:id": {
     props: { title: "智能预警/报警" },
     models: ["yjxxinfo"],
-    router: () => import('../routes/znyj/Yjxxinfo')
+    router: () => import('../routes/znyj/bjxxinfo')
   }
 };
