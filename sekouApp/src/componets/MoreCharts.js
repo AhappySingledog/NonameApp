@@ -23,7 +23,7 @@ export default class MoreCharts extends React.Component {
             <div>
                 {view.map((value, key) => {
                     return <div key={key} style={{ background: "#f9f9f9" }}>
-                        <HeaderFill title={value.tabname} style={{ margin: "8px 0" }}>
+                        <HeaderFill title={value.tabname} style={{ margin: "4px 0" }}>
                             <canvas ref={value.name} />
                         </HeaderFill>
                     </div>

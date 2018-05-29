@@ -23,7 +23,6 @@ export default connect(({ mtcbqk, loading }) => ({ ...mtcbqk }))(
               <List.Item arrow="horizontal">时间</List.Item>
             </DatePicker>
           </div>
-
         }>
           <Tabs
             tabs={tabs}

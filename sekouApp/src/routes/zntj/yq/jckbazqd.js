@@ -2,7 +2,7 @@
 import { connect } from "dva";
 import ReactDOM from "react-dom";
 import React, { Component } from "react";
-import { Picker, List } from "antd-mobile";
+import { SegmentedControl } from "antd-mobile";
 import { subscribes, publish, unsubscribe } from '../../../core/arbiter';
 import { Chart, HeaderFill, LineChart, GridFill, SelectChart } from "../../../componets";
 import '../action';
@@ -12,7 +12,7 @@ import "./jckbazqd.less";
 export default connect(({ jckbazqd, loading }) => ({ ...jckbazqd }))(
     class Jckbazqd extends React.Component {
         state = {
-            year_datas : this.props.today,
+            year_datas: this.props.today,
         }
         componentDidMount() {
             this.showCharts(this.props.data);
@@ -24,15 +24,16 @@ export default connect(({ jckbazqd, loading }) => ({ ...jckbazqd }))(
                 this.chart1 = new Chart(ReactDOM.findDOMNode(this.refs.chart1), data1);
             });
         }
+
         onchange(e) {
-            e[0]>1 ? this.setState({year_datas : this.props.year_data}): this.setState({year_datas : this.props.today});
+            e > 0 ? this.setState({ year_datas: this.props.year_data }) : this.setState({ year_datas: this.props.today });
             this.props.dispatch({
                 type: "jckbazqd/select",
                 payload: e
             });
             this.showCharts(e);
-            
         }
+
         componentWillUnmount() {
             if (this.chart1) this.chart1.destroy();
         }
@@ -40,10 +41,10 @@ export default connect(({ jckbazqd, loading }) => ({ ...jckbazqd }))(
             let { datas = [], data = {}, today, monthchart1 } = this.props;
             return (
                 <GridFill header={
-                    <div id="abc" style={{ borderBottom: "1px solid #ebebeb" }}>
-                        <Picker data={datas} title="选择时间" extra={data.label} value={data} onChange={(e) => {this.onchange(e)}}>
-                            <List.Item arrow="horizontal">时间</List.Item>
-                        </Picker>
+                    <div key="wc" className="zntj_dc">
+                        <div id="abc" style={{ margin: "8px 5px 0px 5px", paddingBottom: '8px', background: "#fff" }}>
+                            <SegmentedControl values={['本年', '本月']} onChange={e => this.onchange(e.nativeEvent.selectedSegmentIndex)} />
+                        </div>
                     </div>
                 }>
                     <div style={{ background: "#f9f9f9" }}>

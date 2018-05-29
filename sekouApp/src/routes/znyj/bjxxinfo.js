@@ -7,7 +7,6 @@ import { connect } from "dva";
 import $ from 'jquery';
 import { subscribe, unsubscribe } from "../../core/arbiter";
 import {
-	Button,
 	Toast,
 	ListView,
 	SearchBar,
@@ -18,7 +17,6 @@ import {
 	List,
 	SegmentedControl
 } from "antd-mobile";
-
 
 function closest(el, selector) {
 	const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
@@ -37,33 +35,72 @@ class Tabos extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			newHi: document.documentElement.clientHeight
+			newHi: document.documentElement.clientHeight - 201,
+		}
+	}
+
+	handleview(e, view) {
+		if (this.oldid) {
+			let oldoUl = document.getElementById(this.oldid);
+			var oldchildren = oldoUl.childNodes;
+			for (let i in oldchildren) {
+				if (oldchildren[i].nodeType === 1) {
+					oldchildren[i].style.background = '';
+					oldchildren[i].style.color = '#888';
+				}
+			}
+		}
+		let oUl = document.getElementById(e);
+		var children = oUl.childNodes;
+		for (let i in children) {
+			if (children[i].nodeType === 1) {
+				this.oldid = e;
+				children[i].style.background = '#39a3ef';
+				children[i].style.color = 'white';
+				this.props.clyjnr(view.view)
+				// console.log(view);
+			}
 		}
 	}
 
 	render() {
 		let { val = {}, title = {}, lx = {} } = this.props;
-		const clyj = ['处理意见一', '处理意见二', '处理意见三', '处理意见四', '处理意见五', '处理意见六'];
+		const clyj = [{ view: "处理意见一", value: '1' }, { view: "处理意见二", value: '2' }, { view: "处理意见三", value: '3' },
+		{ view: "处理意见四", value: '4' }, { view: "处理意见五", value: '5' }, { view: "处理意见六", value: '6' }]
 		return (
-			<div key="xq" className="yjxq_table" style={{ height: this.state.newHi - 201, width: '100%', overflow: 'scroll' }}>
-				{
-					Object.keys(title).map((key, id) => {
-						if (id > 0) {
-							return (
-								<div key={key}>
-									<div key={id + key} className="yjxq_view">
-										<div>{title[key]}:</div>
-										<div>{val[key]}</div>
+			<div key="xq" className="yjxq_table" style={{ height: 500, width: '100%', overflow: 'scroll' }}>
+				<div className="yjxq_table_xxxx">
+					<div className="yjxq_table_xxxx_span">详细信息</div>
+					<div className="yjxq_table_xxxx_glx"></div>
+					{
+						Object.keys(title).map((key, id) => {
+							if (id > 0) {
+								return (
+									<div key={key}>
+										<div key={id + key} className="yjxq_table_xxxx_view">
+											<div>{title[key]}：</div>
+											<div className="yjxq_table_xxxx_view_vla" >{val[key] || '--'}</div>
+										</div>
+										<div className="yjxq_table_xxxx_kg"></div>
 									</div>
-									<div className="yjxq_kg"></div>
-								</div>
-							)
-						}
-					})
-				}
+								)
+							}
+						})
+					}
+				</div>
 				{lx == 'yj' ? <div /> : <div>
-					<p className="sub-title">处理意见</p>
-					<SegmentedControl className="yjxq_btn" values={clyj} tintColor={'#ff0000'} onChange={value => this.props.clyjnr(value.nativeEvent.value)} />
+					<div className="yjxq_cglx"></div>
+					<div className="yjxq_table_xxxx_span">处理意见</div>
+					<div className="yjxq_table_xxxx_glx"></div>
+					<div className="yjxq_btn">
+						{
+							clyj.map((e, i) => {
+								return <div id={"btn" + i} key={e.view + i} className="yjxq_btn_view" onClick={() => this.handleview("btn" + i, e)}>
+									<div className="yjxq_btn_view_bout"> {e.view} </div>
+								</div>
+							})
+						}
+					</div>
 				</div>}
 			</div>
 		)
@@ -102,17 +139,17 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 
 		}
 
-		componentWillReceiveProps(nextPor) {
-			document.addEventListener('touchstart', function (event) {
-				// 判断默认行为是否可以被禁用
-				if (event.cancelable) {
-					// 判断默认行为是否已经被禁用
-					if (!event.defaultPrevented) {
-						event.preventDefault();
-					}
-				}
-			}, false);
-		}
+		// componentWillReceiveProps(nextPor) {
+		// document.addEventListener('touchstart', function (event) {
+		// 	// 判断默认行为是否可以被禁用
+		// 	if (event.cancelable) {
+		// 		// 判断默认行为是否已经被禁用
+		// 		if (!event.defaultPrevented) {
+		// 			event.preventDefault();
+		// 		}
+		// 	}
+		// }, false);
+		// }
 
 		/** 输入框查询内容（要经过多样化的） */
 		handeViewfind = (val) => {
@@ -213,19 +250,23 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 
 		/** 处理 */
 		Handle = (e) => {
-			Toast.loading("请稍等...", 0);
-			this.props.dispatch({
-				type: 'yjxxinfo/QueryUser',
-				payload: {
-					tableName: this.state.tableName,
-					HANDLER: this.state.userid,
-					HANDLINGRESULT: this.clyj || "处理意见一",
-					GID: this.state.clsj.GID,
-				}
-			}).then(() => {
-				/** 处理完成关闭面板并且回滚 */
-				this.setState({ modal: false },() => this.fecthData());
-			})
+			if (this.clyj) {
+				Toast.loading("请稍等...", 0);
+				this.props.dispatch({
+					type: 'yjxxinfo/QueryUser',
+					payload: {
+						tableName: this.state.tableName,
+						HANDLER: this.state.userid,
+						HANDLINGRESULT: this.clyj,
+						GID: this.state.clsj.GID,
+					}
+				}).then(() => {
+					/** 处理完成关闭面板并且回滚 */
+					this.setState({ modal: false }, () => this.fecthData());
+				})
+			}else{
+				Toast.offline('您未选择处理意见',1.5);
+			}
 		}
 
 		render() {
@@ -249,19 +290,22 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 							},
 						]}
 					>
-						<div key={rowID} className="znyj_talb" style={{ padding: '0 15px', backgroundColor: 'white', }}>
-							{
-								PageDisplayDate.length > 0 ? Object.keys(PageTitleDate).map((key, id) => {
-									if (id < 5) {
-										return (
-											<div key={id + key} className={id === 0 ? "znyj_views" : "znyj_view"} onClick={() => { this.setState({ clsj: obj, modal: true }) }}>
-												<div className="znyjTop">{PageTitleDate[key]} :</div>
-												<div>{obj[key]}</div>
-											</div>
-										)
-									}
-								}) : <div />
-							}
+						<div key={rowID} className="znyj_table">
+							<div className="znyj_table_img" style={{ background: this.props.kfiled === 'yj' ? "#ffb423" : "#ff7625" }}><img src={this.props.znyj[window.localStorage.getItem('znyj_index')].img} /> </div>
+							<div className="znyj_table_view">
+								{
+									PageDisplayDate.length > 0 ? Object.keys(PageTitleDate).map((key, id) => {
+										if (id < 5) {
+											return (
+												<div key={id + key} className={id === 0 ? "znyj_views" : "znyj_view"} onClick={() => { this.setState({ clsj: obj, modal: true }) }}>
+													<div className="znyjTop">{PageTitleDate[key]} :</div>
+													<div>{obj[key]}</div>
+												</div>
+											)
+										}
+									}) : <div />
+								}
+							</div>
 						</div>
 					</SwipeAction>
 				);
@@ -287,9 +331,9 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 					<Modal
 						popup
 						visible={this.state.modal}
-						transparent
+						// transparent
 						maskClosable={false}
-						title={this.props.kfiled === 'yj' ? "预警详情" : "报警处理"}
+						// title={this.props.kfiled === 'yj' ? "预警详情" : "报警处理"}
 						footer={this.props.kfiled === 'yj' ? [{ text: '关闭', onPress: () => { this.setState({ modal: false }) } }] : [{ text: '关闭', onPress: () => { this.setState({ modal: false }) } }, { text: '提交', onPress: this.Handle }]}
 						wrapProps={{ onTouchStart: this.onWrapTouchStart }}
 						animationType="slide-up"

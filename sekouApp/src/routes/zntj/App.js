@@ -52,9 +52,9 @@ export default connect(({ zntj, loading }) => ({
             grids.map((obj, idx) => {
               return (
                 <div key={idx}>
-                  <div style={{ padding: '8px 8px 6px 16px', fontWeight: 600 }}>{obj.name}</div>
+                  <div style={{ padding: '15px 8px 0px 16px', fontWeight: 600 }}>{obj.name}</div>
                   <Grid data={obj.items} onClick={onClick} hasLine={false} renderItem={renderItem} />
-                  <div style={idx < lg ? { width: '90%', margin: '4px auto', borderBottom: "1px solid #e8e8e8" } : {}} />
+                  <div style={idx < lg ? { width: '90%', margin: '1px auto', borderBottom: "1px solid #e8e8e8" } : {}} />
                 </div>
               );
             })

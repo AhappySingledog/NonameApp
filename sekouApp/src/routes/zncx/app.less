@@ -20,6 +20,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin: 2px;
         >div {
             width: 55%;
             color: #1890FF
@@ -29,16 +30,37 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin: 2px;
         >div {
             width: 55%;
             color: #8e8e8e
+        }
+    }
+    /** 智能查询中的卡片 */
+    &_table {
+        margin: 15px 0;
+        background: white;
+        display: flex;
+        flex-direction: row;
+        &_img {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background: #1890ff;
+            margin: 0px 30px;
+            border-radius: 5px;
+        }
+        &_view {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
         }
     }
 }
 
 .zncxTop {
     width: 35% !important;
-    text-align: end;
+    text-align: start;
 }
 
 .custom-pagination-with-icon .am-pagination-wrap-btn-prev .am-button-inline {

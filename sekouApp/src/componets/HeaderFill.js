@@ -9,7 +9,7 @@ export default class HeaderFill extends React.Component {
                 <div className="headerfill-title">{title}</div>
                 <div className="headerfill-box">{box}</div>
                 <div className="headerfill-num"> {num}</div>
-                <div style={Object.assign({padding: "12px"}, contentStyle)}> {children}</div>               
+                <div style={Object.assign({padding: "5px"}, contentStyle)}> {children}</div>               
             </div>
         )        
     }

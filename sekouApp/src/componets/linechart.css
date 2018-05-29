@@ -1,0 +1,29 @@
+.linechart {
+  width: 100%;
+}
+.linechart_hight_light {
+  color: #3bb64f;
+}
+.linechart td {
+  white-space: nowrap;
+  padding: 4px;
+}
+.linechart_press {
+  border-radius: 6px;
+  width: 100%;
+  background: #e8e8e8;
+  animation: linechartAnimation 1s;
+}
+.linechart_press_val {
+  height: 12px;
+  border-radius: 6px;
+  background: #39a3ef;
+}
+@keyframes linechartAnimation {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

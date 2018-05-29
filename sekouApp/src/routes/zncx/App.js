@@ -126,8 +126,8 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                         imo: $('#IMO').val(),
                         hc: $('#hc').val(),
                     },
-                }).then( e => {
-                    if (this.props.newJson.length > 0 ) {
+                }).then(e => {
+                    if (this.props.newJson.length > 0) {
                         this.setState({ modal: true })
                     }
                 });
@@ -221,24 +221,26 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
             let { PageDisplayDate, PageTitleDate, pageSize } = this.state;
             let index = PageDisplayDate.length - 1;
             const separator = (sectionID, rowID) => (<div key={`${sectionID}-${rowID}`} style={{ backgroundColor: '#F5F5F9', height: 8, borderTop: '1px solid #ECECED', borderBottom: '1px solid #ECECED', }} />);
-            const seasons = [[{ label: 'SCT', value: 'SCT', }, { label: 'CCT', value: 'CCT', }, { label: 'MCT', value: 'MCT', }]];
             const row = (rowData, sectionID, rowID) => {
                 if (index < 0) index = PageDisplayDate.length - 1;
                 const obj = PageDisplayDate[index--];
                 return (
-                    <div key={rowID} className="zncx_table" style={{ padding: '0 15px', backgroundColor: 'white', }}>
-                        {
-                            PageDisplayDate.length > 0 ? Object.keys(PageTitleDate).map((key, id) => {
-                                if (id < 5) {
-                                    return (
-                                        <div key={id + key} className={id === 0 ? "zncx_views" : "zncx_view"}>
-                                            <div className="zncxTop">{PageTitleDate[key]} :</div>
-                                            <div>{obj[key]}</div>
-                                        </div>
-                                    )
-                                }
-                            }) : <div />
-                        }
+                    <div key={rowID} className="zncx_table">
+                        <div className="zncx_table_img">  <img src={tabs[this.state.pageSize].icon} /> </div>
+                        <div className="zncx_table_view">
+                            {
+                                PageDisplayDate.length > 0 ? Object.keys(PageTitleDate).map((key, id) => {
+                                    if (id < 5) {
+                                        return (
+                                            <div key={id + key} className={id === 0 ? "zncx_views" : "zncx_view"}>
+                                                <div className="zncxTop">{PageTitleDate[key]} :</div>
+                                                <div>{obj[key]}</div>
+                                            </div>
+                                        )
+                                    }
+                                }) : <div />
+                            }
+                        </div>
                     </div>
                 );
             };
@@ -247,7 +249,6 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                     <div key="zncx_Search">
                         <div key="valChange" style={{ margin: 5 }}>
                             <SegmentedControl values={['SCT', 'CCT', 'MCT']} onValueChange={e => { this.seasonsValue = e }} />
-                            {/* <SegmentedControl selectedIndex={1} values={['Segment1', 'Segment2', 'Segment3']} /> */}
                         </div>
                         <div className="zncxSea">
                             <input className="zncxSea_left" type="text" id="IMO" placeholder="请输入IMO编号" type="search" />
@@ -340,7 +341,7 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
             return (
                 <Tabs
                     tabs={tabs.map(tab => ({ title: tab.title }))}
-                    swipeable={true}
+                    swipeable={false}
                     initialPage={0}
                     prerenderingSiblingsNumber={0}
                     onChange={null}
@@ -356,7 +357,7 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
                                     visible={this.state.modal}
                                     transparent
                                     maskClosable={false}
-                                    title="查询详情"
+                                    // title="查询详情"
                                     footer={[{ text: '关闭', onPress: () => { this.setState({ modal: false }) } }]}
                                     wrapProps={{ onTouchStart: this.onWrapTouchStart }}
                                     animationType="slide-up"

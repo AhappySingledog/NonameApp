@@ -69,7 +69,6 @@ export default connect(({ yqcl, loading }) => ({ ...yqcl }))(
                     >
                         {tabs.map((va, key) => {
                             return <div key={key}> <div className="boxS" /> <Raingratio val={va.data} />
-                                <div className="boxS" />
                                 <MoreCharts view={va.datas} groupData={"yqcl/showCharts"} index={this.state.index} />
                             </div>
                         })}

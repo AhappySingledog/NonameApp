@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { Picker, List, Tabs } from "antd-mobile";
+import { SegmentedControl, Tabs } from "antd-mobile";
 import React, { Component } from "react";
 import { subscribes, publish, unsubscribe } from '../../../core/arbiter';
 import { connect } from "dva";
@@ -29,10 +29,10 @@ export default connect(({ wxpjzxqk, loading }) => ({ ...wxpjzxqk }))(
       return (
 
         <GridFill header={
-          <div id="abc" style={{ borderBottom: "1px solid #ebebeb" }}>
-            <Picker data={datas} title="选择时间" extra={data.label} value={data} onChange={(e) => this.onchange(e)}>
-              <List.Item arrow="horizontal">时间</List.Item>
-            </Picker>
+          <div key="wc" className="zntj_dc">
+            <div id="abc" style={{ margin: "8px 5px 0px 5px", paddingBottom: '8px', background: "#fff" }}>
+              <SegmentedControl values={['本年', '本月']} onChange={e => this.onchange(e.nativeEvent.selectedSegmentIndex)} />
+            </div>
           </div>
         }>
           <div style={{ background: "#f9f9f9" }}>
@@ -45,7 +45,7 @@ export default connect(({ wxpjzxqk, loading }) => ({ ...wxpjzxqk }))(
               onTabClick={(tab, index) => { this.onTabClick(tab, index) }}>
               {tabs.map((va, key) => {
                 return <div key={key}>
-                  <div className="boxS" />
+                  <div className="boxS" style={{ background: '#e8e8e8', marginBottom: '-5px' }} />
                   <MoreCharts source={""} view={va.datas} groupData={"yqqysb/showCharts"} index={this.state.index} />
                 </div>
               })}

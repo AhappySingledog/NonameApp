@@ -54,9 +54,9 @@ export default {
           {
             headTitle: '本年各码头超过三个月未放行的集装箱情况',
             items: [
-              { title: "SCT", vl: "52%", value: "520" },
-              { title: "CCT", vl: "30%", value: "300" },
-              { title: "MCT", vl: "18%", value: "180" }
+              { title: "SCT", vl: "52%", value: "111" },
+              { title: "CCT", vl: "30%", value: "222" },
+              { title: "MCT", vl: "18%", value: "333" }
             ]
           }
         ]

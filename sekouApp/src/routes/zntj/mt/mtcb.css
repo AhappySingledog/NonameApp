@@ -1,54 +1,6 @@
-.mtcb {
-  background: #f9f9f9;
-}
-.mtcb_segbox {
+.boxS {
   width: 100%;
-  height: 4px;
 }
-.mtcb_box {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: 120px;
-}
-.mtcb_box_top {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  border-top: 1px solid #e8e8e8;
+.yqcl_box {
   border-bottom: 1px solid #e8e8e8;
-  background: white;
-  align-items: center;
-}
-.mtcb_box_top_cg {
-  background-image: url(../../../images/zntj/jcg/cg.svg);
-  background-size: 100% 100%;
-  display: inline-block;
-  border-radius: 4px;
-  background: #2591fe;
-  padding: 2px;
-  width: 20px;
-  height: 20px;
-  margin-right: 5%;
-}
-.mtcb_box_top_jg {
-  background-image: url(../../../images/zntj/jcg/jg.svg);
-  background-size: 100% 100%;
-  display: inline-block;
-  border-radius: 4px;
-  background: #2591fe;
-  padding: 2px;
-  width: 20px;
-  height: 20px;
-  margin-right: 5%;
-}
-.mtcb_box_bot {
-  display: flex;
-  flex-direction: row;
-}
-.mc {
-  background: #9f9f9f;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
 }

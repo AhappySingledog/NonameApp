@@ -38,21 +38,21 @@ export default {
                         label: '同比',
                         fill: false,
                         data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                        backgroundColor: '#acd598',
-                        borderColor: '#acd598',
+                        backgroundColor: '#b3de75',
+                        borderColor: '#b3de75',
                         type: 'line'
-                    }, {
+                      }, {
                         label: '环比',
                         fill: false,
                         data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
-                        backgroundColor: '#1890ff',
-                        borderColor: '#1890ff',
+                        backgroundColor: '#f8c321',
+                        borderColor: '#f8c321',
                         type: 'line'
-                    }, {
+                      }, {
                         label: '船代申报提单量',
                         data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
-                        backgroundColor: '#f57874'
-                    }],
+                        backgroundColor: '#39a3ef'
+                      }],
                     labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
                 },
                 options: {

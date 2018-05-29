@@ -18,6 +18,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin: 15px 0px 5px 5px;
         >div {
             width: 55%;
             color: #1890FF
@@ -27,54 +28,102 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin: 5px;
         >div {
             width: 55%;
             color: #8e8e8e
         }
     }
+    /** 智能预警中的卡片 */
+    &_table {
+        // margin: 15px 0;
+        background: white;
+        display: flex;
+        flex-direction: row;
+        &_img {
+            width: 40px;
+            height: 40px;
+            margin: 15px 30px;
+            border-radius: 5px;
+        }
+        &_view {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }
 
-.znyjTop{
+.znyjTop {
     width: 35% !important;
-    text-align: end;
+    text-align: start;
 }
 
 .yjxq {
     &_table {
         width: '50%';
-        text-align: start
+        text-align: start;
+        &_xxxx {
+            display: flex;
+            flex-direction: column;
+
+            &_glx{
+                border: 1px solid #efefef;
+                margin: 5px 0;
+            }
+            
+            &_span {
+                color: black;
+                padding-top: 12px;
+            }
+            &_span::before {
+                content: '';
+                border-left: 4px solid #1891ff;
+                margin: 0 12px;
+            }
+            &_view {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                line-height: 36px;
+                height: 36px;
+                &_vla{
+                    color: #333 !important; 
+                 }
+                >div {
+                    width: 50%;
+                    color: #8e8e8e;
+                    margin-left: 30px;
+                    margin-bottom: 10px;
+                }
+            }
+            &_kg {
+                border: 1px solid #efefef;
+                width: 90%;
+                margin-left: 30px;
+            }
+        }
     }
-    &_view {
+    &_cglx{
+        border: 8px solid #efefef;
+    }
+    &_btn {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        >div {
-            width: 50%;
-            color: #8e8e8e
-        }
-    }
-    &_kg {
-        height: 6px; // background-color: rgb(245, 245, 249);
-        // border-top: 1px solid rgb(236, 236, 237);
-        // border-bottom: 1px solid rgb(236, 236, 237);
-    }
-    &_btn{
-        height: 200px;
-        width: 88%;
-        display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         padding-left: 15px;
-        >div{
-            border: 1PX solid #1890FF;
-            border-color:rgb(255, 0, 0);
-            border-radius: 5px;
-            margin-bottom : 5px;
-        }
-        &-item :first-child{
-            border-radius : 5px
-        };
-        &-item :last-child{
-            border-radius : 5px
+        &_view {
+            border: 1px solid #E9E9E9;
+            border-radius: 7px;
+            margin: 5px 10px;
+            &_bout {
+                // background: rgba(255, 255, 255, 0);
+                width: 100px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                border-radius: 5px;
+            }
         }
     }
 }
@@ -82,14 +131,13 @@
 .sub-title {
     color: #888;
     font-size: 14px;
-    padding: 30px 0 18px 0;
-    margin: 0;
+    margin: 10px 30px;
 }
 
-.am-segment-item:first-child{
-    border-radius : 5px
+.am-segment-item:first-child {
+    border-radius: 5px
 }
-.am-segment-item:last-child{
-    border-radius : 5px
+
+.am-segment-item:last-child {
+    border-radius: 5px
 }
-* { touch-action: none; }

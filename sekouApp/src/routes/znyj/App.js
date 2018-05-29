@@ -24,7 +24,7 @@ export default connect(({ znyj, loading }) => ({ ...znyj, onClick: znyj.onGridIt
             if (id.indexOf('userid') > 0) {
                 const userid = id.substring(id.indexOf('=') + 1);
                 window.localStorage.setItem('userid', userid);
-                Toast.loading('加载中...', 0)
+                Toast.loading('加载中...', 0);
                 this.props.dispatch({
                     type: 'znyj/Query',
                 });
@@ -46,7 +46,6 @@ export default connect(({ znyj, loading }) => ({ ...znyj, onClick: znyj.onGridIt
         render() {
             let { tabs = [], onClick = () => { }, list = null } = this.props;
             const { index } = this.state;
-            console.log(index)
             return (
                 <Tabs
                     tabs={tabs.map(view => ({ title: view.title }))}
@@ -81,7 +80,7 @@ class Vies extends React.Component {
                                     </div>
                                     <div className={"yjbox_right_name_" + valu.type}>{valu.title}</div>
                                 </div>
-                                <div className={"yjbox_right_cen yjbox_right_cen_" + valu.type}>{list[valu.cla].value}</div>
+                                <div className={"yjbox_right_cen yjbox_right_cen_" + valu.type}>{ list[valu.cla] ? list[valu.cla].value : 0 }</div>
                                 <div className="yjbox_right_bot">{valu.botview}</div>
                             </div>
                         </div>

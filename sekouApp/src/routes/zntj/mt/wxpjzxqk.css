@@ -1,4 +1,14 @@
 .boxS {
   width: 100%;
-  height: 5PX;
+  height: 5px;
+}
+.zntj_glx {
+  height: 5px;
+  border: 1px solid #ebebeb;
+  background: #ebebeb;
+}
+.zntj_dc {
+  border-bottom: 1px solid #ebebeb;
+  width: 100%;
+  background: #fff;
 }

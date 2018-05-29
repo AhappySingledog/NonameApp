@@ -8,9 +8,8 @@
   height: 120px;
   justify-content: space-around;
   border: 1px solid #e8e8e8;
-  border-radius: 5px;
   background: white;
-  margin: 1px;
+  margin: 1px 3px 1px 1px;
 }
 .mtcb_box_top {
   display: flex;
@@ -44,7 +43,7 @@
 .mtcb_box_cen {
   font-size: 20px;
   text-align: center;
-  color: blue;
+  color: #1890ff;
 }
 .mtcb_box_bot {
   display: flex;
@@ -53,7 +52,7 @@
   font-size: 14px;
 }
 .mtcb_box_bot_up > span {
-  background: #42de4d;
+  background: #3bb64f;
   padding: 1px 3px;
   margin: 0 2px;
   color: white;
@@ -63,12 +62,12 @@
   display: inline-block;
   width: 0;
   height: 0;
-  border-bottom: 8px solid #42de4d;
+  border-bottom: 8px solid #3bb64f;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
 }
 .mtcb_box_bot_down > span {
-  background: #ff3259;
+  background: #ed4d3f;
   padding: 1px 3px;
   margin: 0 4px;
   color: white;
@@ -78,7 +77,7 @@
   display: inline-block;
   width: 0;
   height: 0;
-  border-top: 8px solid #ff3259;
+  border-top: 8px solid #ed4d3f;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
 }

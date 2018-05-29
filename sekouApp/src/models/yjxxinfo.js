@@ -3,20 +3,45 @@ import { Toast } from "antd-mobile";
 import { publish } from "../core/arbiter";
 
 const map = {
-    ALTER1: { svn: 'skhg_loader', svns: 'skhg_loader_service', ptah: 'queryTableByWhere', title: '还柜后超2周未申报', tableName: '', query: '1=1' },
-    ALTER2: { svn: 'skhg_loader', svns: 'skhg_loader_service', ptah: 'queryTableByWhere', title: '到港3个月未放行', tableName: 'V_IMAP_SCCT_ONYARD_NOCUS90', query: '1=1' },
-    ALTER3: { svn: 'skhg_loader', svns: 'skhg_loader_service', ptah: 'queryTableByWhere', title: '在场堆积压柜未调入CIC查验', tableName: '', query: '1=1' },
-    ALTER4: { svn: 'skhg_loader', svns: 'skhg_loader_service', ptah: 'queryTableByWhere', title: 'CIC在场积压未开始查验', tableName: '', query: '1=1' },
-    ALTER5: { svn: 'skhg_loader', svns: 'skhg_loader_service', ptah: 'queryTableByWhere', title: 'CIC查验完毕未离场柜数', tableName: '', query: '1=1' },
-    ALTER6: { svn: 'skhg_loader', svns: 'skhg_loader_service', ptah: 'queryTableByWhere', title: '收到海关放行信息未提离/装船', tableName: 'V_IMAP_SCCT_ONYARD_RECCIQ', query: '1=1' },
-    WARNING1: { svn: 'skhg_stage', svns: 'skhg_stage_service', ptah: 'queryTableByWhere', title: '空柜有货', tableName: 'IMAP_WARNING_LOG1', query: '1=1 and HANDLER is null ORDER BY GID ' },
-    WARNING2: { svn: 'skhg_stage', svns: 'skhg_stage_service', ptah: 'queryTableByWhere', title: '调拨通道途中监管异常报警', tableName: 'IMAP_WARNING_LOG2', query: '1=1 and HANDLER is null ORDER BY GID' },
-    WARNING3: { svn: 'skhg_stage', svns: 'skhg_stage_service', ptah: 'queryTableByWhere', title: '行政通道车辆识别异常报警', tableName: 'IMAP_WARNING_LOG3', query: '1=1 and HANDLER is null  ORDER BY GID' },
-    WARNING10: { svn: 'skhg_stage', svns: 'skhg_stage_service', ptah: 'queryTableByWhere', title: '旅检船舶未审批即移泊', tableName: 'IMAP_WARNING_LOG10', query: '1=1 and HANDLER is null  ORDER BY GID' }
+    ALTER01: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口集装箱到港后超7天未放行', tableName: 'V_IMAP_ALERTING_01', query: '1=1' },
+    ALTER02: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口集装箱到港后超14天未放行', tableName: 'V_IMAP_ALERTING_02', query: '1=1' },
+    ALTER03: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口集装箱到港后超90天未放行', tableName: 'V_IMAP_ALERTING_03', query: '1=1' },
+    ALTER04: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口集装箱放行后超15天未提离', tableName: 'V_IMAP_ALERTING_04', query: '1=1' },
+    ALTER05: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '出口集装箱进闸后超7天未放行', tableName: 'V_IMAP_ALERTING_05', query: '1=1' },
+    ALTER06: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '出口集装箱进闸后超90天未放行', tableName: 'V_IMAP_ALERTING_06', query: '1=1' },
+    ALTER07: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '出口集装箱放行后超10天未装船', tableName: 'V_IMAP_ALERTING_07', query: '1=1' },
+    ALTER08: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口舱单品名含敏感词', tableName: 'V_IMAP_ALERTING_08', query: '1=1' },
+    ALTER09: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '出口预配舱单品名含敏感词', tableName: 'V_IMAP_ALERTING_09', query: '1=1' },
+    ALTER10: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '整船换装货物超期滞留堆场', tableName: 'V_IMAP_ALERTING_10', query: '1=1' },
+    ALTER11: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '收到查验指令24小时未调入CIC', tableName: 'V_IMAP_ALERTING_11', query: '1=1' },
+    ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '调入CIC超24小时未查验', tableName: 'V_IMAP_ALERTING_12', query: '1=1' },
+
+
+    WARNING01: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '国际中转集装箱滞港超90天', tableName: 'IMAP_WARNING_01', query: '1=1 and MODIFIER is null ' },
+    WARNING02: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '国际中转集装箱滞港超180天', tableName: 'IMAP_WARNING_02', query: '1=1 and MODIFIER is null' },
+    WARNING03: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '出口提前申报后超3天未抵运', tableName: 'IMAP_WARNING_03', query: '1=1 and MODIFIER is null' },
+    WARNING04: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '装载舱单数据发送不及时', tableName: 'IMAP_WARNING_04', query: '1=1 and MODIFIER is null' },
+    WARNING05: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '船舶离港后超24小时未发送理货报告', tableName: 'IMAP_WARNING_05', query: '1=1 and MODIFIER is null ' },
+    WARNING06: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '海关未放行集装箱装船', tableName: 'IMAP_WARNING_06', query: '1=1 and MODIFIER is null' },
+    WARNING07: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '海关未放行集装箱出闸', tableName: 'IMAP_WARNING_07', query: '1=1 and MODIFIER is null' },
+    WARNING08: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '整船换装货物异常提离堆场', tableName: 'IMAP_WARNING_08', query: '1=1 and MODIFIER is null' },
+    WARNING09: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '整船换装货物异常预配载', tableName: 'IMAP_WARNING_09', query: '1=1 and MODIFIER is null ' },
+    WARNING10: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '同船运输集装箱异常装卸', tableName: 'IMAP_WARNING_10', query: '1=1 and MODIFIER is null' },
+    WARNING11: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '空柜重量异常', tableName: 'IMAP_WARNING_11', query: '1=1 and MODIFIER is null' },
+    WARNING12: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆超时停留', tableName: 'IMAP_WARNING_12', query: '1=1 and MODIFIER is null' },
+    WARNING13: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆偏离路线', tableName: 'IMAP_WARNING_13', query: '1=1 and MODIFIER is null ' },
+    WARNING14: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆运行超时', tableName: 'IMAP_WARNING_14', query: '1=1 and MODIFIER is null' },
+    WARNING15: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '散杂货异常堆放', tableName: 'IMAP_WARNING_15', query: '1=1 and MODIFIER is null' },
+    WARNING16: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '收到查验指令72小时未调入CIC', tableName: 'IMAP_WARNING_16', query: '1=1 and MODIFIER is null' },
+    WARNING17: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '查验完毕超24小时未调离CIC', tableName: 'IMAP_WARNING_17', query: '1=1 and MODIFIER is null ' },
+    WARNING18: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆识别异常', tableName: 'IMAP_WARNING_18', query: '1=1 and MODIFIER is null' },
+    WARNING19: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆布控中控', tableName: 'IMAP_WARNING_19', query: '1=1 and MODIFIER is null' },
+    // WARNING20: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '旅检船舶未审批即移泊', tableName: 'IMAP_WARNING_LOG10', query: '1=1 and MODIFIER is null' },
+    // WARNING21: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '空柜有货', tableName: 'IMAP_WARNING_LOG1', query: '1=1 and MODIFIER is null ' }
 };
 export default {
     namespace: "yjxxinfo",
-    state: { datas: {}, list: null },
+    state: { datas: {}, list: null, znyj: [{ img: require('../images/znyj/yj/yj.svg') }, { img: require('../images/znyj/bj/bj.svg') }] },
     effects: {
         *findTable({ payload }, { put }) {
             let json = {
@@ -59,7 +84,6 @@ export default {
             let tab = payload.tableName;
             let count = payload.count;
             let jsons = payload.jsons;
-            // let res = yield (publish('webAction', { svn: svs, path: 'queryTableByWhere', data: { tableName: map[payload.tab].tableName, where: payload.jsons } }));
             let res = yield (publish('getData', { svn: map[tab].svn, tableName: map[tab].tableName, data: { pageno: count, pagesize: 10, where: jsons } }));
             if (res[0]['features'].length > 0) {
                 let datas = [];
@@ -79,23 +103,23 @@ export default {
             }
         },
         *QueryUser({ payload }, { call, put }) {
-            publish('webAction', { svn: 'skhg_loader_service', path: 'queryTableByWhere', data: { tableName: 'O_USER', where: "USERNAME = '" + payload.HANDLER + "'" } }).then(ors => {
-                if (ors[0].data) {
-                    publish('webAction', {
-                        svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
-                            sql: "UPDATE " + map[payload.tableName].tableName + " SET ISHANDLED='Y', HANDLER='" + payload.HANDLER + "',USERID= '"+ ors[0].data[0].GID +"', HANDLINGRESULT='" + payload.HANDLINGRESULT + "', HANDLINGTIME=SYSDATE WHERE GID=" + payload.GID
-                        }
-                    }).then((res) => {
-                        if (res[0].success) {
-                            Toast.success('处理成功！', 2)
-                        } else {
-                            Toast.fail('处理失败，请重新处理', 1);
-                        }
-                    });
-                } else {
-                    Toast.fail('未能正确查询到当前用户，请联系管理员!', 1.5);
+            // publish('webAction', { svn: 'skhg_loader_service', path: 'queryTableByWhere', data: { tableName: 'O_USER', where: "USERNAME = '" + payload.HANDLER + "'" } }).then(ors => {
+            //     if (ors[0].data) {
+            publish('webAction', {
+                svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
+                    sql: "UPDATE " + map[payload.tableName].tableName + " SET ISHANDLED='Y', MODIFIER='" + payload.HANDLER + "', HANDLINGRESULT='" + payload.HANDLINGRESULT + "', HANDLEDTIME=SYSDATE WHERE CONTAINERNO=" + payload.CONTAINERNO
                 }
-            })
+            }).then((res) => {
+                if (res[0].success) {
+                    Toast.success('处理成功！', 2)
+                } else {
+                    Toast.fail('处理失败，请重新处理', 1);
+                }
+            });
+            //     } else {
+            //         Toast.fail('未能正确查询到当前用户，请联系管理员!', 1.5);
+            //     }
+            // })
         },
     },
     reducers: {

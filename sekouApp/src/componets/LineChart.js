@@ -6,7 +6,7 @@ export default class LineChart extends React.Component {
     render() {
         const { source =[]} = this.props;
         return (
-            <HeaderFill title={source[0].headTitle} style={{margin: "8px 0"}}>
+            <HeaderFill title={source[0].headTitle}>
                 <table className="linechart">
                     <thead>
                     <tr>

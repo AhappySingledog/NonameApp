@@ -34,7 +34,6 @@ export default connect(({ mtdc, loading }) => ({ ...mtdc }))(
           >
             {tabs.map((va, key) => {
               return <div key={key}> <div className="boxS" /> <Raingratio val={va.data} />
-                <div className="boxS" />
                 <MoreCharts view={va.datas} groupData={"mtdc/showCharts"} index={this.state.index} />
               </div>
             })}

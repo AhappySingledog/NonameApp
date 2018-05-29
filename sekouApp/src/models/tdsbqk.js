@@ -1,9 +1,4 @@
-const datas = [
-  {label: "今日", value: 1},
-  {label: "本周", value: 2},
-  {label: "本月", value: 3},
-  {label: "今年", value: 4},
-];
+const datas = ['今日', '本周', '本月', '本年'];
 
 export default {
     namespace: "tdsbqk",
