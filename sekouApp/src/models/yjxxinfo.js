@@ -107,7 +107,7 @@ export default {
             //     if (ors[0].data) {
             publish('webAction', {
                 svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
-                    sql: "UPDATE " + map[payload.tableName].tableName + " SET ISHANDLED='Y', MODIFIER='" + payload.HANDLER + "', HANDLINGRESULT='" + payload.HANDLINGRESULT + "', HANDLEDTIME=SYSDATE WHERE CONTAINERNO=" + payload.CONTAINERNO
+                    sql: "UPDATE " + map[payload.tableName].tableName + " SET ISHANDLED='Y', MODIFIER='" + payload.HANDLER + "', HANDLINGRESULT='" + payload.HANDLINGRESULT + "', HANDLEDTIME=SYSDATE WHERE " + payload.CNAME + "='" + payload.CNUM + "'"
                 }
             }).then((res) => {
                 if (res[0].success) {
@@ -121,6 +121,18 @@ export default {
             //     }
             // })
         },
+        *UpdateXX({ payload }, { call, put }) {
+            publish('webAction', {
+                svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
+                    sql: "UPDATE " + map[payload.tableName].tableName + " SET ISREADED='Y', READTIME=SYSDATE WHERE " + payload.CNAME + "='" + payload.CNUM + "'"
+                }
+            }).then((res) => {
+                if (res[0].success) {
+                } else {
+                    Toast.fail('详情打开失败，请联系管理员', 0);
+                }
+            });
+        }
     },
     reducers: {
         setInfo(state, { payload }) {

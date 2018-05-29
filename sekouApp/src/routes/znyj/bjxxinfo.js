@@ -251,6 +251,10 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 		/** 处理 */
 		Handle = (e) => {
 			if (this.clyj) {
+				console.log(this.state.clsj);
+				let cname = null;
+				let cnum = null;
+				if (this.state.clsj.CONTAINERNO) { cname = "CONTAINERNO", cnum = this.state.clsj.CONTAINERNO } else { cname = "CARNO", cnum = this.state.clsj.CONTAINERNO.CARNO }
 				Toast.loading("请稍等...", 0);
 				this.props.dispatch({
 					type: 'yjxxinfo/QueryUser',
@@ -258,15 +262,31 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 						tableName: this.state.tableName,
 						HANDLER: this.state.userid,
 						HANDLINGRESULT: this.clyj,
-						GID: this.state.clsj.GID,
+						CNAME: cname,
+						CNUM: cnum
 					}
 				}).then(() => {
 					/** 处理完成关闭面板并且回滚 */
 					this.setState({ modal: false }, () => this.fecthData());
 				})
-			}else{
-				Toast.offline('您未选择处理意见',1.5);
+			} else {
+				Toast.offline('您未选择处理意见', 1.5);
 			}
+		}
+
+		handleClik(obj) {
+			this.setState({ clsj: obj, modal: true });
+			let cname = null;
+			let cnum = null;
+			if (obj.CONTAINERNO) { cname = "CONTAINERNO", cnum = obj.CONTAINERNO } else { cname = "CARNO", cnum = obj.CONTAINERNO.CARNO }
+			this.props.dispatch({
+				type: 'yjxxinfo/UpdateXX',
+				payload: {
+					tableName: this.state.tableName,
+					CNAME: cname,
+					CNUM: cnum
+				}
+			})
 		}
 
 		render() {
@@ -297,7 +317,7 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 									PageDisplayDate.length > 0 ? Object.keys(PageTitleDate).map((key, id) => {
 										if (id < 5) {
 											return (
-												<div key={id + key} className={id === 0 ? "znyj_views" : "znyj_view"} onClick={() => { this.setState({ clsj: obj, modal: true }) }}>
+												<div key={id + key} className={id === 0 ? "znyj_views" : "znyj_view"} onClick={() => this.handleClik(obj)}>
 													<div className="znyjTop">{PageTitleDate[key]} :</div>
 													<div>{obj[key]}</div>
 												</div>
