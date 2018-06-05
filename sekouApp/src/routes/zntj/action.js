@@ -1668,4 +1668,403 @@ subscribes({
             }
             return [charts1, charts2, charts3, charts4];
         }
+    }, {
+        sub: 'mtsj/showCharts',
+        func: (e) => {
+        //    return  publish("webAction", { path: "queryTableByWhere",svn: "skhg_stage_service", data: {tableName: "SCCT_DATA", where: "TERMINALCODE = SCT" } }).then(res => {
+        //        return  res;
+        //    })
+        var charts1 = {
+            type: 'bar',
+            data: {
+              datasets: [{
+                label: '船舶进境数量',
+                data: [200, 190],
+                backgroundColor: '#39a3ef'
+              }, {
+                label: '船舶出境数量',
+                data: [260, 170],
+                backgroundColor: '#8cbd47'
+              }],
+              labels: ['2018/05/30', '2018/05/28']
+            },
+            options: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true
+                }
+              }
+            }
+        };
+        var charts2 = {
+            type: 'bar',
+            data: {
+              datasets: [{
+                label: '进闸箱量',
+                data: [200, 190],
+                backgroundColor: '#39a3ef'
+              }, {
+                label: '出闸箱量',
+                data: [260, 170],
+                backgroundColor: '#8cbd47'
+              }, {
+                label: '装船箱量',
+                data: [210, 290],
+                backgroundColor: '#7fc0fe'
+              }, {
+                label: '卸船箱量',
+                data: [220, 180],
+                backgroundColor: '#f2c955'
+              }],
+              labels: ['2018/05/30', '2018/05/28']
+            },
+            options: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true
+                }
+              }
+            }
+        };
+        var charts3 = {
+            type: 'bar',
+            data: {
+              datasets: [{
+                label: '进闸车辆数量',
+                data: [200, 190],
+                backgroundColor: '#39a3ef'
+              }, {
+                label: '出闸车辆数量',
+                data: [260, 170],
+                backgroundColor: '#8cbd47'
+              }],
+              labels: ['2018/05/30', '2018/05/28']
+            },
+            options: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true
+                }
+              }
+            }
+        };
+        var charts4 = {
+            type: 'bar',
+            data: {
+              datasets: [{
+                label: '空箱数量',
+                data: [200, 190],
+                backgroundColor: '#39a3ef'
+              }, {
+                label: '重箱数量',
+                data: [260, 170],
+                backgroundColor: '#8cbd47'
+              }, {
+                label: '危险品箱数量',
+                data: [210, 290],
+                backgroundColor: '#7fc0fe'
+              }],
+              labels: ['2018/05/30', '2018/05/28']
+            },
+            options: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true
+                }
+              }
+            }
+        };
+        var charts5 = {
+            type: 'bar',
+            data: {
+              datasets: [{
+                label: '超过三个月未放行的集装箱数量',
+                data: [20, 19],
+                backgroundColor: '#39a3ef'
+              }],
+              labels: ['2018/05/30', '2018/05/28']
+            },
+            options: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true
+                }
+              }
+            }
+        };
+        var charts6 = {
+            type: 'bar',
+            data: {
+              datasets: [{
+                label: '危险品箱数量',
+                data: [20, 20],
+                backgroundColor: '#39a3ef'
+              }],
+              labels: ['2018/05/30', '2018/05/28']
+            },
+            options: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true
+                }
+              }
+            }
+        };
+        return [charts1, charts2,charts3,charts4,charts5,charts6];
+        }
+    }, {
+        sub: 'tgsj/showCharts',
+        func: (e) => {
+            var charts1 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: '船舶进境数量',
+                    data: [200, 190],
+                    backgroundColor: '#39a3ef'
+                  }, {
+                    label: '船舶出境数量',
+                    data: [260, 170],
+                    backgroundColor: '#8cbd47'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            var charts2 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: 'MCT提单数量',
+                    data: [200, 190],
+                    backgroundColor: '#39a3ef'
+                  }, {
+                    label: 'SCT提单数量',
+                    data: [260, 170],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: 'CCT提单数量',
+                    data: [210, 290],
+                    backgroundColor: '#7fc0fe'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            var charts3 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: '船代1提单数量',
+                    data: [200, 190],
+                    backgroundColor: '#39a3ef'
+                  }, {
+                    label: '船代1提单数量',
+                    data: [260, 170],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: '船代1提单数量',
+                    data: [250, 180],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: '船代3提单数量',
+                    data: [240, 160],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: '船代4提单数量',
+                    data: [230, 150],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: '船代5提单数量',
+                    data: [220, 140],
+                    backgroundColor: '#8cbd47'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            var charts4 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: '报关行1提单数量',
+                    data: [200, 190],
+                    backgroundColor: '#39a3ef'
+                  }, {
+                    label: '报关行2提单数量',
+                    data: [260, 170],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: '报关行3提单数量',
+                    data: [210, 290],
+                    backgroundColor: '#7fc0fe'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            var charts5 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: 'MCT',
+                    data: [200, 190],
+                    backgroundColor: '#39a3ef'
+                  }, {
+                    label: 'SCT',
+                    data: [260, 170],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: 'CCT',
+                    data: [210, 290],
+                    backgroundColor: '#7fc0fe'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            var charts6 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: '查验箱量量',
+                    data: [250, 140],
+                    backgroundColor: '#39a3ef'
+                  },{
+                    label: '放行箱量',
+                    data: [200, 190],
+                    backgroundColor: '#8cbd47'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            return [charts1, charts2,charts3,charts4,charts5,charts6];
+        }
+    }, {
+        sub: 'yqsj/showCharts',
+        func: (e) => {
+            var charts1 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: '进闸车辆数量',
+                    data: [200, 190],
+                    backgroundColor: '#39a3ef'
+                  }, {
+                    label: '出闸车辆数量',
+                    data: [260, 170],
+                    backgroundColor: '#8cbd47'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            var charts2 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: '库存数量',
+                    data: [200, 190],
+                    backgroundColor: '#39a3ef'
+                  }, {
+                    label: '入库数量',
+                    data: [260, 170],
+                    backgroundColor: '#8cbd47'
+                  }, {
+                    label: '出库数量',
+                    data: [210, 290],
+                    backgroundColor: '#7fc0fe'
+                  }, {
+                    label: '申报数量',
+                    data: [220, 180],
+                    backgroundColor: '#f2c955'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            var charts3 = {
+                type: 'bar',
+                data: {
+                  datasets: [{
+                    label: '审核的进出口备案制清单数量',
+                    data: [80, 80],
+                    backgroundColor: '#39a3ef'
+                  }],
+                  labels: ['2018/05/30', '2018/05/28']
+                },
+                options: {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      usePointStyle: true
+                    }
+                  }
+                }
+            };
+            return [charts1, charts2,charts3];
+        }
     });

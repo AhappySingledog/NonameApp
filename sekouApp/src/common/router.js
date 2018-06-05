@@ -8,6 +8,21 @@ export const routerConfig = {
     models: ["zntj"],
     router: () => import('../routes/zntj/App')
   },
+  "/zntj_mtsj": {
+    props: { title: "码头数据" },
+    models: ["mtsj"],
+    router: () => import('../routes/zntj/new/Mtsj')
+  },
+  "/zntj_tgsj": {
+    props: { title: "通关数据" },
+    models: ["tgsj"],
+    router: () => import('../routes/zntj/new/Tgsj')
+  },
+  "/zntj_yqsj": {
+    props: { title: "园区数据" },
+    models: ["yqsj"],
+    router: () => import('../routes/zntj/new/Yqsj')
+  },
   "/zntj_bgdl": {
     props: { title: "报关单量" },
     models: ["bgdl"],

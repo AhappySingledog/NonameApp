@@ -19,19 +19,19 @@ export default connect(({ znyj, loading }) => ({ ...znyj, onClick: znyj.onGridIt
             index: (window.localStorage.getItem('znyj_index') || 0) * 1,
         }
 
-        componentDidMount() {
-            let id = document.location.hash;
-            if (id.indexOf('userid') > 0) {
-                const userid = id.substring(id.indexOf('=') + 1);
-                window.localStorage.setItem('userid', userid);
-                Toast.loading('加载中...', 0);
-                this.props.dispatch({
-                    type: 'znyj/Query',
-                });
-            } else {
-                Toast.fail("您未登入系统，无法正常操作！", 0)
-            }
-        }
+        // componentDidMount() {
+        //     let id = document.location.hash;
+        //     if (id.indexOf('userid') > 0) {
+        //         const userid = id.substring(id.indexOf('=') + 1);
+        //         window.localStorage.setItem('userid', userid);
+        //         Toast.loading('加载中...', 0);
+        //         this.props.dispatch({
+        //             type: 'znyj/Query',
+        //         });
+        //     } else {
+        //         Toast.fail("您未登入系统，无法正常操作！", 0)
+        //     }
+        // }
 
         tabName = (e) => {
             Toast.loading('查询中...', 0);

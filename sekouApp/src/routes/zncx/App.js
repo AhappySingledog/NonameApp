@@ -78,16 +78,16 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
             }
         }
 
-        componentDidMount() {
-            let id = document.location.hash;
-            console.log(document.location);
-            if (id.indexOf('userid') > 0) {
-                this.setState({ pageSize: 0 });
-                this.fecthData();
-            } else {
-                Toast.fail("您未登入系统，无法正常操作！", 0)
-            }
-        };
+        // componentDidMount() {
+        //     let id = document.location.hash;
+        //     console.log(document.location);
+        //     if (id.indexOf('userid') > 0) {
+        //         this.setState({ pageSize: 0 });
+        //         this.fecthData();
+        //     } else {
+        //         Toast.fail("您未登入系统，无法正常操作！", 0)
+        //     }
+        // };
 
         /** 切换标题签 */
         handefind = (tab, index) => {
