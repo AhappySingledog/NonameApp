@@ -65,8 +65,8 @@ class Tabos extends React.Component {
 
 	render() {
 		let { val = {}, title = {}, lx = {} } = this.props;
-		const clyj = [{ view: "处理意见一", value: '1' }, { view: "处理意见二", value: '2' }, { view: "处理意见三", value: '3' },
-		{ view: "处理意见四", value: '4' }, { view: "处理意见五", value: '5' }, { view: "处理意见六", value: '6' }]
+		const clyj = [{ view: "催促办理", value: '1' }, { view: "转科室办理", value: '2' }, { view: "锁柜", value: '3' },
+		{ view: "锁定录证", value: '4' }, { view: "派遣无人机", value: '5' }, { view: "专员到场", value: '6' }]
 		return (
 			<div key="xq" className="yjxq_table" style={{ height: 500, width: '100%', overflow: 'scroll' }}>
 				<div className="yjxq_table_xxxx">
@@ -90,7 +90,7 @@ class Tabos extends React.Component {
 				</div>
 				{lx == 'yj' ? <div /> : <div>
 					<div className="yjxq_cglx"></div>
-					<div className="yjxq_table_xxxx_span">处理意见</div>
+					<div className="yjxq_table_xxxx_span">跟进情况反馈</div>
 					<div className="yjxq_table_xxxx_glx"></div>
 					<div className="yjxq_btn">
 						{
@@ -270,7 +270,7 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 					this.setState({ modal: false }, () => this.fecthData());
 				})
 			} else {
-				Toast.offline('您未选择处理意见', 1.5);
+				Toast.offline('您未选择反馈意见', 1.5);
 			}
 		}
 
@@ -291,7 +291,7 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 
 		render() {
 			let items = [];
-			const clyj = ['处理意见一', '处理意见二', '处理意见三', '处理意见四', '处理意见五', '处理意见六'];
+			const clyj = ['催促办理', '转科室办理', '锁柜', '锁定录证', '派遣无人机', '专员到场'];
 			let { PageDisplayDate, PageTitleDate } = this.state;
 			let index = PageDisplayDate.length - 1;
 			const separator = (sectionID, rowID) => (<div key={`${sectionID}-${rowID}`} style={{ backgroundColor: '#F5F5F9', height: 8, borderTop: '1px solid #ECECED', borderBottom: '1px solid #ECECED', }} />);
@@ -305,7 +305,7 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 						disabled={this.props.kfiled === 'yj' ? true : false}
 						right={[
 							{
-								text: '处理', onPress: () => { this.setState({ modal: true, clsj: obj }) },
+								text: '反馈', onPress: () => { this.setState({ modal: true, clsj: obj }) },
 								style: { backgroundColor: '#F4333C', color: 'white' },
 							},
 						]}

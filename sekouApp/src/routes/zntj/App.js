@@ -19,10 +19,10 @@ export default connect(({ zntj, loading }) => ({
   grids: zntj.grids,
   onClick: zntj.onGridItemClick,
 }))(class App extends Component {
-  // componentDidMount() {
-  //   let id = document.location.hash;
-  //   if (id.indexOf('userid') < 0) Toast.fail("您未登入系统，无法正常操作！", 0)
-  // }
+  componentDidMount() {
+    let id = document.location.hash;
+    if (id.indexOf('userid') < 0) Toast.fail("您未登入系统，无法正常操作！", 0)
+  }
   render() {
     let { bgs = [], grids = [], onClick = () => { } } = this.props;
     let lg = grids.length - 1;

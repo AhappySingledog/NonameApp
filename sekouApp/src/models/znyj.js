@@ -26,6 +26,8 @@ export default {
                     { num: '0', title: '未调入', botview: '收到查验指令24小时未调入CIC', type: "yj", col: 'color :#FEBA56', cla: 'ALTER11', img: require("../images/znyj/yj/wtl.svg") },
                     { num: '0', title: '未查验', botview: '调入CIC超24小时未查验', type: "yj", col: 'color :#FEBA56', cla: 'ALTER12', img: require("../images/znyj/yj/wtl.svg") },
                     { num: '0', title: '未调离', botview: '查验完毕超12小时未调离CIC', type: "yj", col: 'color :#FEBA56', cla: 'ALTER13', img: require("../images/znyj/yj/wtl.svg") },
+                    { num: '0', title: '进口通关时效超长预警', botview: '进口通关时效超长预警', type: "yj", col: 'color :#FEBA56', cla: 'ALTER14', img: require("../images/znyj/yj/wtl.svg") },
+                    { num: '0', title: '出口通关时效超长预警', botview: '出口通关时效超长预警', type: "yj", col: 'color :#FEBA56', cla: 'ALTER15', img: require("../images/znyj/yj/wtl.svg") },
                 ]
             },
             {
@@ -50,6 +52,10 @@ export default {
                     { num: '0', title: '查验完毕超24小时未调离CIC', botview: '查验完毕超24小时未调离CIC', type: "bj", col: 'color :#FE6668', cla: 'WARNING17', img: require("../images/znyj/bj/jtgzbj.svg") },
                     { num: '0', title: '行政通道车辆识别异常', botview: '行政通道车辆识别异常', type: "bj", col: 'color :#FE6668', cla: 'WARNING18', img: require("../images/znyj/bj/jtgzbj.svg") },
                     { num: '0', title: '行政通道车辆布控中控', botview: '行政通道车辆布控中控', type: "bj", col: 'color :#FE6668', cla: 'WARNING19', img: require("../images/znyj/bj/jtgzbj.svg") },
+                    { num: '0', title: '旅检船舶未审批即移泊', botview: '旅检船舶未审批即移泊', type: "bj", col: 'color :#FE6668', cla: 'WARNING20', img: require("../images/znyj/bj/jtgzbj.svg") },
+                    { num: '0', title: '旅检船舶夜间异常', botview: '旅检船舶夜间异常', type: "bj", col: 'color :#FE6668', cla: 'WARNING21', img: require("../images/znyj/bj/jtgzbj.svg") },
+                    { num: '0', title: '船舶抵港时间异常报警', botview: '船舶抵港时间异常报警', type: "bj", col: 'color :#FE6668', cla: 'WARNING22', img: require("../images/znyj/bj/jtgzbj.svg") },
+                    { num: '0', title: '船舶离港时间异常报警', botview: '船舶离港时间异常报警', type: "bj", col: 'color :#FE6668', cla: 'WARNING23', img: require("../images/znyj/bj/jtgzbj.svg") },
                 ]
             },
         ],

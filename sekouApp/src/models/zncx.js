@@ -34,6 +34,7 @@ export default {
 				if (responseCXJG[0]['features'].length > 0) {
 					let datas = [];
 					responseCXJG[0].features.map(x => datas.push(x.attributes));
+					console.log(datas);
 					yield put({
 						type: 'appendList',
 						payload: [datas, responseCXBM] ? [datas, responseCXBM] : [],

@@ -15,29 +15,34 @@ const map = {
     ALTER10: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '整船换装货物超期滞留堆场', tableName: 'V_IMAP_ALERTING_10', query: '1=1' },
     ALTER11: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '收到查验指令24小时未调入CIC', tableName: 'V_IMAP_ALERTING_11', query: '1=1' },
     ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '调入CIC超24小时未查验', tableName: 'V_IMAP_ALERTING_12', query: '1=1' },
+    ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '查验完毕超12小时未调离CIC', tableName: 'V_IMAP_ALERTING_13', query: '1=1' },
+    ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口通关时效超长预警', tableName: 'V_IMAP_ALERTING_14', query: '1=1' },
+    ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '出口通关时效超长预警', tableName: 'V_IMAP_ALERTING_15', query: '1=1' },
 
 
-    WARNING01: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '国际中转集装箱滞港超90天', tableName: 'IMAP_WARNING_01', query: '1=1 and MODIFIER is null ' },
-    WARNING02: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '国际中转集装箱滞港超180天', tableName: 'IMAP_WARNING_02', query: '1=1 and MODIFIER is null' },
-    WARNING03: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '出口提前申报后超3天未抵运', tableName: 'IMAP_WARNING_03', query: '1=1 and MODIFIER is null' },
-    WARNING04: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '装载舱单数据发送不及时', tableName: 'IMAP_WARNING_04', query: '1=1 and MODIFIER is null' },
-    WARNING05: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '船舶离港后超24小时未发送理货报告', tableName: 'IMAP_WARNING_05', query: '1=1 and MODIFIER is null ' },
-    WARNING06: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '海关未放行集装箱装船', tableName: 'IMAP_WARNING_06', query: '1=1 and MODIFIER is null' },
-    WARNING07: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '海关未放行集装箱出闸', tableName: 'IMAP_WARNING_07', query: '1=1 and MODIFIER is null' },
-    WARNING08: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '整船换装货物异常提离堆场', tableName: 'IMAP_WARNING_08', query: '1=1 and MODIFIER is null' },
-    WARNING09: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '整船换装货物异常预配载', tableName: 'IMAP_WARNING_09', query: '1=1 and MODIFIER is null ' },
-    WARNING10: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '同船运输集装箱异常装卸', tableName: 'IMAP_WARNING_10', query: '1=1 and MODIFIER is null' },
-    WARNING11: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '空柜重量异常', tableName: 'IMAP_WARNING_11', query: '1=1 and MODIFIER is null' },
-    WARNING12: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆超时停留', tableName: 'IMAP_WARNING_12', query: '1=1 and MODIFIER is null' },
-    WARNING13: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆偏离路线', tableName: 'IMAP_WARNING_13', query: '1=1 and MODIFIER is null ' },
-    WARNING14: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆运行超时', tableName: 'IMAP_WARNING_14', query: '1=1 and MODIFIER is null' },
-    WARNING15: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '散杂货异常堆放', tableName: 'IMAP_WARNING_15', query: '1=1 and MODIFIER is null' },
-    WARNING16: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '收到查验指令72小时未调入CIC', tableName: 'IMAP_WARNING_16', query: '1=1 and MODIFIER is null' },
-    WARNING17: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '查验完毕超24小时未调离CIC', tableName: 'IMAP_WARNING_17', query: '1=1 and MODIFIER is null ' },
-    WARNING18: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆识别异常', tableName: 'IMAP_WARNING_18', query: '1=1 and MODIFIER is null' },
-    WARNING19: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆布控中控', tableName: 'IMAP_WARNING_19', query: '1=1 and MODIFIER is null' },
-    // WARNING20: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '旅检船舶未审批即移泊', tableName: 'IMAP_WARNING_LOG10', query: '1=1 and MODIFIER is null' },
-    // WARNING21: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '空柜有货', tableName: 'IMAP_WARNING_LOG1', query: '1=1 and MODIFIER is null ' }
+    WARNING01: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '国际中转集装箱滞港超90天', tableName: 'IMAP_WARNING_01', query: "ISHANDLED='N'" },
+    WARNING02: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '国际中转集装箱滞港超180天', tableName: 'IMAP_WARNING_02', query: "ISHANDLED='N'" },
+    WARNING03: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '出口提前申报后超3天未抵运', tableName: 'IMAP_WARNING_03', query: "ISHANDLED='N'" },
+    WARNING04: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '装载舱单数据发送不及时', tableName: 'IMAP_WARNING_04', query: "ISHANDLED='N'" },
+    WARNING05: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '船舶离港后超24小时未发送理货报告', tableName: 'IMAP_WARNING_05', query: "ISHANDLED='N'" },
+    WARNING06: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '海关未放行集装箱装船', tableName: 'IMAP_WARNING_06', query: "ISHANDLED='N'" },
+    WARNING07: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '海关未放行集装箱出闸', tableName: 'IMAP_WARNING_07', query: "ISHANDLED='N'" },
+    WARNING08: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '整船换装货物异常提离堆场', tableName: 'IMAP_WARNING_08', query: "ISHANDLED='N'" },
+    WARNING09: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '整船换装货物异常预配载', tableName: 'IMAP_WARNING_09', query: "ISHANDLED='N'" },
+    WARNING10: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '同船运输集装箱异常装卸', tableName: 'IMAP_WARNING_10', query: "ISHANDLED='N'" },
+    WARNING11: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '空柜重量异常', tableName: 'IMAP_WARNING_11', query: "ISHANDLED='N'" },
+    WARNING12: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆超时停留', tableName: 'IMAP_WARNING_12', query: "ISHANDLED='N'" },
+    WARNING13: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆偏离路线', tableName: 'IMAP_WARNING_13', query: "ISHANDLED='N'" },
+    WARNING14: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '调拨车辆运行超时', tableName: 'IMAP_WARNING_14', query: "ISHANDLED='N'" },
+    WARNING15: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '散杂货异常堆放', tableName: 'IMAP_WARNING_15', query: "ISHANDLED='N'" },
+    WARNING16: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '收到查验指令72小时未调入CIC', tableName: 'IMAP_WARNING_16', query: "ISHANDLED='N'" },
+    WARNING17: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '查验完毕超24小时未调离CIC', tableName: 'IMAP_WARNING_17', query: "ISHANDLED='N'" },
+    WARNING18: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆识别异常', tableName: 'IMAP_WARNING_18', query: "ISHANDLED='N'" },
+    WARNING19: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆布控中控', tableName: 'IMAP_WARNING_19', query: "ISHANDLED='N'" },
+    WARNING20: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '旅检船舶未审批即移泊', tableName: 'IMAP_WARNING_20', query: "ISHANDLED='N'" },
+    WARNING21: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '旅检船舶夜间异常', tableName: 'IMAP_WARNING_21', query: "ISHANDLED='N'" },
+    WARNING22: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '船舶抵港时间异常报警', tableName: 'IMAP_WARNING_22', query: "ISHANDLED='N'" },
+    WARNING23: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '船舶离港时间异常报警', tableName: 'IMAP_WARNING_23', query: "ISHANDLED='N'" },
 };
 export default {
     namespace: "yjxxinfo",
@@ -66,6 +71,9 @@ export default {
             if (res[0]['features'].length > 0) {
                 let datas = [];
                 let attr = res[0].fieldAliases;
+                delete attr.MODIFIER;
+                delete attr.HANDLEDTIME;
+                delete attr.HANDLINGRESULT
                 res[0].features.map(x => datas.push(x.attributes));
                 Toast.hide();
                 yield put({
@@ -85,9 +93,13 @@ export default {
             let count = payload.count;
             let jsons = payload.jsons;
             let res = yield (publish('getData', { svn: map[tab].svn, tableName: map[tab].tableName, data: { pageno: count, pagesize: 10, where: jsons } }));
+            console.log(res);
             if (res[0]['features'].length > 0) {
                 let datas = [];
                 let attr = res[0].fieldAliases;
+                delete attr.MODIFIER;
+                delete attr.HANDLEDTIME;
+                delete attr.HANDLINGRESULT
                 res[0].features.map(x => datas.push(x.attributes));
                 Toast.hide();
                 yield put({
@@ -107,11 +119,19 @@ export default {
             //     if (ors[0].data) {
             publish('webAction', {
                 svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
-                    sql: "UPDATE " + map[payload.tableName].tableName + " SET ISHANDLED='Y', MODIFIER='" + payload.HANDLER + "', HANDLINGRESULT='" + payload.HANDLINGRESULT + "', HANDLEDTIME=SYSDATE WHERE " + payload.CNAME + "='" + payload.CNUM + "'"
+                    sql: "UPDATE " + map[payload.tableName].tableName + " SET ISHANDLED='Y', MODIFIER=" + payload.HANDLER + ", HANDLINGRESULT='" + payload.HANDLINGRESULT + "', HANDLEDTIME=SYSDATE WHERE " + payload.CNAME + "='" + payload.CNUM + "';"
                 }
             }).then((res) => {
                 if (res[0].success) {
-                    Toast.success('处理成功！', 2)
+                    publish('webAction', {
+                        svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
+                            sql: "UPDATE IMAP_WARNING_NEW SET " + payload.tableName + "= " + payload.tableName + " - 1 where ISHANDLED = 'N'; UPDATE IMAP_WARNING_NEW SET " + payload.tableName + " = " + payload.tableName + " + 1 where ISHANDLED = 'Y';"
+                        }
+                    }).then(e =>{
+                        if(e[0].success){
+                            Toast.success('处理成功！', 2);
+                        }
+                    })
                 } else {
                     Toast.fail('处理失败，请重新处理', 1);
                 }
@@ -122,16 +142,18 @@ export default {
             // })
         },
         *UpdateXX({ payload }, { call, put }) {
-            publish('webAction', {
-                svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
-                    sql: "UPDATE " + map[payload.tableName].tableName + " SET ISREADED='Y', READTIME=SYSDATE WHERE " + payload.CNAME + "='" + payload.CNUM + "'"
-                }
-            }).then((res) => {
-                if (res[0].success) {
-                } else {
-                    Toast.fail('详情打开失败，请联系管理员', 0);
-                }
-            });
+            if ((map[payload.tableName].tableName).indexOf('WARNING') > 0) {
+                publish('webAction', {
+                    svn: 'skhg_stage_service', path: 'excuteSqlNoQuery', data: {
+                        sql: "UPDATE " + map[payload.tableName].tableName + " SET ISREADED='Y', READTIME=SYSDATE WHERE " + payload.CNAME + "='" + payload.CNUM + "'"
+                    }
+                }).then((res) => {
+                    if (res[0].success) {
+                    } else {
+                        Toast.fail('详情打开失败，请联系管理员', 0);
+                    }
+                });
+            }
         }
     },
     reducers: {

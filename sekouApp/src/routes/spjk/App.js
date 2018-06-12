@@ -6,13 +6,13 @@ import { Modal, Grid, Icon, SearchBar, Toast } from 'antd-mobile';
 import lb from '../../images/spjk/lb.svg'
 
 export default connect(({ spjk, loading }) => ({ ...spjk }))(class App extends Component {
-  // componentDidMount() {
-  //   let id = document.location.hash;
-  //   if (id.indexOf('userid') > 0) {
-  //   } else {
-  //     Toast.fail("您未登入系统，无法正常操作！", 0)
-  //   }
-  // }
+  componentDidMount() {
+    let id = document.location.hash;
+    if (id.indexOf('userid') > 0) {
+    } else {
+      Toast.fail("您未登入系统，无法正常操作！", 0)
+    }
+  }
   render() {
     let { modal = false, modal2 = false, center = 'lng:113.89425,lat:22.485156', zoom = 14, spxg = [], dispatch, spurl, title, text } = this.props;
     return (

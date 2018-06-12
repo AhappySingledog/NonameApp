@@ -2,7 +2,7 @@
   "proxy": [
     {
       "name": "proxy",
-      "url": "http://172.28.1.101:8080/proxy/proxy.jsp",
+      "url": "http://172.28.1.101:8089/proxy/proxy.jsp",
       "desc": "支持费JSONP代理"
     }
   ],
@@ -10,27 +10,27 @@
     {
       "name": "skhg_stage",
       "description": "元数据服务",
-      "url": "http://172.28.1.101:8080/ServiceEngine/rest/services/NetServer/skhg_stage",
+      "url": "http://172.28.1.101:8089/ServiceEngine/rest/services/NetServer/skhg_stage",
       "proxy": ""
     },{
       "name": "skhg_loader",
       "description": "元数据服务",
-      "url": "http://172.28.1.101:8080/ServiceEngine/rest/services/NetServer/skhg_loader",
+      "url": "http://172.28.1.101:8089/ServiceEngine/rest/services/NetServer/skhg_loader",
       "proxy": ""
     },{
       "name": "skhg_service",
       "description": "skhg服务接口",
-      "url": "http://172.28.1.101:8080/ServiceEngine/rest/services/SKHGServer",
+      "url": "http://172.28.1.101:8089/ServiceEngine/rest/services/SKHGServer",
       "proxy": ""
     },{
       "name": "skhg_stage_service",
       "description": "skhg_stage服务接口",
-      "url": "http://172.28.1.101:8080/ServiceEngine/rest/services/SKHGStageServer",
+      "url": "http://172.28.1.101:8089/ServiceEngine/rest/services/SKHGStageServer",
       "proxy": ""
     },{
       "name": "skhg_loader_service",
       "description": "skhg_loade服务接口",
-      "url": "http://172.28.1.101:8080/ServiceEngine/rest/services/SKHGLoaderServer",
+      "url": "http://172.28.1.101:8089/ServiceEngine/rest/services/SKHGLoaderServer",
       "proxy": ""
     },{
       "name": "eportapisct",
