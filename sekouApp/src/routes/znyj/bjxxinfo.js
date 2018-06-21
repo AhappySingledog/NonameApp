@@ -246,8 +246,8 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 
 		/** 处理 */
 		Handle = (e) => {
-			if (this.clyj) {
-				console.log(this.state.clsj);
+			console.log(this.clyj);
+			if (this.clyj && this.clyj !== 'undefined') {
 				let cname = null;
 				let cnum = null;
 				if (this.state.clsj.CONTAINERNO) { cname = "CONTAINERNO", cnum = this.state.clsj.CONTAINERNO } else { cname = "CARNO", cnum = this.state.clsj.CONTAINERNO.CARNO }
@@ -350,7 +350,7 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 						// transparent
 						maskClosable={false}
 						// title={this.props.kfiled === 'yj' ? "预警详情" : "报警处理"}
-						footer={this.props.kfiled === 'yj' ? [{ text: '关闭', onPress: () => { this.setState({ modal: false }) } }] : [{ text: '关闭', onPress: () => { this.setState({ modal: false }) } }, { text: '提交', onPress: this.Handle }]}
+						footer={this.props.kfiled === 'yj' ? [{ text: '关闭', onPress: () => { this.setState({ modal: false },()=> { this.clyj = 'undefined',console.log(this.clyj)}) } }] : [{ text: '关闭', onPress: () => { this.setState({ modal: false },()=> { this.clyj = 'undefined',console.log(this.clyj)}) } }, { text: '提交', onPress: this.Handle }]}
 						wrapProps={{ onTouchStart: this.onWrapTouchStart }}
 						animationType="slide-up"
 					>
