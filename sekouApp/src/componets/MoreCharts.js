@@ -2,15 +2,14 @@ import React from "react";
 import HeaderFill from './HeaderFill';
 import ReactDOM from "react-dom";
 import Chart from "chart.js";
-import { LineChart, SelectChart } from './index';
-import { subscribes, publish, unsubscribe } from '../core/arbiter';
+import { publish } from '../core/arbiter';
 import '../routes/zntj/action';
 
 export default class MoreCharts extends React.Component {
 
-    componentDidMount() {
-        let { view, groupData, index } = this.props;
-        publish(groupData, index).then((res) => {
+    componentDidUpdate(){
+        let {  groupData ,list} = this.props;
+        publish(groupData, list).then((res) => {
             Object.keys(this.refs).map((a,b)=>{
                 let chars = new Chart(ReactDOM.findDOMNode(this.refs[a]), res[0][b]);
             })

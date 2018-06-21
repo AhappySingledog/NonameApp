@@ -4,8 +4,6 @@ import pathToRegexp from "path-to-regexp";
 import './bjxx.less';
 import ReactDOM from 'react-dom';
 import { connect } from "dva";
-import $ from 'jquery';
-import { subscribe, unsubscribe } from "../../core/arbiter";
 import {
 	Toast,
 	ListView,
@@ -13,9 +11,6 @@ import {
 	PullToRefresh,
 	Modal,
 	SwipeAction,
-	Picker,
-	List,
-	SegmentedControl
 } from "antd-mobile";
 
 function closest(el, selector) {
@@ -109,7 +104,7 @@ class Tabos extends React.Component {
 
 
 
-export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
+export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 	class Yjxx extends Component {
 		state = {
 			tableName: (window.localStorage.getItem('tableName') || ""),
@@ -134,6 +129,7 @@ export default connect(({ yjxxinfo, loading }) => ({ ...yjxxinfo }))(
 				type: "yjxxinfo/findTable",
 				payload: pathToRegexp(key).exec(location.pathname)
 			}).then(e => {
+				console.log(this);
 				this.fecthData();
 			});
 

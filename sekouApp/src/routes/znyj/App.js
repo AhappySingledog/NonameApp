@@ -2,16 +2,6 @@ import { Tabs, Toast } from "antd-mobile";
 import React, { Component } from "react";
 import { connect } from "dva";
 import "./app.less";
-import a from './Yjxxinfo';
-import { publish } from "../../core/arbiter";
-
-function isEmptyObject(obj) {
-
-    for (var key in obj) {
-        break; return false
-    };
-    return true
-};
 
 export default connect(({ znyj, loading }) => ({ ...znyj, onClick: znyj.onGridItemClick }))(
     class app extends Component {

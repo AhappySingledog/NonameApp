@@ -9,28 +9,28 @@ const datas = [
       datas: datas,
       data: [datas[0].value],
       tabs: [
+        // {
+        //   title: '全部', type: 'all',
+        //   datas: [
+        //     { name: 'z_chars1', tabname: '近一年各码头危险品箱数环比情况' },
+        //   ],
+        // },
         {
-          title: '全部', type: 'all',
+          title: 'SCT', type: 'SCT',
           datas: [
-            { name: 'z_chars1', tabname: '近一年各码头危险品箱数环比情况' },
+            { name: 'z_chars2', tabname: 'SCT危险品箱数环比情况' },
           ],
         },
         {
-          title: 'SCT', type: 'sct',
+          title: 'CCT', type: 'CCT',
           datas: [
-            { name: 'z_chars2', tabname: '近一年各码头危险品箱数环比情况' },
+            { name: 'z_chars3', tabname: 'CCT危险品箱数环比情况' },
           ],
         },
         {
-          title: 'CCT', type: 'cct',
+          title: 'MCT', type: 'MCT',
           datas: [
-            { name: 'z_chars3', tabname: '近一年各码头危险品箱数环比情况' },
-          ],
-        },
-        {
-          title: 'MCT', type: 'mct',
-          datas: [
-            { name: 'z_chars4', tabname: '近一年各码头危险品箱数环比情况' },
+            { name: 'z_chars4', tabname: 'MCT危险品箱数环比情况' },
           ],
         }
       ],
