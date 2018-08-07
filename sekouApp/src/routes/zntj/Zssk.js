@@ -1,52 +1,73 @@
-import ReactDOM from "react-dom";
-import { SegmentedControl } from "antd-mobile";
+import { Tabs } from "antd-mobile";
 import React, { Component } from "react";
 import { subscribes, publish, unsubscribe } from '../../core/arbiter';
 import { connect } from "dva";
 import './action';
 
-import { Chart, HeaderFill, LineChart, GridFill } from "../../componets";
+import { GridFill, MoreCharts } from "../../componets";
 import "./zssk.less";
 
 export default connect(({ zssk, loading }) => ({ ...zssk }))(
   class Zssk extends Component {
+    state = {
+      index: 0,                             //记录翻页数
+      list: [],                             //所有查询后返回的数据
+      json: []                             //传入chart图的数据
+    }
+
     componentDidMount() {
-      this.showCharts(0);
-    }
-    showCharts(e) {
-      publish("zssk/showCharts", e).then((res) => {
-        let [data1] = res[0];
-        if (this.chart1) this.chart1.destroy();
-        this.chart1 = new Chart(ReactDOM.findDOMNode(this.refs.chart1), data1);
-      });
-    }
-    onchange(e) {
       this.props.dispatch({
-        type: "zssk/select",
-        payload: e
-      });
-      this.showCharts(e);
+        type: 'layout/QueryBGDL',
+        payload: {
+          where: ' 1=1 order by EFFECTDATE DESC',
+        }
+      }).then(() => {
+        this.ActionCharts();
+      })
     }
-    componentWillUnmount() {
-      if (this.chart1) this.chart1.destroy();
+
+
+    /** 点击码头后跳转 */
+    onTabClick = (tab, index) => {
+      this.setState({ index: index }, () => this.ActionCharts());
     }
+    /** 进入action的char图 */
+    ActionCharts = () => {
+      publish('QueryBGDLxx').then(e => {
+        this.setState({ list: { json: (e[e.length - 1]['list'][0]['data']).sort((a, b) => Number(a.EFFECTDATE) - Number(b.EFFECTDATE)), index: this.state.index } })
+      })
+    };
+
+    // onchange(e) {
+    //   this.props.dispatch({
+    //     type: "bgdl/select",
+    //     payload: e
+    //   });
+    // }
     render() {
-      let { datas = [], data = {}, source = [] } = this.props;
+      let { tabs } = this.props;
       return (
         <GridFill header={
           <div key="wc" className="zntj_dc">
-            <div id="abc" style={{ margin: "8px 5px 0px 5px", paddingBottom: '8px', background: "#fff" }}>
-              <SegmentedControl values={['本年', '本月']} onChange={e => this.onchange(e.nativeEvent.selectedSegmentIndex)} />
-            </div>
+            {/* <div id="abc" style={{ margin: "8px 5px 0px 5px", paddingBottom: '8px', background: "#fff" }}>
+              <SegmentedControl values={['本年', '本月']} onValueChange={e => this.onchange(e)} />
+            </div> */}
           </div>
         }>
-          <div style={{ background: "#f9f9f9", height: '80%' }}>
-            <LineChart source={source} />
-
-            <HeaderFill title="近一年征收税款同环比情况" style={{ margin: "8px 0", height: '90%' }}>
-              <canvas ref="chart1" />
-            </HeaderFill>
-          </div>
+          <Tabs
+            tabs={tabs}
+            swipeable={false}
+            initialPage={0}
+            onChange={null}
+            onTabClick={(tab, index) => { this.onTabClick(tab, index) }}
+          >
+            {tabs.map((va, key) => {
+              return <div key={key}>
+                <div className="boxS" />
+                <MoreCharts view={va.datas} list={this.state.list} groupData={"zssk/showCharts"} index={this.state.index} />
+              </div>
+            })}
+          </Tabs>
         </GridFill>
       );
     }

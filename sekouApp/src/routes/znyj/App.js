@@ -24,13 +24,14 @@ export default connect(({ znyj, loading }) => ({ ...znyj, onClick: znyj.onGridIt
         }
 
         tabName = (e) => {
+            console.log(this.props.list);
             Toast.loading('查询中...', 0);
             if (this.props.list[e.cla].value > 0) {
                 window.localStorage.setItem('tableName', e.cla);
                 this.props.onClick(e);
             } else {
                 Toast.hide();
-                Toast.fail('当前无数据', 1.5);
+                Toast.info('无数据', 1.5);
             }
         }
         render() {

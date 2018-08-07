@@ -5,7 +5,7 @@ import { DatePicker, List, Tabs } from "antd-mobile";
 import React, { Component } from "react";
 import { subscribes, publish, unsubscribe } from '../../../core/arbiter';
 import { connect } from "dva";
-import { MoreCharts, Raingratio, Chart ,GridFill} from "../../../componets";
+import { MoreCharts, Raingratio, Chart, GridFill } from "../../../componets";
 import "./yqcl.less";
 
 export default connect(({ yqcl, loading }) => ({ ...yqcl }))(
@@ -14,17 +14,22 @@ export default connect(({ yqcl, loading }) => ({ ...yqcl }))(
         state = {
             dataTime: new Date(Date.now()),
             index: 0,
+            json: []
         }
 
         componentDidMount() {
-            this.showCharts(0);
+            this.handleAction(' TRUNC(RECORDDATE) = TRUNC(SYSDATE) ')
+            // this.showCharts(0);
         }
         onchange(e) {
-            this.props.dispatch({
-                type: "yqcl/select",
-                payload: e
+            this.setState({ dataTime: e }, () => {
+                let data = new Date(e);
+                let y = data.getFullYear();
+                let m = data.getMonth() + 1;
+                let d = data.getDate();
+                const date = '' + y + '/' + (m <= 9 ? '0' + m : m) + '/' + (d <= 9 ? '0' + d : d);
+                this.handleAction("TRUNC(RECORDDATE) = trunc(to_date('" + date + "' , 'YYYY/MM/DD'))")
             });
-            this.showCharts(e);
         }
 
 
@@ -50,8 +55,22 @@ export default connect(({ yqcl, loading }) => ({ ...yqcl }))(
         onTabClick = (title, index) => {
             this.showCharts(index);
         }
+
+
+        handleAction(where) {
+            console.log(where)
+            this.props.dispatch({
+                type: 'yqcl/Query_Info',
+                payload: {
+                    where: where
+                }
+            }).then(e => {
+                this.setState({ json: [this.props.jsons[0].data[0].I, this.props.jsons[0].data[0].E] })
+            })
+        }
+
         render() {
-            let { mothdatas = [], nowdata = {}, tabs, monthchart1, monthchart2 } = this.props;
+            let { datas } = this.props;
             return (
                 <GridFill header={
                     <div className="yqcl_box">
@@ -60,20 +79,9 @@ export default connect(({ yqcl, loading }) => ({ ...yqcl }))(
                         </DatePicker>
                     </div>
                 }>
-                    <Tabs
-                        tabs={tabs.map(tab => ({ title: tab.title }))}
-                        swipeable={false}
-                        initialPage={0}
-                        onChange={(tab, index) => { }}
-                        onTabClick={(tab, index) => { this.onTabClick(tab, index) }}
-                    >
-                        {tabs.map((va, key) => {
-                            return <div key={key}> <div className="boxS" /> <Raingratio val={va.data} />
-                                <MoreCharts view={va.datas} groupData={"yqcl/showCharts"} index={this.state.index} />
-                            </div>
-                        })}
-
-                    </Tabs>
+                    <div > <div className="boxS" />
+                        <MoreCharts view={datas} groupData={"yqcl/showCharts"} list={this.state.json} index={this.state.index} />
+                    </div>
                 </GridFill>
 
             )

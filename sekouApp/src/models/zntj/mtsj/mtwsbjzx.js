@@ -1,5 +1,5 @@
 import { Toast } from 'antd-mobile';
-import { publish } from "../core/arbiter";
+import { publish } from '../../../core/arbiter';
 
 const datas = [
   { label: "本月", value: 1 },

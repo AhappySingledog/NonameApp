@@ -1,5 +1,5 @@
 import { Toast } from 'antd-mobile';
-import { publish } from "../core/arbiter";
+import { publish } from '../../../core/arbiter';
 
 export default {
     namespace: 'mtdc',
@@ -13,9 +13,9 @@ export default {
         //     { name: 'v_chars1', tabname: '近一周危险品箱情况' },
         //   ],
         //   data: [
-        //     { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../images/zntj/jcg/jg.svg") },
-        //     { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '重箱数量', img: require("../images/zntj/jcg/cg.svg") },
-        //     { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../images/zntj/jcg/jg.svg") },
+        //     { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../../images/zntj/jcg/jg.svg") },
+        //     { val: 320, hb: 7, zb: 'up', cb: 'jg', name: '重箱数量', img: require("../../images/zntj/jcg/cg.svg") },
+        //     { val: 203, hb: 5, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../../images/zntj/jcg/jg.svg") },
         //   ]
         // },
         {
@@ -26,9 +26,9 @@ export default {
             { name: 'v_chars2', tabname: '近一周危险品箱情况' },
           ],
           data: [
-            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../images/zntj/jcg/jg.svg") },
-            { val: 0, hb: 0, zb: 'up', cb: 'jg', name: '重箱数量',  img: require("../images/zntj/jcg/cg.svg") },
-            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../images/zntj/jcg/jg.svg") },
+            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../../../images/zntj/jcg/jg.svg") },
+            { val: 0, hb: 0, zb: 'up', cb: 'jg', name: '重箱数量',  img: require("../../../images/zntj/jcg/cg.svg") },
+            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../../../images/zntj/jcg/jg.svg") },
           ]
         },
         {
@@ -39,9 +39,9 @@ export default {
             { name: 'v_chars3', tabname: '近一周危险品箱情况' },
           ],
           data: [
-            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../images/zntj/jcg/jg.svg") },
-            { val: 0, hb: 0, zb: 'up', cb: 'jg', name: '重箱数量',  img: require("../images/zntj/jcg/cg.svg") },
-            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../images/zntj/jcg/jg.svg") },
+            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../../../images/zntj/jcg/jg.svg") },
+            { val: 0, hb: 0, zb: 'up', cb: 'jg', name: '重箱数量',  img: require("../../../images/zntj/jcg/cg.svg") },
+            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../../../images/zntj/jcg/jg.svg") },
           ]
         },
         {
@@ -52,9 +52,9 @@ export default {
             { name: 'v_chars4', tabname: '近一周危险品箱情况' },
           ],
           data: [
-            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../images/zntj/jcg/jg.svg") },
-            { val: 0, hb: 0, zb: 'up', cb: 'jg', name: '重箱数量',  img: require("../images/zntj/jcg/cg.svg") },
-            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../images/zntj/jcg/jg.svg") },
+            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '空箱数量', img: require("../../../images/zntj/jcg/jg.svg") },
+            { val: 0, hb: 0, zb: 'up', cb: 'jg', name: '重箱数量',  img: require("../../../images/zntj/jcg/cg.svg") },
+            { val: 0, hb: 0, zb: 'down', cb: 'cg', name: '危险品箱数量', img: require("../../../images/zntj/jcg/jg.svg") },
           ]
         },
       ]

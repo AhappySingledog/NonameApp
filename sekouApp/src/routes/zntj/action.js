@@ -1,382 +1,234 @@
-import {
-    subscribes,
-    publish
-} from '../../core/arbiter';
+import { subscribes, publish, subscribe } from '../../core/arbiter';
 import store from '../../index';
-const {
-    dispatch
-} = store;
+const { dispatch } = store;
+
+const ys = ['#39a3ef', '#7fc0fe', '#abd275', '#8cbd47', '#ed4d3f', '#fb5a5a', '#fcb247', '#f2c955', '#B23AEE', '#87CEFA', '#7FFFD4', '#698B69', '#4B0082', '#00E5EE', '#00E5EE', '#2E8B57'];
+/** 自动选择颜色 */
+function txys(datajson) {
+    let ysall = [];
+    for (let i in datajson) ysall.push(ys[i]);
+    return ysall;
+};
 
 subscribes({
-    sub: 'bgdl/showCharts',
+    sub: 'zssk/showCharts',
     func: (e) => {
-
+        let data = [];
+        let jsons = [[], [], [], []];
+        let rqsj = [];
+        for (let i in e.json) {
+            /** 去年的数据统计 */
+            if (e.json[i].CUSTOMSCODE === '5304关区' && (e.json[i].EFFECTDATE).indexOf((new Date().getFullYear() - 1))) {
+                jsons[0].push(Number(e.json[i].TAXATION));
+            } else if (e.json[i].CUSTOMSCODE === '5349关区' && (e.json[i].EFFECTDATE).indexOf((new Date().getFullYear() - 1))) {
+                jsons[1].push(Number(e.json[i].TAXATION));
+            }
+            /** 今年的数据统计 */
+            if (e.json[i].CUSTOMSCODE === '5304关区' && (e.json[i].EFFECTDATE).indexOf((new Date().getFullYear())) > -1) {
+                jsons[2].push(Number(e.json[i].TAXATION));
+                rqsj.push(e.json[i].EFFECTDATE);
+            } else if (e.json[i].CUSTOMSCODE === '5349关区' && (e.json[i].EFFECTDATE).indexOf((new Date().getFullYear())) > -1) {
+                jsons[3].push(Number(e.json[i].TAXATION));
+            }
+        };
+        switch (e.index) {
+            case 0:
+                data.push({
+                    type: 'line',
+                    borderWidth: 2,
+                    label: '5304关区' + (new Date().getFullYear() - 1) + '年征收金额',
+                    borderColor: "#39a3ef",
+                    backgroundColor: "#39a3ef",
+                    fill: false,
+                    data: jsons[0],
+                    yAxisID: 'y-axis-2',
+                }, {
+                        type: 'line',
+                        borderWidth: 2,
+                        label: '5349关区' + (new Date().getFullYear() - 1) + '年征收金额',
+                        borderColor: "#ed4d3f",
+                        backgroundColor: "#ed4d3f",
+                        fill: false,
+                        data: jsons[1],
+                        yAxisID: 'y-axis-2',
+                    }, {
+                        type: 'bar',
+                        label: '5304关区' + new Date().getFullYear() + '年征收金额',
+                        backgroundColor: '#abd275',
+                        data: jsons[2],
+                        borderColor: 'white',
+                        borderWidth: 2,
+                        yAxisID: 'y-axis-1',
+                    }, {
+                        type: 'bar',
+                        label: '5349关区' + new Date().getFullYear() + '年征收金额',
+                        backgroundColor: '#fcb247',
+                        data: jsons[3],
+                        borderColor: 'white',
+                        borderWidth: 2,
+                        yAxisID: 'y-axis-1',
+                    });
+                break;
+            case 1:
+                data.push({
+                    type: 'line',
+                    borderWidth: 2,
+                    label: '5304关区' + (new Date().getFullYear() - 1) + '年征收金额',
+                    borderColor: "#39a3ef",
+                    backgroundColor: "#39a3ef",
+                    fill: false,
+                    data: jsons[0],
+                    yAxisID: 'y-axis-2',
+                }, {
+                        type: 'bar',
+                        label: '5304关区' + new Date().getFullYear() + '年征收金额',
+                        backgroundColor: '#7fc0fe',
+                        data: jsons[2],
+                        borderColor: 'white',
+                        borderWidth: 2,
+                        yAxisID: 'y-axis-1',
+                    });
+                break;
+            case 2:
+                data.push({
+                    type: 'line',
+                    borderWidth: 2,
+                    label: '5349关区' + (new Date().getFullYear() - 1) + '年征收金额',
+                    borderColor: "#39a3ef",
+                    backgroundColor: "#39a3ef",
+                    fill: false,
+                    data: jsons[1],
+                    yAxisID: 'y-axis-2',
+                }, {
+                        type: 'bar',
+                        label: '5349关区' + new Date().getFullYear() + '年征收金额',
+                        backgroundColor: '#7fc0fe',
+                        data: jsons[3],
+                        borderColor: 'white',
+                        borderWidth: 2,
+                        yAxisID: 'y-axis-1',
+                    });
+                break;
+        }
+        var charts1 = {
+            type: 'bar',
+            data: {
+                labels: rqsj,
+                datasets: data
+            },
+            options: {
+                responsive: true,
+                scaleStartValue: 0,
+                legend: {
+                    position: 'bottom',
+                },
+                scales: {
+                    scaleStartValue: 0,
+                    yAxes: [{
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        id: 'y-axis-1',
+                        ticks: {
+                            suggestedMin: 0,
+                            beginAtZero: true
+                        }
+                    }, {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        id: 'y-axis-2',
+                        ticks: {
+                            suggestedMin: 0,
+                            beginAtZero: true
+                        }
+                    }],
+                }
+            }
+        }
+        return [charts1];
     }
 }, {
-        sub: 'zssk/showCharts',
-        func: (e) => {
-            if (e === 0) {
-                var charts1 = {
-                    type: 'bar',
-                    data: {
-                        datasets: [{
-                            label: '同比',
-                            fill: false,
-                            data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                            backgroundColor: '#b3de75',
-                            borderColor: '#b3de75',
-                            type: 'line'
-                        }, {
-                            label: '环比',
-                            fill: false,
-                            data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
-                            backgroundColor: '#f8c321',
-                            borderColor: '#f8c321',
-                            type: 'line'
-                        }, {
-                            label: '船代申报提单量',
-                            data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
-                            backgroundColor: '#39a3ef'
-                        }],
-                        labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
-                    },
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true
-                            }
-                        }
-                    }
-                };
-            }
-            if (e === 1) {
-                var charts1 = {
-                    type: 'bar',
-                    data: {
-                        labels: ['10周', '11周', '12周', '13周'],
-                        datasets: [{
-                            type: 'line',
-                            borderWidth: 2,
-                            label: '同比',
-                            borderColor: "#b3de75",
-                            backgroundColor: "#b3de75",
-                            fill: false,
-                            data: [0.80, 0.56, 0.83, 0.95],
-                            yAxisID: 'y-axis-2',
-                        }, {
-                            type: 'line',
-                            label: '环比',
-                            borderColor: "#f8c321",
-                            backgroundColor: "#f8c321",
-                            borderWidth: 2,
-                            fill: false,
-                            data: [0.85, 0.8, 1.15, 1.05],
-                            yAxisID: 'y-axis-2',
-                        }, {
-                            type: 'bar',
-                            label: '船报申报提单量',
-                            backgroundColor: '#39a3ef',
-                            data: [255, 180, 220, 210],
-                            borderColor: 'white',
-                            borderWidth: 2,
-                            yAxisID: 'y-axis-1',
-                        },]
-                    },
-                    options: {
-                        responsive: true,
-                        scaleStartValue: 0,
-                        legend: {
-                            position: 'bottom',
-                        },
-                        scales: {
-                            scaleStartValue: 0,
-                            yAxes: [{
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                                id: 'y-axis-1',
-                                ticks: {
-                                    suggestedMin: 0,
-                                    beginAtZero: true
-                                }
-                            }, {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
-                                id: 'y-axis-2',
-                                ticks: {
-                                    suggestedMin: 0,
-                                    beginAtZero: true
-                                }
-                            }],
-                        }
-                    }
-                }
-            }
-            return [charts1];
-        }
-    }, {
         sub: 'cysx/showCharts',
         func: (e) => {
-            if (e === 0) {
-                var charts1 = {
-                    type: 'bar',
-                    data: {
-                        datasets: [{
-                            label: '同比',
-                            fill: false,
-                            data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                            backgroundColor: '#b3de75',
-                            borderColor: '#b3de75',
-                            type: 'line'
-                        }, {
-                            label: '环比',
-                            fill: false,
-                            data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
-                            backgroundColor: '#f8c321',
-                            borderColor: '#f8c321',
-                            type: 'line'
-                        }, {
-                            label: '船代申报提单量',
-                            data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
-                            backgroundColor: '#39a3ef'
-                        }],
-                        labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
-                    },
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true
-                            }
-                        }
-                    }
-                };
-                var charts2 = {
-                    type: 'doughnut',
-                    data: {
-                        datasets: [{
-                            data: [7, 3],
-                            backgroundColor: ["#39a3ef", "#e8e8e8"],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                    }
-                };
-            }
-
-            if (e === 1) {
-                var charts1 = {
-                    type: 'bar',
-                    data: {
-                        labels: ['10周', '11周', '12周', '13周'],
-                        datasets: [{
-                            type: 'line',
-                            borderWidth: 2,
-                            label: '同比',
-                            borderColor: "#b3de75",
-                            backgroundColor: "#b3de75",
-                            fill: false,
-                            data: [0.80, 0.56, 0.83, 0.95],
-                            yAxisID: 'y-axis-2',
-                        }, {
-                            type: 'line',
-                            label: '环比',
-                            borderColor: "#f8c321",
-                            backgroundColor: "#f8c321",
-                            borderWidth: 2,
-                            fill: false,
-                            data: [0.85, 0.8, 1.15, 1.05],
-                            yAxisID: 'y-axis-2',
-                        }, {
-                            type: 'bar',
-                            label: '船报申报提单量',
-                            backgroundColor: '#39a3ef',
-                            data: [255, 180, 220, 210],
-                            borderColor: 'white',
-                            borderWidth: 2,
-                            yAxisID: 'y-axis-1',
-                        },]
-                    },
-                    options: {
-                        responsive: true,
-                        scaleStartValue: 0,
-                        scales: {
-                            scaleStartValue: 0,
-                            yAxes: [{
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                                id: 'y-axis-1',
-                                ticks: {
-                                    suggestedMin: 0,
-                                    beginAtZero: true
-                                }
-                            }, {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
-                                id: 'y-axis-2',
-                                ticks: {
-                                    suggestedMin: 0,
-                                    beginAtZero: true
-                                }
-                            }],
-                        },
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                };
-                var charts2 = {
-                    type: 'doughnut',
-                    data: {
-                        datasets: [{
-                            data: [2, 8],
-                            backgroundColor: ["#39a3ef", "#e8e8e8"],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                    }
-                };
-            }
-            return [charts1, charts2];
-        }
-    }, {
-        sub: 'tgxl/showCharts',
-        func: (e) => {
-            if (e === 0) {
-
-                var charts2 = {
-                    type: 'bar',
-                    data: {
-                        labels: ['10周', '11周', '12周', '13周'],
-                        datasets: [{
-                            type: 'line',
-                            borderWidth: 2,
-                            label: '同比',
-                            borderColor: "#b3de75",
-                            backgroundColor: "#b3de75",
-                            fill: false,
-                            data: [0.80, 0.56, 0.83, 0.95],
-                            yAxisID: 'y-axis-2',
-                        }, {
-                            type: 'line',
-                            label: '环比',
-                            borderColor: "#f8c321",
-                            backgroundColor: "#f8c321",
-                            borderWidth: 2,
-                            fill: false,
-                            data: [0.85, 0.8, 1.15, 1.05],
-                            yAxisID: 'y-axis-2',
-                        }, {
-                            type: 'bar',
-                            label: '船报申报提单量',
-                            backgroundColor: '#39a3ef',
-                            data: [255, 180, 220, 210],
-                            borderColor: 'white',
-                            borderWidth: 2,
-                            yAxisID: 'y-axis-1',
-                        },]
-                    },
-                    options: {
-                        responsive: true,
-                        scaleStartValue: 0,
-                        legend: {
-                            position: 'bottom',
-                        },
-                        scales: {
-                            scaleStartValue: 0,
-                            yAxes: [{
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                                id: 'y-axis-1',
-                                ticks: {
-                                    suggestedMin: 0,
-                                    beginAtZero: true
-                                }
-                            }, {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
-                                id: 'y-axis-2',
-                                ticks: {
-                                    suggestedMin: 0,
-                                    beginAtZero: true
-                                }
-                            }],
+            var charts1 = {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: '查验时效',
+                        data: e[1],
+                        backgroundColor: '#f57874'
+                    },],
+                    labels: e[2]
+                },
+                options: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true
                         }
                     }
                 }
-                var charts3 = {
-                    type: 'doughnut',
-                    data: {
-                        datasets: [{
-                            data: [7, 3],
-                            backgroundColor: ["#39a3ef", "#e8e8e8"],
-                            borderWidth: 1
-                        }]
+            };
+            var charts2 = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: e[0],
+                        backgroundColor: ["#39a3ef", "#FFFFFF"],
+                        borderWidth: 1
+                    }],
+                    labels: ['查验时效']
+                },
+                options: {
+                    legend: {
+                        position: 'bottom',
                     },
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                    }
-                };
-            }
-            if (e === 1) {
+                }
+            };
+            return [charts1, charts2];
+        }
+    },
+    {
+        sub: 'tgxl/showCharts',
+        func: (e) => {
 
-                var charts2 = {
-                    type: 'bar',
-                    data: {
-                        datasets: [{
-                            label: '同比',
-                            fill: false,
-                            data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                            backgroundColor: '#b3de75',
-                            borderColor: '#b3de75',
-                            type: 'line'
-                        }, {
-                            label: '环比',
-                            fill: false,
-                            data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
-                            backgroundColor: '#f8c321',
-                            borderColor: '#f8c321',
-                            type: 'line'
-                        }, {
-                            label: '船代申报提单量',
-                            data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
-                            backgroundColor: '#39a3ef'
-                        }],
-                        labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
-                    },
-                    options: {
-                        legend: {
-                            position: 'bottom'
+            var charts1 = {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: '通关效率',
+                        data: e[1],
+                        backgroundColor: '#f57874'
+                    },],
+                    labels: e[2]
+                },
+                options: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true
                         }
                     }
-                };
-                var charts3 = {
-                    type: 'doughnut',
-                    data: {
-                        datasets: [{
-                            data: [8, 2],
-                            backgroundColor: ["#39a3ef", "#e8e8e8"],
-                        }]
-                    }
-                };
-            }
-            return [charts2, charts3];
+                }
+            };
+            var charts2 = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: e[0],
+                        backgroundColor: ["#39a3ef", "#FFFFFF"],
+                        borderWidth: 1
+                    }],
+                    labels: ['通关效率']
+                },
+                options: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                }
+            };
+            return [charts1, charts2];
         }
     }, {
         sub: 'tdsbqk/showCharts',
@@ -450,32 +302,42 @@ subscribes({
     }, {
         sub: 'cdsbqk/showCharts',
         func: (e) => {
-
             var charts1 = {
                 type: 'bar',
                 data: {
                     datasets: [{
-                        label: '同比',
+                        label: '进境数量环比',
                         fill: false,
-                        data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
+                        data: [],
                         backgroundColor: '#b3de75',
                         borderColor: '#b3de75',
                         type: 'line'
                     }, {
-                        label: '环比',
+                        label: '出境数量环比',
                         fill: false,
-                        data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
+                        data: [],
                         backgroundColor: '#f8c321',
                         borderColor: '#f8c321',
                         type: 'line'
                     }, {
-                        label: '船代申报提单量',
-                        data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
-                        backgroundColor: '#39a3ef'
+                        label: '进境数量',
+                        data: e.length > 0 ? e[0][0] : [],
+                        backgroundColor: '#8cbd47',
+                        type: 'bar'
+                    }, {
+                        label: '出境数量',
+                        data: e.length > 0 ? e[0][1] : [],
+                        backgroundColor: '#39a3ef',
+                        type: 'bar'
                     }],
-                    labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
+                    labels: e.length > 0 ? e[0][2] : []
                 },
                 options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
@@ -485,52 +347,99 @@ subscribes({
                 }
             };
             var charts2 = {
-                type: 'doughnut',
+                type: 'bar',
                 data: {
                     datasets: [{
-                        data: [29, 16, 14, 12, 10, 8, 6, 5],
-                        backgroundColor: [
-                            '#39a3ef',
-                            '#7fc0fe',
-                            '#abd275',
-                            '#8cbd47',
-                            '#ed4d3f',
-                            '#fb5a5a',
-                            '#fcb247',
-                            '#f2c955'
-                        ]
+                        label: '进境数量环比',
+                        fill: false,
+                        data: [],
+                        backgroundColor: '#b3de75',
+                        borderColor: '#b3de75',
+                        type: 'line'
+                    }, {
+                        label: '出境数量环比',
+                        fill: false,
+                        data: [],
+                        backgroundColor: '#f8c321',
+                        borderColor: '#f8c321',
+                        type: 'line'
+                    }, {
+                        label: '进境数量',
+                        data: e.length > 0 ? e[1][0] : [],
+                        backgroundColor: '#8cbd47',
+                        type: 'bar'
+                    }, {
+                        label: '出境数量',
+                        data: e.length > 0 ? e[1][1] : [],
+                        backgroundColor: '#39a3ef',
+                        type: 'bar'
                     }],
-                    labels: [
-                        '船代1',
-                        '船代2',
-                        '船代3',
-                        '船代4',
-                        '船代5',
-                        '船代6',
-                        '船代7',
-                        'other'
-                    ]
+                    labels: e.length > 0 ? e[1][2] : [],
                 },
                 options: {
-                    cutoutPercentage: 50,
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
                             usePointStyle: true
                         }
-                    },
-                    tooltips: {
-                        intersect: true
                     }
                 }
             };
-            return [charts1, charts2];
+            var charts3 = {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: '进境数量环比',
+                        fill: false,
+                        data: [],
+                        backgroundColor: '#b3de75',
+                        borderColor: '#b3de75',
+                        type: 'line'
+                    }, {
+                        label: '出境数量环比',
+                        fill: false,
+                        data: [],
+                        backgroundColor: '#f8c321',
+                        borderColor: '#f8c321',
+                        type: 'line'
+                    }, {
+                        label: '进境数量',
+                        data: e.length > 0 ? e[2][0] : [],
+                        backgroundColor: '#8cbd47',
+                        type: 'bar'
+                    }, {
+                        label: '出境数量',
+                        data: e.length > 0 ? e[2][1] : [],
+                        backgroundColor: '#39a3ef',
+                        type: 'bar'
+                    }],
+                    labels: e.length > 0 ? e[2][2] : [],
+                },
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true
+                        }
+                    }
+                }
+            };
+            return [charts1, charts2, charts3];
         }
     }, {
         sub: 'bghldqk/showCharts',
         func: (e) => {
-
-            var charts1 = {
+            var charts2 = {
                 type: 'bar',
                 data: {
                     datasets: [{
@@ -548,13 +457,18 @@ subscribes({
                         borderColor: '#f8c321',
                         type: 'line'
                     }, {
-                        label: '船代申报提单量',
-                        data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
+                        label: '进出口申报提单数据',
+                        data: e ? e[0] : [],
                         backgroundColor: '#39a3ef'
                     }],
-                    labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
+                    labels: e ? e[3] : []
                 },
                 options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
@@ -563,32 +477,14 @@ subscribes({
                     }
                 }
             };
-            var charts2 = {
+            var charts1 = {
                 type: 'doughnut',
                 data: {
                     datasets: [{
-                        data: [29, 16, 14, 12, 10, 8, 6, 5],
-                        backgroundColor: [
-                            '#39a3ef',
-                            '#7fc0fe',
-                            '#abd275',
-                            '#8cbd47',
-                            '#ed4d3f',
-                            '#fb5a5a',
-                            '#fcb247',
-                            '#f2c955'
-                        ]
+                        data: e ? e[0] : [],
+                        backgroundColor: e ? txys(e[0]) : []
                     }],
-                    labels: [
-                        '报关行1',
-                        '报关行2',
-                        '报关行3',
-                        '报关行4',
-                        '报关行5',
-                        '报关行6',
-                        '报关行7',
-                        'other'
-                    ]
+                    labels: e ? e[1] : []
                 },
                 options: {
                     cutoutPercentage: 50,
@@ -603,75 +499,233 @@ subscribes({
                     }
                 }
             };
-            return [charts1, charts2];
+            var charts3 = {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: '同比',
+                        fill: false,
+                        data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
+                        backgroundColor: '#b3de75',
+                        borderColor: '#b3de75',
+                        type: 'line'
+                    }, {
+                        label: '环比',
+                        fill: false,
+                        data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
+                        backgroundColor: '#f8c321',
+                        borderColor: '#f8c321',
+                        type: 'line'
+                    }, {
+                        label: '统计小时数',
+                        data: e ? e[2] : [],
+                        backgroundColor: '#39a3ef'
+                    }],
+                    labels: e ? e[3] : []
+                },
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true
+                        }
+                    }
+                }
+            };
+            return (e && e[4] > 0 ? [charts2, charts3, null] : [charts1, charts2, charts3]);
+        }
+    }, {
+
+        sub: 'cbsbqk/showCharts',
+        func: (e) => {
+            /**
+             *  chartjson 数据整理
+             *  0、当天所有船舶出境数量  
+             *  1、当天所有船舶进境数量
+             *  2、日期
+             */
+            var charts1 = {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: '进境数量',
+                        data: e[0] || [],
+                        backgroundColor: '#b3de75'
+                    }, {
+                        label: '出境数量',
+                        data: e[1] || [],
+                        backgroundColor: '#39a3ef'
+                    }],
+                    labels: e[2] || [],
+                },
+                options: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true
+                        }
+                    },
+                    tooltips: {
+                        intersect: true
+                    },
+                    scales: {
+                        maxBarThickness: e[0] * 1.1
+                    }
+                }
+            };
+            return [charts1];
         }
     }, {
         sub: 'jzxsbqk/showCharts',
         func: (e) => {
-            var charts1 = {
-                type: 'bar',
-                data: {
-                    datasets: [{
-                        label: '同比',
-                        fill: false,
-                        data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                        backgroundColor: '#b3de75',
-                        borderColor: '#b3de75',
-                        type: 'line'
-                    }, {
-                        label: '环比',
-                        fill: false,
-                        data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
-                        backgroundColor: '#f8c321',
-                        borderColor: '#f8c321',
-                        type: 'line'
-                    }, {
-                        label: '船代申报提单量',
-                        data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
-                        backgroundColor: '#39a3ef'
-                    }],
-                    labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
-                },
-                options: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            usePointStyle: true
-                        }
-                    }
-                }
-            };
-            var charts2 = {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [24, 33, 43],
-                        backgroundColor: [
-                            '#39a3ef',
-                            '#7fc0fe',
-                            '#abd275',
-                        ]
-                    }],
-                    labels: [
-                        'SCT',
-                        'CCT',
-                        'MCT'
-                    ]
-                },
-                options: {
-                    cutoutPercentage: 50,
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            usePointStyle: true
-                        }
+            if (e && e.length > 0) {
+                console.log(e);
+                var charts1 = {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: e[0][0],
+                            backgroundColor: [
+                                '#39a3ef',
+                                '#7fc0fe',
+                                '#abd275',
+                            ]
+                        }],
+                        labels: e[0][1]
                     },
-                    tooltips: {
-                        intersect: true
+                    options: {
+                        cutoutPercentage: 50,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true
+                            }
+                        },
+                        tooltips: {
+                            intersect: true
+                        }
                     }
-                }
-            };
-            return [charts1, charts2];
+                };
+                var charts2 = {
+                    type: 'bar',
+                    data: {
+                        datasets: [{
+                            label: '同比',
+                            fill: false,
+                            data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
+                            backgroundColor: '#b3de75',
+                            borderColor: '#b3de75',
+                            type: 'line'
+                        }, {
+                            label: '进口货物',
+                            fill: false,
+                            data: e[1][0],
+                            backgroundColor: '#39a3ef',
+                            type: 'bar'
+                        }, {
+                            label: '出口货物',
+                            data: e[1][1],
+                            backgroundColor: '#7fc0fe',
+                            type: 'bar'
+                        }],
+                        labels: e[1][2]
+                    },
+                    options: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true
+                            }
+                        },
+                        tooltips: {
+                            intersect: true
+                        },
+                        scales: {
+                            maxBarThickness: e[0] * 1.1
+                        }
+                    }
+                };
+                var charts3 = {
+                    type: 'bar',
+                    data: {
+                        datasets: [{
+                            label: '同比',
+                            fill: false,
+                            data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
+                            backgroundColor: '#b3de75',
+                            borderColor: '#b3de75',
+                            type: 'line'
+                        }, {
+                            label: '进境集装箱',
+                            fill: false,
+                            data: e[2][0],
+                            backgroundColor: '#39a3ef',
+                            type: 'bar'
+                        }, {
+                            label: '出境集装箱',
+                            data: e[2][1],
+                            backgroundColor: '#7fc0fe',
+                            type: 'bar'
+                        }],
+                        labels: e[2][2]
+                    },
+                    options: {
+                        cutoutPercentage: 50,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true
+                            }
+                        },
+                        tooltips: {
+                            intersect: true
+                        }
+                    }
+                };
+                var charts4 = {
+                    type: 'bar',
+                    data: {
+                        datasets: [{
+                            label: '同比',
+                            fill: false,
+                            data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
+                            backgroundColor: '#b3de75',
+                            borderColor: '#b3de75',
+                            type: 'line'
+                        }, {
+                            label: '国际进口货物',
+                            fill: false,
+                            data: e[3][0],
+                            backgroundColor: '#39a3ef',
+                            type: 'bar'
+                        }, {
+                            label: '国际出口货物',
+                            data: e[3][1],
+                            backgroundColor: '#7fc0fe',
+                            type: 'bar'
+                        }],
+                        labels: e[3][2]
+                    },
+                    options: {
+                        cutoutPercentage: 50,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true
+                            }
+                        },
+                        tooltips: {
+                            intersect: true
+                        }
+                    }
+                };
+            }
+            return [charts1, charts2, charts3, charts4];
         }
     }, {
         sub: 'mtwsbjzx/showCharts',
@@ -712,6 +766,48 @@ subscribes({
                 }
             };
             return [charts1];
+        }
+    }, {
+        sub: 'hgcyqk/showCharts',
+        func: (e) => {
+            console.log(e);
+            var charts1 = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{ data: e && e.length > 0 ? e[0][1] : [], backgroundColor: ['#39a3ef', '#7fc0fe', '#abd275'] }],
+                    labels: e && e.length > 0 ? e[0][0] : []
+                },
+                options: {
+                    cutoutPercentage: 50,
+                    legend: { position: 'bottom', labels: { usePointStyle: true } },
+                    tooltips: { intersect: true }
+                }
+            };
+            var charts2 = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{ data: e && e.length > 0 ? e[1][1] : [], backgroundColor: ['#39a3ef', '#7fc0fe', '#abd275'] }],
+                    labels: e && e.length > 0 ? e[1][0] : []
+                },
+                options: {
+                    cutoutPercentage: 50,
+                    legend: { position: 'bottom', labels: { usePointStyle: true } },
+                    tooltips: { intersect: true }
+                }
+            };
+            var charts3 = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{ data: e && e.length > 0 ? e[2][1] : [], backgroundColor: ['#39a3ef', '#7fc0fe', '#abd275'] }],
+                    labels: e && e.length > 0 ? e[2][0] : []
+                },
+                options: {
+                    cutoutPercentage: 50,
+                    legend: { position: 'bottom', labels: { usePointStyle: true } },
+                    tooltips: { intersect: true }
+                }
+            };
+            return [charts1, charts2, charts3];
         }
     }, {
         sub: 'yqqysb/showCharts',
@@ -796,7 +892,7 @@ subscribes({
         func: (e) => {
             let kxsl = [];
             let zxsl = [];
-            let hbzxsl=[];
+            let hbzxsl = [];
             let wxpxsl = [];
             let hbwxpxsl = [];
             let ys = [];
@@ -808,7 +904,7 @@ subscribes({
                 for (let i in a) {
                     kxsl.push(Number(a[i]['attributes']['E']));
                     zxsl.push(Number(a[i]['attributes']['F']));
-                    hbzxsl.push(b[i] ? Number(b[i]['attributes']['F']) : 0 );
+                    hbzxsl.push(b[i] ? Number(b[i]['attributes']['F']) : 0);
                     wxpxsl.push(Number(a[i]['attributes']['DG']));
                     hbwxpxsl.push(b[i] ? Number(b[i]['attributes']['DG']) : 0);
                     rq.push([/\d{4}-\d{1,2}-\d{1,2}/g.exec(a[i]['attributes']['RECORDDATE'])][0]);
@@ -960,6 +1056,11 @@ subscribes({
                     labels: rq
                 },
                 options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
@@ -973,17 +1074,8 @@ subscribes({
     }, {
         sub: 'mtjzx/showCharts',
         func: (e) => {
-            let jz = [];
-            let cz = [];
-            let zc = [];
-            let xc = [];
-            let ys = [];
+            let jz = [], cz = [], zc = [], xc = [], ys = [], rq = [], hbjz = [], hbcz = [], hbzc = [], hbxc = [];
             let ysall = ['#39a3ef', '#7fc0fe', '#abd275', '#8cbd47', '#ed4d3f', '#fb5a5a', '#fcb247'];
-            let rq = [];
-            let hbjz = [];
-            let hbcz = [];
-            let hbzc = [];
-            let hbxc = [];
             if (e.length > 0) {
                 let a = e[1].features;
                 let b = e[3].features;
@@ -999,31 +1091,23 @@ subscribes({
                     hbzc.push(b[i] ? Number(b[i]['attributes']['LOADING']) : 0);
                     hbxc.push(b[i] ? Number(b[i]['attributes']['DISCHARGE']) : 0);
                 }
-            }
+            };
             var charts1 = {
                 type: 'bar',
                 data: {
                     datasets: [
-                    //     {
-                    //     label: '同比',
-                    //     fill: false,
-                    //     data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                    //     backgroundColor: '#b3de75',
-                    //     borderColor: '#b3de75',
-                    //     type: 'line'
-                    // }, 
-                    {
-                        label: '环比',
-                        fill: false,
-                        data:hbjz,
-                        backgroundColor: '#f8c321',
-                        borderColor: '#f8c321',
-                        type: 'line'
-                    }, {
-                        label: '码头进闸单量',
-                        data: jz,
-                        backgroundColor: '#39a3ef'
-                    }],
+                        {
+                            label: '环比',
+                            fill: false,
+                            data: hbjz,
+                            backgroundColor: '#f8c321',
+                            borderColor: '#f8c321',
+                            type: 'line'
+                        }, {
+                            label: '码头进闸单量',
+                            data: jz,
+                            backgroundColor: '#39a3ef'
+                        }],
                     labels: rq
                 },
                 options: {
@@ -1032,6 +1116,12 @@ subscribes({
                         labels: {
                             usePointStyle: true
                         }
+                    },
+                    tooltips: {
+                        intersect: true
+                    },
+                    scales: {
+                        maxBarThickness: Math.max.apply(null, jz) * 1.1
                     }
                 }
             };
@@ -1039,26 +1129,18 @@ subscribes({
                 type: 'bar',
                 data: {
                     datasets: [
-                    //     {
-                    //     label: '同比',
-                    //     fill: false,
-                    //     data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                    //     backgroundColor: '#b3de75',
-                    //     borderColor: '#b3de75',
-                    //     type: 'line'
-                    // }, 
-                    {
-                        label: '环比',
-                        fill: false,
-                        data: hbcz,
-                        backgroundColor: '#f8c321',
-                        borderColor: '#f8c321',
-                        type: 'line'
-                    }, {
-                        label: '码头出闸单量',
-                        data: cz,
-                        backgroundColor: '#39a3ef'
-                    }],
+                        {
+                            label: '环比',
+                            fill: false,
+                            data: hbcz,
+                            backgroundColor: '#f8c321',
+                            borderColor: '#f8c321',
+                            type: 'line'
+                        }, {
+                            label: '码头出闸单量',
+                            data: cz,
+                            backgroundColor: '#39a3ef'
+                        }],
                     labels: rq
                 },
                 options: {
@@ -1067,6 +1149,12 @@ subscribes({
                         labels: {
                             usePointStyle: true
                         }
+                    },
+                    tooltips: {
+                        intersect: true
+                    },
+                    scales: {
+                        maxBarThickness: Math.max.apply(null, cz) * 1.1
                     }
                 }
             };
@@ -1074,26 +1162,18 @@ subscribes({
                 type: 'bar',
                 data: {
                     datasets: [
-                    //     {
-                    //     label: '同比',
-                    //     fill: false,
-                    //     data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                    //     backgroundColor: '#b3de75',
-                    //     borderColor: '#b3de75',
-                    //     type: 'line'
-                    // },
-                     {
-                        label: '环比',
-                        fill: false,
-                        data: hbzc,
-                        backgroundColor: '#f8c321',
-                        borderColor: '#f8c321',
-                        type: 'line'
-                    }, {
-                        label: '码头装船单量',
-                        data: zc,
-                        backgroundColor: '#39a3ef'
-                    }],
+                        {
+                            label: '环比',
+                            fill: false,
+                            data: hbzc,
+                            backgroundColor: '#f8c321',
+                            borderColor: '#f8c321',
+                            type: 'line'
+                        }, {
+                            label: '码头装船单量',
+                            data: zc,
+                            backgroundColor: '#39a3ef'
+                        }],
                     labels: rq
                 },
                 options: {
@@ -1102,6 +1182,12 @@ subscribes({
                         labels: {
                             usePointStyle: true
                         }
+                    },
+                    tooltips: {
+                        intersect: true
+                    },
+                    scales: {
+                        maxBarThickness: Math.max.apply(null, zc) * 1.1
                     }
                 }
             };
@@ -1109,26 +1195,18 @@ subscribes({
                 type: 'bar',
                 data: {
                     datasets: [
-                    //     {
-                    //     label: '同比',
-                    //     fill: false,
-                    //     data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                    //     backgroundColor: '#b3de75',
-                    //     borderColor: '#b3de75',
-                    //     type: 'line'
-                    // },
-                     {
-                        label: '环比',
-                        fill: false,
-                        data: hbxc,
-                        backgroundColor: '#f8c321',
-                        borderColor: '#f8c321',
-                        type: 'line'
-                    }, {
-                        label: '码头卸船单量',
-                        data: xc,
-                        backgroundColor: '#39a3ef'
-                    }],
+                        {
+                            label: '环比',
+                            fill: false,
+                            data: hbxc,
+                            backgroundColor: '#f8c321',
+                            borderColor: '#f8c321',
+                            type: 'line'
+                        }, {
+                            label: '码头卸船单量',
+                            data: xc,
+                            backgroundColor: '#39a3ef'
+                        }],
                     labels: rq
                 },
                 options: {
@@ -1137,6 +1215,12 @@ subscribes({
                         labels: {
                             usePointStyle: true
                         }
+                    },
+                    tooltips: {
+                        intersect: true
+                    },
+                    scales: {
+                        maxBarThickness: Math.max.apply(null, xc) * 1.1
                     }
                 }
             };
@@ -1179,6 +1263,9 @@ subscribes({
                             usePointStyle: true
                         }
                     },
+                    scales: {
+                        maxBarThickness: Math.max.apply(null, ys) * 2.1
+                    },
                     tooltips: {
                         intersect: true
                     }
@@ -1188,26 +1275,26 @@ subscribes({
                 type: 'bar',
                 data: {
                     datasets: [
-                    //     {
-                    //     label: '同比',
-                    //     fill: false,
-                    //     data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                    //     backgroundColor: '#b3de75',
-                    //     borderColor: '#b3de75',
-                    //     type: 'line'
-                    // },
-                     {
-                        label: '环比',
-                        fill: false,
-                        data: hbczcl,
-                        backgroundColor: '#f8c321',
-                        borderColor: '#f8c321',
-                        type: 'line'
-                    }, {
-                        label: '出闸车辆',
-                        data: czcl,
-                        backgroundColor: '#39a3ef'
-                    }],
+                        //     {
+                        //     label: '同比',
+                        //     fill: false,
+                        //     data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
+                        //     backgroundColor: '#b3de75',
+                        //     borderColor: '#b3de75',
+                        //     type: 'line'
+                        // },
+                        {
+                            label: '环比',
+                            fill: false,
+                            data: hbczcl,
+                            backgroundColor: '#f8c321',
+                            borderColor: '#f8c321',
+                            type: 'line'
+                        }, {
+                            label: '出闸车辆',
+                            data: czcl,
+                            backgroundColor: '#39a3ef'
+                        }],
                     labels: rq
                 },
                 options: {
@@ -1228,28 +1315,41 @@ subscribes({
                 type: 'doughnut',
                 data: {
                     datasets: [{
-                        data: [29, 16, 14, 12, 10, 8, 6, 5],
-                        backgroundColor: [
-                            '#39a3ef',
-                            '#7fc0fe',
-                            '#abd275',
-                            '#8cbd47',
-                            '#ed4d3f',
-                            '#fb5a5a',
-                            '#fcb247',
-                            '#f2c955'
-                        ]
+                        label : '进闸车辆',
+                        data: e,
+                        backgroundColor:  ['#b3de75','#39a3ef']
                     }],
                     labels: [
-                        '报关行1',
-                        '报关行2',
-                        '报关行3',
-                        '报关行4',
-                        '报关行5',
-                        '报关行6',
-                        '报关行7',
-                        'other'
+                        '进闸车辆','出闸车辆'
                     ]
+                },
+                options: {
+                    cutoutPercentage: 50,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true
+                        }
+                    },
+                    tooltips: {
+                        intersect: true
+                    }
+                }
+            };
+            return [charts1];
+        }
+    }, {
+        sub: 'bgdl/showCharts',
+        func: (e) => {
+            var charts1 = {
+                headTitle: '本月报关单量排名情况',
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: e && e.length > 0 ? e[0][0] : [],
+                        backgroundColor: ['#39a3ef', '#f2c955']
+                    }],
+                    labels: e && e.length > 0 ? [e[0][1][0] + '总量', e[0][1][1] + '总量'] : [],
                 },
                 options: {
                     cutoutPercentage: 50,
@@ -1268,27 +1368,24 @@ subscribes({
                 type: 'bar',
                 data: {
                     datasets: [{
-                        label: '同比',
-                        fill: false,
-                        data: [160, 150, 160, 200, 140, 230, 250, 160, 150, 160, 200, 140],
-                        backgroundColor: '#b3de75',
-                        borderColor: '#b3de75',
-                        type: 'line'
+                        label: '5304关区',
+                        data: e && e.length ? e[1][0] : [],
+                        backgroundColor: '#39a3ef',
+                        type: 'bar'
                     }, {
-                        label: '环比',
-                        fill: false,
-                        data: [260, 170, 220, 200, 190, 260, 300, 260, 170, 220, 200, 190],
-                        backgroundColor: '#f8c321',
-                        borderColor: '#f8c321',
-                        type: 'line'
-                    }, {
-                        label: '船代申报提单量',
-                        data: [160, 190, 230, 260, 160, 230, 210, 160, 190, 230, 260, 160],
-                        backgroundColor: '#39a3ef'
+                        label: '5349关区',
+                        data: e && e.length ? e[1][1] : [],
+                        backgroundColor: '#f2c955',
+                        type: 'bar'
                     }],
-                    labels: ['2017/04', '2017/05', '2017/06', '2017/07', '2017/08', '2017/09', '2017/10', '2017/11', '2017/12', '2018/01', '2018/02', '2018/03']
+                    labels: e && e.length ? e[1][2] : []
                 },
                 options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
@@ -1729,9 +1826,6 @@ subscribes({
     }, {
         sub: 'mtsj/showCharts',
         func: (e) => {
-            //    return  publish("webAction", { path: "queryTableByWhere",svn: "skhg_stage_service", data: {tableName: "SCCT_DATA", where: "TERMINALCODE = SCT" } }).then(res => {
-            //        return  res;
-            //    })
             var charts1 = {
                 type: 'bar',
                 data: {
@@ -2125,4 +2219,32 @@ subscribes({
             };
             return [charts1, charts2, charts3];
         }
-    });
+    }, {
+        sub: 'wxpjzxqk/showCharts',
+        func: (e) => {
+            var charts1 = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: e && e.length > 0 ? e[1] : [],
+                        backgroundColor: ['#39a3ef', '#7fc0fe', '#abd275']
+                    }],
+                    labels: e && e.length > 0 ? e[0] : [],
+                },
+                options: {
+                    cutoutPercentage: 50,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true
+                        }
+                    },
+                    tooltips: {
+                        intersect: true
+                    }
+                }
+            };
+            return [charts1];
+        }
+    }
+);

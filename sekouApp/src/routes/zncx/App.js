@@ -80,7 +80,6 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
 
         componentDidMount() {
             let id = document.location.hash;
-            console.log(document.location);
             if (id.indexOf('userid') > 0) {
                 this.setState({ pageSize: 0 });
                 this.fecthData();
@@ -117,7 +116,6 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
         handeFindxx = () => {
             if ($('#IMO').val() !== "" || $('#hc').val() !== "") {
                 let type = this.props.tabs[this.state.pageSize].type;
-                console.log(type);
                 Toast.loading('请稍后...', 0);
                 this.props.dispatch({
                     type: 'zncx/' + type,
@@ -154,7 +152,6 @@ export default connect(({ zncx, loading }) => ({ ...zncx }))(
 
         /** 下拉 */
         onRefresh = () => {
-            console.log("123");
             this.setState({ count: 2 }, () => this.fecthData());
         };
 

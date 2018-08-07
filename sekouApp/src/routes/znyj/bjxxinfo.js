@@ -53,7 +53,6 @@ class Tabos extends React.Component {
 				children[i].style.background = '#39a3ef';
 				children[i].style.color = 'white';
 				this.props.clyjnr(view.view)
-				// console.log(view);
 			}
 		}
 	}
@@ -129,7 +128,6 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 				type: "yjxxinfo/findTable",
 				payload: pathToRegexp(key).exec(location.pathname)
 			}).then(e => {
-				console.log(this);
 				this.fecthData();
 			});
 
@@ -246,11 +244,22 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 
 		/** 处理 */
 		Handle = (e) => {
-			console.log(this.clyj);
 			if (this.clyj && this.clyj !== 'undefined') {
 				let cname = null;
 				let cnum = null;
-				if (this.state.clsj.CONTAINERNO) { cname = "CONTAINERNO", cnum = this.state.clsj.CONTAINERNO } else { cname = "CARNO", cnum = this.state.clsj.CONTAINERNO.CARNO }
+				if (this.state.clsj.CONTAINERNO) { 
+					cname = "CONTAINERNO", cnum = this.state.clsj.CONTAINERNO 
+				} else if(this.state.clsj.CARNO ) { 
+					cname = "CARNO", cnum = this.state.clsj.CARNO 
+				}else if(this.state.clsj.CONTA_ID){
+					cname = "CONTA_ID", cnum = this.state.clsj.CONTA_ID
+				}else if(this.state.clsj.CONTNO){
+					cname = "CONTNO", cnum = this.state.clsj.CONTNO
+				}else if(this.state.clsj.IMO){
+					cname = "IMO", cnum = this.state.clsj.IMO
+				}else if(this.state.clsj.OUTPORT_VOYNO){
+					cname = "OUTPORT_VOYNO", cnum = this.state.clsj.OUTPORT_VOYNO
+				}
 				Toast.loading("请稍等...", 0);
 				this.props.dispatch({
 					type: 'yjxxinfo/QueryUser',
@@ -274,7 +283,19 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 			this.setState({ clsj: obj, modal: true });
 			let cname = null;
 			let cnum = null;
-			if (obj.CONTAINERNO) { cname = "CONTAINERNO", cnum = obj.CONTAINERNO } else { cname = "CARNO", cnum = obj.CONTAINERNO.CARNO }
+			if (obj.CONTAINERNO) { 
+				cname = "CONTAINERNO", cnum = obj.CONTAINERNO 
+			} else if(obj.CARNO ) { 
+				cname = "CARNO", cnum = obj.CARNO 
+			}else if(obj.CONTA_ID){
+				cname = "CONTA_ID", cnum = obj.CONTA_ID
+			}else if(obj.CONTNO){
+				cname = "CONTNO", cnum = obj.CONTNO
+			}else if(obj.IMO){
+				cname = "IMO", cnum = obj.IMO
+			}else if(obj.OUTPORT_VOYNO){
+				cname = "OUTPORT_VOYNO", cnum = obj.OUTPORT_VOYNO
+			}
 			this.props.dispatch({
 				type: 'yjxxinfo/UpdateXX',
 				payload: {
@@ -286,6 +307,7 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 		}
 
 		render() {
+			console.log(this.props.znyj[window.localStorage.getItem('znyj_index')]);
 			let items = [];
 			const clyj = ['催促办理', '转科室办理', '锁柜', '锁定录证', '派遣无人机', '专员到场'];
 			let { PageDisplayDate, PageTitleDate } = this.state;
@@ -307,7 +329,7 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 						]}
 					>
 						<div key={rowID} className="znyj_table">
-							<div className="znyj_table_img" style={{ background: this.props.kfiled === 'yj' ? "#ffb423" : "#ff7625" }}><img src={this.props.znyj[window.localStorage.getItem('znyj_index')].img} /> </div>
+							<div className="znyj_table_img" style={{ background: this.props.kfiled === 'yj' ? "#ffb423" : "#ff7625" }}><img src={window.localStorage.getItem('znyj_index') ? this.props.znyj[window.localStorage.getItem('znyj_index')].img : this.props.znyj[0].img} /> </div>
 							<div className="znyj_table_view">
 								{
 									PageDisplayDate.length > 0 ? Object.keys(PageTitleDate).map((key, id) => {
@@ -350,7 +372,7 @@ export default connect(({ yjxxinfo }) => ({ ...yjxxinfo }))(
 						// transparent
 						maskClosable={false}
 						// title={this.props.kfiled === 'yj' ? "预警详情" : "报警处理"}
-						footer={this.props.kfiled === 'yj' ? [{ text: '关闭', onPress: () => { this.setState({ modal: false },()=> { this.clyj = 'undefined',console.log(this.clyj)}) } }] : [{ text: '关闭', onPress: () => { this.setState({ modal: false },()=> { this.clyj = 'undefined',console.log(this.clyj)}) } }, { text: '提交', onPress: this.Handle }]}
+						footer={this.props.kfiled === 'yj' ? [{ text: '关闭', onPress: () => { this.setState({ modal: false }, () => { this.clyj = 'undefined' }) } }] : [{ text: '关闭', onPress: () => { this.setState({ modal: false }, () => { this.clyj = 'undefined' }) } }, { text: '提交', onPress: this.Handle }]}
 						wrapProps={{ onTouchStart: this.onWrapTouchStart }}
 						animationType="slide-up"
 					>

@@ -1,7 +1,8 @@
+import { GridFill, Raingratio, MoreCharts } from "../../../componets";
 import { Tabs, DatePicker, List, Toast } from "antd-mobile";
+import { publish } from '../../../core/arbiter';
 import React, { Component } from "react";
 import { connect } from "dva";
-import { GridFill, Raingratio, MoreCharts } from "../../../componets";
 import "./Mtdc.less";
 
 export default connect(({ mtdc, loading }) => ({ ...mtdc }))(
@@ -41,32 +42,36 @@ export default connect(({ mtdc, loading }) => ({ ...mtdc }))(
     /** 所有的查询方法 */
     QueyrShip(e) {
       this.props.dispatch({
-        type: 'mtdc/QueryShip', payload: e ? { Todate: e, type: this.state.TERMINALCODE } : { type: this.state.TERMINALCODE }
+        type: 'layout/QueryShip', payload: e ? { Todate: e, tabName: 'SCCT_DATA', type: this.state.TERMINALCODE } : { tabName: 'SCCT_DATA', type: this.state.TERMINALCODE }
       }).then(e => {
-        if (this.props.list[0][0]) {
-          this.props.tabs[this.state.index]['data'][0]['val'] = Number(this.props.list[0][0]['attributes']['E'])
-          this.props.tabs[this.state.index]['data'][1]['val'] = Number(this.props.list[0][0]['attributes']['F'])
-          this.props.tabs[this.state.index]['data'][2]['val'] = Number(this.props.list[0][0]['attributes']['DG'])
-          this.setState({ json: this.props.list, shipjson: this.props.tabs[this.state.index]['data'] });
-          if (this.props.lastToweek['features'].length > 0) {
-            let kxsl = Number(this.props.lastToweek['features'][0]['attributes']['E']);
-            let zxsl = Number(this.props.lastToweek['features'][0]['attributes']['F']);
-            let wxpxsl = Number(this.props.lastToweek['features'][0]['attributes']['DG']);
-            let a = ((this.props.tabs[this.state.index]['data'][0]['val'] - kxsl) / kxsl) * 100;
-            let b = ((this.props.tabs[this.state.index]['data'][1]['val'] - zxsl) / zxsl) * 100;
-            let c = ((this.props.tabs[this.state.index]['data'][2]['val'] - wxpxsl) / wxpxsl) * 100;
 
-            this.props.tabs[this.state.index]['data'][0]['zb'] = a > 0 ? 'up' : 'down';
-            this.props.tabs[this.state.index]['data'][1]['zb'] = b > 0 ? 'up' : 'down';
-            this.props.tabs[this.state.index]['data'][2]['zb'] = c > 0 ? 'up' : 'down';
+        publish('QueryShips').then(e => {
+          if (e[0]['list'][0][0]) {
+            const list = e[e.length - 1];
+            this.props.tabs[this.state.index]['data'][0]['val'] = Number(list.list[0][0]['attributes']['E'])
+            this.props.tabs[this.state.index]['data'][1]['val'] = Number(list.list[0][0]['attributes']['F'])
+            this.props.tabs[this.state.index]['data'][2]['val'] = Number(list.list[0][0]['attributes']['DG'])
+            this.setState({ json: list.list, shipjson: this.props.tabs[this.state.index]['data'] });
+            if (list.lastToday['features'].length > 0) {
 
-            this.props.tabs[this.state.index]['data'][0]['hb'] = Math.floor(Math.abs(a));
-            this.props.tabs[this.state.index]['data'][1]['hb'] = Math.floor(Math.abs(b));
-            this.props.tabs[this.state.index]['data'][2]['hb'] = Math.floor(Math.abs(c));
+              let kxsl = Number(list.lastToweek['features'][0]['attributes']['E']);
+              let zxsl = Number(list.lastToweek['features'][0]['attributes']['F']);
+              let wxpxsl = Number(list.lastToweek['features'][0]['attributes']['DG']);
 
-            this.setState({ json: this.props.list, shipjson: this.props.tabs[this.state.index]['data'] });
+              let a = ((this.props.tabs[this.state.index]['data'][0]['val'] - kxsl) / kxsl) * 100;
+              let b = ((this.props.tabs[this.state.index]['data'][1]['val'] - zxsl) / zxsl) * 100;
+              let c = ((this.props.tabs[this.state.index]['data'][2]['val'] - wxpxsl) / wxpxsl) * 100;
+              this.props.tabs[this.state.index]['data'][0]['zb'] = a > 0 ? 'up' : 'down';
+              this.props.tabs[this.state.index]['data'][1]['zb'] = b > 0 ? 'up' : 'down';
+              this.props.tabs[this.state.index]['data'][2]['zb'] = c > 0 ? 'up' : 'down';
+
+              this.props.tabs[this.state.index]['data'][0]['hb'] = Math.floor(Math.abs(a));
+              this.props.tabs[this.state.index]['data'][1]['hb'] = Math.floor(Math.abs(b));
+              this.props.tabs[this.state.index]['data'][2]['hb'] = Math.floor(Math.abs(c));
+              this.setState({ json: list.list, shipjson: this.props.tabs[this.state.index]['data'] });
+            }
           }
-        }
+        })
       });
     }
     render() {
@@ -89,7 +94,7 @@ export default connect(({ mtdc, loading }) => ({ ...mtdc }))(
           >
             {tabs.map((va, key) => {
               return <div key={key}> <div className="boxS" /> <Raingratio val={va.data} />
-                <MoreCharts  view={va.datas} list={this.state.json} groupData={"mtdc/showCharts"} index={this.state.index} />
+                <MoreCharts view={va.datas} list={this.state.json} groupData={"mtdc/showCharts"} index={this.state.index} />
               </div>
             })}
           </Tabs>

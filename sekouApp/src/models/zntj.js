@@ -72,7 +72,6 @@ export default {
   reducers: {
 
     ChangeDate({ payload }, { put }) {
-      console.log("22222");
       var handleDate = new Date(payload);
       let Ndate = handleDate.getFullYear() + '' + (handleDate.getMonth() + 1 < 10 ? '0' + handleDate.getMonth() + 1 : handleDate.getMonth() + 1);
       // yield put({ type: 'Cdate', Ndate });

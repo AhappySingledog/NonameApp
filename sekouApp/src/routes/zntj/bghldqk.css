@@ -8,3 +8,27 @@
   width: 100%;
   background: #fff;
 }
+.wrapper {
+  position: relative;
+}
+.ulOptions {
+  z-index: 2;
+  height: 240px;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  top: 110%;
+  left: 0;
+  right: 0;
+  list-style: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.6);
+}
+.ulOptions > li {
+  padding: 3px 6px;
+}
+.ulOptions > li_active {
+  background-color: #0094ff;
+  color: white;
+}

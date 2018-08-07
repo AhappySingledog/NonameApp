@@ -1,7 +1,8 @@
+import { GridFill, Raingratio, MoreCharts } from "../../../componets";
 import { Tabs, DatePicker, List, Toast } from "antd-mobile";
+import { publish } from '../../../core/arbiter';
 import React, { Component } from "react";
 import { connect } from "dva";
-import { GridFill, Raingratio, MoreCharts } from "../../../componets";
 import "./mtcb.less";
 
 
@@ -42,24 +43,27 @@ export default connect(({ mtcbqk, loading }) => ({ ...mtcbqk }))(
     /** 所有的查询方法 */
     QueyrShip(e) {
       this.props.dispatch({
-        type: 'mtcbqk/QueryShip', payload: e ? { Todate: e, type: this.state.TERMINALCODE } : { type: this.state.TERMINALCODE }
+        type: 'layout/QueryShip',payload: e ? { Todate: e, tabName: 'SCCT_DATA', type: this.state.TERMINALCODE } : { tabName: 'SCCT_DATA', type: this.state.TERMINALCODE }
       }).then(e => {
-          if(this.props.list[0][0]){
-            this.props.tabs[this.state.index]['data'][0]['val'] = Number(this.props.list[0][0]['attributes']['BARGEIN']) + Number(this.props.list[0][0]['attributes']['VESSELIN']);
-            this.props.tabs[this.state.index]['data'][1]['val'] = Number(this.props.list[0][0]['attributes']['BARGEOUT']) + Number(this.props.list[0][0]['attributes']['VESSELOUT']);
-            this.setState({ json: this.props.list, shipjson: this.props.tabs[this.state.index]['data'] });
-            if(this.props.lastToday['features'].length > 0){
-              let jghb = Number(this.props.lastToday['features'][0]['attributes']['BARGEIN']) + Number(this.props.lastToday['features'][0]['attributes']['VESSELIN']);
-              let cghb =  Number(this.props.lastToday['features'][0]['attributes']['BARGEOUT']) + Number(this.props.lastToday['features'][0]['attributes']['VESSELOUT']);
-              let c = (( this.props.tabs[this.state.index]['data'][0]['val'] - jghb ) /jghb )* 100;
-              let h = (( this.props.tabs[this.state.index]['data'][1]['val'] - cghb ) /cghb )* 100;
-              this.props.tabs[this.state.index]['data'][0]['zb'] = c > 0 ? 'up' : 'down' ;
-              this.props.tabs[this.state.index]['data'][1]['zb'] = h > 0 ? 'up' : 'down' ;
-              this.props.tabs[this.state.index]['data'][0]['hb'] = Math.floor(Math.abs(c));
-              this.props.tabs[this.state.index]['data'][1]['hb'] = Math.floor(Math.abs(h));
-              this.setState({ json: this.props.list, shipjson: this.props.tabs[this.state.index]['data'] });
-             }
-          }
+        publish('QueryShips').then(e => {
+            if(e[0]['list'][0][0]){
+              const list = e[e.length - 1];
+              this.props.tabs[this.state.index]['data'][0]['val'] = Number(list.list[0][0]['attributes']['BARGEIN']) + Number(list.list[0][0]['attributes']['VESSELIN']);
+              this.props.tabs[this.state.index]['data'][1]['val'] = Number(list.list[0][0]['attributes']['BARGEOUT']) + Number(list.list[0][0]['attributes']['VESSELOUT']);
+              this.setState({ json: list.list, shipjson: this.props.tabs[this.state.index]['data'] });
+              if(list.lastToday['features'].length > 0){
+                let jghb = Number(list.lastToday['features'][0]['attributes']['BARGEIN']) + Number(list.lastToday['features'][0]['attributes']['VESSELIN']);
+                let cghb =  Number(list.lastToday['features'][0]['attributes']['BARGEOUT']) + Number(list.lastToday['features'][0]['attributes']['VESSELOUT']);
+                let c = (( this.props.tabs[this.state.index]['data'][0]['val'] - jghb ) /jghb )* 100;
+                let h = (( this.props.tabs[this.state.index]['data'][1]['val'] - cghb ) /cghb )* 100;
+                this.props.tabs[this.state.index]['data'][0]['zb'] = c > 0 ? 'up' : 'down' ;
+                this.props.tabs[this.state.index]['data'][1]['zb'] = h > 0 ? 'up' : 'down' ;
+                this.props.tabs[this.state.index]['data'][0]['hb'] = Math.floor(Math.abs(c));
+                this.props.tabs[this.state.index]['data'][1]['hb'] = Math.floor(Math.abs(h));
+                this.setState({ json: list.list, shipjson: this.props.tabs[this.state.index]['data'] });
+               }
+            }
+        })
       });
     }
 

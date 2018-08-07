@@ -1,6 +1,6 @@
 
 import { Toast } from "antd-mobile";
-import { publish } from "../core/arbiter";
+import { publish } from '../../../core/arbiter';
 
 const map = {
     ALTER01: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口集装箱到港后超7天未放行', tableName: 'V_IMAP_ALERTING_01', query: '1=1' },
@@ -39,14 +39,15 @@ const map = {
     WARNING17: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '查验完毕超24小时未调离CIC', tableName: 'IMAP_WARNING_17', query: "ISHANDLED='N'" },
     WARNING18: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆识别异常', tableName: 'IMAP_WARNING_18', query: "ISHANDLED='N'" },
     WARNING19: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '行政通道车辆布控中控', tableName: 'IMAP_WARNING_19', query: "ISHANDLED='N'" },
-    WARNING20: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '旅检船舶未审批即移泊', tableName: 'IMAP_WARNING_20', query: "ISHANDLED='N'" },
+    WARNING20: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '旅检船舶未确认即移泊', tableName: 'IMAP_WARNING_20', query: "ISHANDLED='N'" },
     WARNING21: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '旅检船舶夜间异常', tableName: 'IMAP_WARNING_21', query: "ISHANDLED='N'" },
     WARNING22: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '船舶抵港时间异常报警', tableName: 'IMAP_WARNING_22', query: "ISHANDLED='N'" },
     WARNING23: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '船舶离港时间异常报警', tableName: 'IMAP_WARNING_23', query: "ISHANDLED='N'" },
+    WARNING24: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '退运柜15天内复进境', tableName: 'IMAP_WARNING_24', query: "ISHANDLED='N'" },
 };
 export default {
     namespace: "yjxxinfo",
-    state: { datas: {}, list: null, znyj: [{ img: require('../images/znyj/yj/yj.svg') }, { img: require('../images/znyj/bj/bj.svg') }] },
+    state: { datas: {}, list: null, znyj: [{ img: require('../../../images/znyj/yj/yj.svg') }, { img: require('../../../images/znyj/bj/bj.svg') }] },
     effects: {
         *findTable({ payload }, { put }) {
             let json = {
@@ -93,7 +94,6 @@ export default {
             let count = payload.count;
             let jsons = payload.jsons;
             let res = yield (publish('getData', { svn: map[tab].svn, tableName: map[tab].tableName, data: { pageno: count, pagesize: 10, where: jsons } }));
-            console.log(res);
             if (res[0]['features'].length > 0) {
                 let datas = [];
                 let attr = res[0].fieldAliases;
@@ -128,6 +128,7 @@ export default {
                             sql: "UPDATE IMAP_WARNING_NEW SET " + payload.tableName + "= " + payload.tableName + " - 1 where ISHANDLED = 'N'; UPDATE IMAP_WARNING_NEW SET " + payload.tableName + " = " + payload.tableName + " + 1 where ISHANDLED = 'Y';"
                         }
                     }).then(e =>{
+                        console.log(e);
                         if(e[0].success){
                             Toast.success('处理成功！', 2);
                         }

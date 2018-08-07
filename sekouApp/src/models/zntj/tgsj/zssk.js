@@ -5,18 +5,27 @@ const datas = [
   
   export default {
       namespace: "zssk",
-      state: { 
-        datas: datas,
-        data: [datas[0].value],
-        source: [
+      state: {
+        tabs: [
           {
-          headTitle:'本月征收税款占比情况',
-          items:[
-            {title:"月占比", vl:"80%", value:"1000"},
-            {title:"年占比", vl:"8%", value:"2300"}
-          ]
-        }
-        ]
+            title: "总量",
+            datas: [
+              { name: 'y_chars1', tabname: '今年征收税款与历史总量同比情况' },
+            ]
+          },
+          {
+            title: "5304税款金额",
+            datas: [
+              { name: 'y_chars2', tabname: '5304关区征收税款同比情况' },
+            ]
+          },
+          {
+            title: "5349税款金额",
+            datas: [
+              { name: 'y_chars3', tabname: '5349关区征收税款同比情况' },
+            ]
+          },
+        ],
       },
       reducers: {
         select(state, { payload }) {
