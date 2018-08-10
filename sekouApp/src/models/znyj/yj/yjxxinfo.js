@@ -15,9 +15,9 @@ const map = {
     ALTER10: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '整船换装货物超期滞留堆场', tableName: 'V_IMAP_ALERTING_10', query: '1=1' },
     ALTER11: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '收到查验指令24小时未调入CIC', tableName: 'V_IMAP_ALERTING_11', query: '1=1' },
     ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '调入CIC超24小时未查验', tableName: 'V_IMAP_ALERTING_12', query: '1=1' },
-    ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '查验完毕超12小时未调离CIC', tableName: 'V_IMAP_ALERTING_13', query: '1=1' },
-    ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口通关时效超长预警', tableName: 'V_IMAP_ALERTING_14', query: '1=1' },
-    ALTER12: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '出口通关时效超长预警', tableName: 'V_IMAP_ALERTING_15', query: '1=1' },
+    ALTER13: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '查验完毕超12小时未调离CIC', tableName: 'V_IMAP_ALERTING_13', query: '1=1' },
+    ALTER14: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '进口通关时效超长预警', tableName: 'V_IMAP_ALERTING_14', query: '1=1' },
+    ALTER15: { svn: 'skhg_loader', svns: 'skhg_loader_service', title: '出口通关时效超长预警', tableName: 'V_IMAP_ALERTING_15', query: '1=1' },
 
 
     WARNING01: { svn: 'skhg_stage', svns: 'skhg_stage_service', title: '国际中转集装箱滞港超90天', tableName: 'IMAP_WARNING_01', query: "ISHANDLED='N'" },
